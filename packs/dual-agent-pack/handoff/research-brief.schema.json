@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Research Brief",
+  "type": "object",
+  "required": ["ts", "topic", "summary", "signals", "strategy_hooks", "risk_notes", "priority"],
+  "properties": {
+    "ts": { "type": "string" },
+    "topic": { "type": "string" },
+    "summary": { "type": "string" },
+    "signals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim", "evidence", "confidence"],
+        "properties": {
+          "claim": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "type": "number" },
+          "time_horizon": { "type": "string" },
+          "invalidation": { "type": "string" }
+        }
+      }
+    },
+    "strategy_hooks": { "type": "array", "items": { "type": "string" } },
+    "risk_notes": { "type": "array", "items": { "type": "string" } },
+    "feed_gaps": { "type": "array", "items": { "type": "string" } },
+    "requested_feeds": { "type": "array", "items": { "type": "string" } },
+    "priority": { "type": "string", "enum": ["low", "medium", "high"] }
+  }
+}

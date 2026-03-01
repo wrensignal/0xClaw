@@ -89,3 +89,6 @@ node packages/cli/src/index.mjs init-pack --pack dual-agent-pack
 ```
 
 This creates `.0xclaw/pack-dual-agent.json` with neutral names (`research-agent`, `trading-agent`) and a handoff contract.
+
+
+See also: `docs/speakeasy-integration.md` for private inference routing guidance.
