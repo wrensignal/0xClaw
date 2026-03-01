@@ -1,0 +1,13 @@
+{
+  "profile": "trading-agent-paper",
+  "liveExecution": false,
+  "loop": {
+    "enabled": true,
+    "heartbeatAdaptive": true,
+    "tradeExecution": "paper"
+  },
+  "risk": {
+    "maxTradeUsd": 25,
+    "maxDailyNotionalUsd": 75
+  }
+}

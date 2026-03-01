@@ -1,0 +1,17 @@
+{
+  "profile": "trading-agent-live-disabled",
+  "liveExecution": false,
+  "loop": {
+    "enabled": true,
+    "heartbeatAdaptive": true,
+    "tradeExecution": "paper"
+  },
+  "liveEnablement": {
+    "requiresExplicitOperatorApproval": true,
+    "checklistRequired": true
+  },
+  "risk": {
+    "maxTradeUsd": 25,
+    "maxDailyNotionalUsd": 75
+  }
+}

@@ -10,7 +10,7 @@ This script:
 1. Verifies Node.js >= 20 is present
 2. Runs `npm install`
 3. Runs `doctor` to validate the environment
-4. Runs `init --profile research-only` (skipped if already initialised)
+4. Runs `init --profile research-agent` (skipped if already initialised)
 5. Prints next steps
 
 The script is idempotent — safe to run more than once.
@@ -31,7 +31,7 @@ node packages/cli/src/index.mjs doctor
 
 ### 3) Initialize profile
 ```bash
-node packages/cli/src/index.mjs init --profile research-only
+node packages/cli/src/index.mjs init --profile research-agent
 ```
 
 ### 4) Check status
@@ -72,7 +72,7 @@ All templates default to `liveExecution: false`. See `docs/safety.md` before ena
 
 | Profile | Live execution | Trade mode |
 |---------|---------------|------------|
-| `research-only` | off | none |
+| `research-agent` | off | none |
 | `solo-trader-paper` | off | paper |
 
 Switch profiles at any time by re-running `init`:
@@ -80,3 +80,12 @@ Switch profiles at any time by re-running `init`:
 ```bash
 node packages/cli/src/index.mjs init --profile solo-trader-paper
 ```
+
+
+## Optional: initialize a neutral dual-agent pack
+
+```bash
+node packages/cli/src/index.mjs init-pack --pack dual-agent-pack
+```
+
+This creates `.0xclaw/pack-dual-agent.json` with neutral names (`research-agent`, `trading-agent`) and a handoff contract.

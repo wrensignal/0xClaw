@@ -40,8 +40,8 @@ CONFIG="$REPO_ROOT/.0xclaw/config.json"
 if [ -f "$CONFIG" ]; then
   info "Config already exists at .0xclaw/config.json — skipping init."
 else
-  info "Initializing profile research-only..."
-  $CLI init --profile research-only
+  info "Initializing profile research-agent..."
+  $CLI init --profile research-agent
   ok "Profile initialized."
 fi
 

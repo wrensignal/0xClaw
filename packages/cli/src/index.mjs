@@ -14,7 +14,7 @@ function arg(name, fallback = null) {
 }
 
 async function cmdInit() {
-  const profile = arg('--profile', 'research-only');
+  const profile = arg('--profile', 'research-agent');
   await mkdir(configDir, { recursive: true });
   const profilePath = path.resolve(cwd, `packages/profiles/templates/${profile}.json`);
   let body;
@@ -25,6 +25,46 @@ async function cmdInit() {
   }
   await writeFile(configPath, JSON.stringify({ ...body, createdAt: new Date().toISOString() }, null, 2));
   console.log(`Initialized 0xclaw in ${configDir} with profile=${profile}`);
+}
+
+
+async function cmdInitPack() {
+  const pack = arg('--pack', 'dual-agent-pack');
+  if (pack !== 'dual-agent-pack') {
+    console.error(`Unknown pack: ${pack}`);
+    process.exit(1);
+  }
+  await mkdir(configDir, { recursive: true });
+
+  const load = async (name, fallback) => {
+    const p = path.resolve(cwd, `packages/profiles/templates/${name}.json`);
+    try { return JSON.parse(await readFile(p, 'utf8')); } catch { return fallback; }
+  };
+
+  const research = await load('research-agent', { profile: 'research-agent', liveExecution: false });
+  const trading = await load('trading-agent-paper', { profile: 'trading-agent-paper', liveExecution: false });
+
+  const packCfg = {
+    pack: 'dual-agent-pack',
+    createdAt: new Date().toISOString(),
+    agents: {
+      researchAgent: {
+        name: arg('--research-name', 'research-agent'),
+        config: research
+      },
+      tradingAgent: {
+        name: arg('--trading-name', 'trading-agent'),
+        config: trading
+      }
+    },
+    handoff: {
+      channel: 'inbox/research-*.json',
+      format: 'json'
+    }
+  };
+
+  await writeFile(path.join(configDir, 'pack-dual-agent.json'), JSON.stringify(packCfg, null, 2));
+  console.log(`Initialized pack dual-agent-pack in ${configDir}`);
 }
 
 async function cmdDoctor() {
@@ -94,7 +134,7 @@ maxSymbolStalenessCycles: 6   # Drop symbol after 6 cycles without signal
 targetBasketSize: 8
 
 ## Risk Limits (paper/live)
-# Uncomment and tune only when profile is solo-trader-paper or above
+# Uncomment and tune only when profile is trading-agent-paper or above
 # maxTradeUsd: 25
 # maxDailyNotionalUsd: 75
 `;
@@ -196,12 +236,13 @@ async function main() {
   const cmd = process.argv[2];
   switch (cmd) {
     case 'init': return cmdInit();
+    case 'init-pack': return cmdInitPack();
     case 'doctor': return cmdDoctor();
     case 'status': return cmdStatus();
     case 'start': return cmdStart();
     case 'bootstrap-openclaw': return cmdBootstrapOpenclaw();
     default:
-      console.log('Usage: 0xclaw <init|doctor|status|start|bootstrap-openclaw> [--profile research-only]');
+      console.log('Usage: 0xclaw <init|init-pack|doctor|status|start|bootstrap-openclaw> [--profile research-agent] [--pack dual-agent-pack]');
       process.exit(1);
   }
 }
