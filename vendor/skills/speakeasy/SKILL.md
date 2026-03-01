@@ -41,3 +41,4 @@ Use this skill to standardize Speakeasy integration for research/trading agents.
 - Read `references/env-and-routing.md` for env schema and routing contract.
 - Read `references/degraded-mode.md` for confidence-tier behavior and fallback ladder.
 - Read `references/ops-checklist.md` for runbook-style verification.
+- Skill logo asset: `assets/speakeasy-logo.svg`.
