@@ -29,13 +29,7 @@ cd "$REPO_ROOT"
 npm install --prefer-offline 2>&1 | tail -3
 ok "Dependencies installed."
 
-# ── Step 3: Doctor check ──────────────────────────────────────────────────────
-info "Running doctor..."
-# Doctor exits 1 on failure; the set -e will propagate that.
-$CLI doctor
-ok "Doctor passed."
-
-# ── Step 4: Init profile (idempotent) ────────────────────────────────────────
+# ── Step 3: Init profile (idempotent) ────────────────────────────────────────
 CONFIG="$REPO_ROOT/.0xclaw/config.json"
 if [ -f "$CONFIG" ]; then
   info "Config already exists at .0xclaw/config.json — skipping init."
@@ -44,6 +38,12 @@ else
   $CLI init --profile research-agent
   ok "Profile initialized."
 fi
+
+# ── Step 4: Doctor check ──────────────────────────────────────────────────────
+info "Running doctor..."
+# Doctor exits 1 on failure; the set -e will propagate that.
+$CLI doctor
+ok "Doctor passed."
 
 # ── Done ─────────────────────────────────────────────────────────────────────
 echo ""

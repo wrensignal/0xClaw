@@ -1,6 +1,6 @@
-# 0xclaw (private alpha)
+# 0xclaw
 
-`0xclaw` is a crypto compatibility kit for OpenClaw operators.
+`0xclaw` is a crypto agent compatibility kit for OpenClaw operators.
 
 ## Goals
 - Safe-by-default crypto agent setup
@@ -8,12 +8,18 @@
 - Heartbeat-ready strategy loop primitives
 - One-command operator UX
 
-## Quick start (local)
+## Quick start
 
+### Option A — one-command install
+```bash
+bash scripts/install.sh
+```
+
+### Option B — manual local setup
 ```bash
 npm install
-node packages/cli/src/index.mjs doctor
 node packages/cli/src/index.mjs init --profile research-only
+node packages/cli/src/index.mjs doctor
 node packages/cli/src/index.mjs status
 ```
 
@@ -28,6 +34,9 @@ node packages/cli/src/index.mjs status
 - Live execution disabled by default
 - Explicit approvals required for external side effects
 - Data-quality confidence tiers and fallback paths are mandatory
+
+## License
+Apache-2.0 (see `LICENSE`).
 
 ## Vendored dependencies
 - `vendor/pump-fun-sdk-lite` (v1.28.0, MIT)
