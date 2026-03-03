@@ -6,6 +6,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "bin": {
+    "0xclaw": "packages/cli/src/index.mjs"
+  },
   "scripts": {
     "build": "echo 'build: placeholder'",
     "test": "echo 'test: placeholder'",

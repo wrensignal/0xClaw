@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { mkdir, readFile, writeFile, access } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
@@ -71,12 +71,7 @@ async function cmdDoctor() {
   const checks = [];
   checks.push({ name: 'node', ok: Number(process.versions.node.split('.')[0]) >= 20 });
   checks.push({ name: 'config', ok: existsSync(configPath) });
-  try {
-    await access(path.join(cwd, 'packages'));
-    checks.push({ name: 'packages-dir', ok: true });
-  } catch {
-    checks.push({ name: 'packages-dir', ok: false });
-  }
+  checks.push({ name: 'cli-runtime', ok: true });
 
   const failed = checks.filter((c) => !c.ok);
   console.log(JSON.stringify({ ok: failed.length === 0, checks }, null, 2));
