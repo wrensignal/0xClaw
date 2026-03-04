@@ -9,5 +9,15 @@
   "risk": {
     "maxTradeUsd": 25,
     "maxDailyNotionalUsd": 75
+  },
+  "inference": {
+    "provider": "speakeasy",
+    "baseUrl": "https://api.speakeasyrelay.com",
+    "routes": {
+      "research": "deepseek-v3.2",
+      "deep_think": "qwen3-235b-a22b-thinking-2507",
+      "codegen": "qwen3-coder-480b-a35b-instruct",
+      "uncensored": "venice-uncensored"
+    }
   }
 }

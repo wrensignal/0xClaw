@@ -1,4 +1,5 @@
 import { fallbackOrder } from '@0xclaw/core/src/index.mjs';
+export { createInferenceClient } from './inference.mjs';
 
 export function evaluateDataQuality({ lunarCoverage = 0, lunarErrors = 0, birdeyeCoverage = 0, walletRows = 0 }) {
   const lunarOk = lunarCoverage >= 70 && lunarErrors <= 4;
