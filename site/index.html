@@ -4,197 +4,258 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>0xClaw — Solana Meme Trading Toolkit</title>
-    <meta name="description" content="Set up your Solana meme trading agent in minutes. Take the simple Railway path or go open source with full control." />
+    <meta
+      name="description"
+      content="Set up your Solana meme trading agent in minutes. Take the simple path with Railway or the open source path with full control."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root {
-        --bg: oklch(0.14 0.025 258);
-        --bg-2: oklch(0.17 0.028 255);
-        --panel: oklch(0.2 0.025 255 / 0.9);
-        --panel-soft: oklch(0.22 0.03 252 / 0.5);
-        --ink: oklch(0.95 0.01 260);
-        --muted: oklch(0.74 0.03 252);
-        --line: oklch(0.36 0.05 250);
-        --line-soft: oklch(0.3 0.03 250);
-        --accent: oklch(0.78 0.17 38);
-        --accent-2: oklch(0.74 0.16 292);
-        --teal: oklch(0.72 0.13 195);
-        --radius: 18px;
-        --ease: cubic-bezier(0.25, 1, 0.5, 1);
+        --bg: oklch(0.985 0.004 250);
+        --surface: oklch(0.995 0.003 250);
+        --surface-2: oklch(0.975 0.006 250);
+        --ink: oklch(0.24 0.02 255);
+        --muted: oklch(0.54 0.015 255);
+        --line: oklch(0.9 0.008 255);
+        --line-strong: oklch(0.83 0.012 255);
+        --accent: oklch(0.62 0.19 260);
+        --accent-2: oklch(0.68 0.14 205);
+        --gold: oklch(0.76 0.14 75);
+        --radius-lg: 28px;
+        --radius-md: 16px;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
       }
 
       * { box-sizing: border-box; }
+      html, body { margin: 0; }
       body {
-        margin: 0;
-        font-family: "DM Sans", system-ui, sans-serif;
+        font-family: Manrope, system-ui, sans-serif;
         color: var(--ink);
         background:
-          radial-gradient(1200px 500px at 75% -10%, oklch(0.48 0.12 292 / 0.2), transparent 65%),
-          radial-gradient(900px 400px at 10% 0%, oklch(0.45 0.13 210 / 0.16), transparent 60%),
-          linear-gradient(180deg, var(--bg) 0%, oklch(0.11 0.02 260) 100%);
+          radial-gradient(80rem 30rem at 90% -10%, oklch(0.9 0.05 250 / 0.55), transparent 65%),
+          radial-gradient(60rem 24rem at -10% -15%, oklch(0.9 0.04 70 / 0.35), transparent 60%),
+          var(--bg);
       }
 
       a { color: inherit; text-decoration: none; }
-      .wrap { width: min(1120px, calc(100% - 2rem)); margin: 0 auto; }
+      .wrap { width: min(1160px, calc(100% - 2rem)); margin: 0 auto; }
 
       .nav {
         position: sticky;
         top: 0;
         z-index: 30;
-        background: oklch(0.13 0.02 260 / 0.76);
         backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--line-soft);
+        background: oklch(0.985 0.004 250 / 0.86);
+        border-bottom: 1px solid var(--line);
       }
       .nav-inner {
-        min-height: 68px;
+        min-height: 72px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 1rem;
       }
       .brand {
-        font-family: "Libre Baskerville", serif;
-        font-size: 1.06rem;
+        font-family: Newsreader, serif;
+        font-size: 1.2rem;
         letter-spacing: -0.02em;
       }
-      .nav-links { display: flex; align-items: center; gap: 1rem; color: var(--muted); font-size: 0.92rem; }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
 
       .btn {
+        min-height: 46px;
+        padding: 0.72rem 1.05rem;
+        border-radius: 999px;
+        border: 1px solid transparent;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 44px;
-        padding: 0.72rem 1rem;
-        border-radius: 11px;
-        border: 1px solid transparent;
-        font-weight: 600;
-        font-size: 0.86rem;
-        transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
+        font-weight: 700;
+        font-size: 0.85rem;
+        transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
       }
       .btn:hover { transform: translateY(-1px); }
       .btn-main {
+        color: white;
         background: linear-gradient(120deg, var(--accent), var(--accent-2));
-        color: oklch(0.16 0.02 260);
+        box-shadow: 0 10px 28px -16px oklch(0.62 0.19 260 / 0.5);
       }
-      .btn-ghost {
-        border-color: var(--line);
-        background: color-mix(in oklab, var(--panel) 75%, black 25%);
+      .btn-soft {
+        background: var(--surface);
+        border-color: var(--line-strong);
+        color: var(--ink);
+      }
+      .btn-text {
+        border: 0;
+        color: var(--muted);
+        font-weight: 600;
       }
 
-      .hero { padding: clamp(3.5rem, 9vw, 7rem) 0 2.2rem; }
-      .chip {
+      .hero {
+        padding: clamp(3.8rem, 8vw, 6.6rem) 0 2.8rem;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.12fr 0.88fr;
+        gap: 1.2rem;
+      }
+      .kicker {
         display: inline-flex;
         align-items: center;
-        gap: .4rem;
-        border: 1px solid var(--line);
+        border: 1px solid var(--line-strong);
         border-radius: 999px;
-        padding: .36rem .78rem;
+        padding: .35rem .72rem;
         color: var(--muted);
         font-family: "IBM Plex Mono", monospace;
         font-size: .72rem;
-        letter-spacing: .06em;
         text-transform: uppercase;
+        letter-spacing: .05em;
       }
       h1 {
-        margin: .95rem 0 .7rem;
-        font-family: "Libre Baskerville", serif;
-        font-size: clamp(2.3rem, 5.8vw, 4.5rem);
-        line-height: 1.06;
-        letter-spacing: -0.012em;
-        max-width: 13ch;
+        margin: .9rem 0 .65rem;
+        font-family: Newsreader, serif;
+        font-size: clamp(2.5rem, 5.7vw, 4.9rem);
+        line-height: .98;
+        letter-spacing: -0.03em;
+        max-width: 12ch;
       }
       .hero p {
         margin: 0;
         color: var(--muted);
-        max-width: 62ch;
-        font-size: 1.04rem;
-        line-height: 1.6;
+        font-size: 1.03rem;
+        line-height: 1.65;
+        max-width: 58ch;
       }
-      .hero-actions { margin-top: 1.25rem; display: flex; gap: .68rem; flex-wrap: wrap; }
+      .hero-actions {
+        margin-top: 1.25rem;
+        display: flex;
+        gap: .7rem;
+        flex-wrap: wrap;
+      }
 
-      .hero-orbit {
-        margin-top: 1.2rem;
+      .hero-panel {
         border: 1px solid var(--line);
+        background: linear-gradient(165deg, var(--surface), var(--surface-2));
+        border-radius: var(--radius-lg);
+        padding: 1.15rem;
+        display: grid;
+        align-content: space-between;
+        min-height: 320px;
+      }
+      .hero-panel .meta {
+        display: grid;
+        gap: .55rem;
+      }
+      .chip {
+        border: 1px solid var(--line-strong);
         border-radius: 999px;
-        padding: .65rem 1rem;
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        align-items: center;
-        gap: .85rem;
-        background: color-mix(in oklab, var(--panel-soft) 60%, black 40%);
-      }
-      .hero-orbit .dot {
-        width: 8px; height: 8px; border-radius: 50%; background: var(--teal);
-        box-shadow: 0 0 0 4px oklch(0.72 0.13 195 / 0.2);
-      }
-      .hero-orbit span { color: var(--muted); font-size: .84rem; }
-
-      section { padding: 1.65rem 0; }
-      h2 {
-        margin: 0;
-        font-family: "Libre Baskerville", serif;
-        font-size: clamp(1.25rem, 2.9vw, 2rem);
-      }
-      .sub { margin: .35rem 0 1rem; color: var(--muted); }
-
-      .setup-shell {
-        border: 1px solid var(--line);
-        border-radius: 24px;
-        overflow: hidden;
-        background: linear-gradient(160deg, color-mix(in oklab, var(--bg-2) 70%, black 30%), color-mix(in oklab, var(--bg) 60%, black 40%));
-      }
-      .setup-grid {
-        display: grid;
-        grid-template-columns: 1fr auto 1fr;
-        gap: 0;
-      }
-      .path {
-        padding: 1.3rem 1.15rem;
-        min-height: 228px;
-        position: relative;
-      }
-      .path + .path { border-left: 1px solid var(--line-soft); }
-
-      .path h3 { margin: .42rem 0 .32rem; font-size: 1.1rem; }
-      .path p { margin: 0; color: var(--muted); }
-      .meta {
-        margin-top: .7rem;
-        font-size: .78rem;
-        color: var(--muted);
+        padding: .25rem .6rem;
+        font-size: .73rem;
         font-family: "IBM Plex Mono", monospace;
+        color: var(--muted);
+        width: fit-content;
+      }
+      .hero-panel h3 {
+        margin: .4rem 0;
+        font-size: 1.08rem;
+        line-height: 1.35;
+      }
+      .hero-panel p {
+        margin: 0;
+        color: var(--muted);
+        font-size: .93rem;
+      }
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: .55rem;
+      }
+      .hero-stats article {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: .65rem;
+      }
+      .hero-stats b {
+        font-size: .74rem;
+        color: var(--muted);
         text-transform: uppercase;
         letter-spacing: .05em;
       }
-      .tag {
-        display: inline-flex;
-        align-items: center;
-        gap: .4rem;
-        color: var(--accent);
+      .hero-stats span {
+        display: block;
+        margin-top: .2rem;
+        font-size: .92rem;
+      }
+
+      section { padding: 1.2rem 0; }
+      h2 {
+        margin: 0;
+        font-family: Newsreader, serif;
+        font-size: clamp(1.45rem, 3.2vw, 2.5rem);
+        letter-spacing: -0.02em;
+      }
+      .sub {
+        margin: .35rem 0 1.1rem;
+        color: var(--muted);
+      }
+
+      .setup {
+        margin-top: .45rem;
+        border: 1px solid var(--line);
+        border-radius: 30px;
+        background: linear-gradient(160deg, var(--surface), var(--surface-2));
+        overflow: hidden;
+      }
+      .setup-grid {
+        display: grid;
+        grid-template-columns: 1fr 72px 1fr;
+      }
+      .path {
+        padding: 1.25rem;
+        min-height: 232px;
+      }
+      .path h3 { margin: .45rem 0 .36rem; font-size: 1.12rem; }
+      .path p { margin: 0; color: var(--muted); }
+      .path .micro {
+        margin-top: .7rem;
         font-family: "IBM Plex Mono", monospace;
-        font-size: .72rem;
-        letter-spacing: .06em;
         text-transform: uppercase;
+        letter-spacing: .05em;
+        font-size: .73rem;
+        color: var(--muted);
       }
-
       .recommended {
-        background: linear-gradient(180deg, color-mix(in oklab, var(--panel) 84%, black 16%), color-mix(in oklab, var(--panel) 68%, black 32%));
+        border-right: 1px solid var(--line);
+        background: linear-gradient(180deg, oklch(0.985 0.006 245), oklch(0.97 0.01 245));
       }
-      .alt {
-        background: linear-gradient(180deg, oklch(0.17 0.02 255 / 0.7), oklch(0.15 0.02 255 / 0.66));
+      .recommended .tag {
+        display: inline-flex;
+        font-family: "IBM Plex Mono", monospace;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+        font-size: .72rem;
+        color: var(--accent);
       }
-      .alt h3,
-      .alt p,
-      .alt .meta { color: color-mix(in oklab, var(--muted) 80%, black 20%); }
-
+      .open-source {
+        border-left: 1px solid var(--line);
+        background: color-mix(in oklab, var(--surface-2) 88%, black 12%);
+      }
       .or {
-        width: 92px;
-        border-left: 1px solid var(--line-soft);
-        border-right: 1px solid var(--line-soft);
         display: grid;
         grid-template-rows: 1fr auto 1fr;
-        align-items: center;
         justify-items: center;
+        align-items: center;
         color: var(--muted);
         font-family: "IBM Plex Mono", monospace;
         font-size: .72rem;
@@ -203,67 +264,100 @@
       .or .line {
         width: 1px;
         height: 100%;
-        background: linear-gradient(180deg, transparent, var(--line), transparent);
+        background: linear-gradient(180deg, transparent, var(--line-strong), transparent);
       }
 
-      .grid { display: grid; gap: .85rem; }
-      .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-      .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
-      .card {
-        border: 1px solid var(--line-soft);
-        border-radius: 14px;
-        padding: .95rem;
-        background: color-mix(in oklab, var(--panel) 72%, black 28%);
-        transition: transform .2s var(--ease), border-color .2s var(--ease);
-      }
-      .card:hover { transform: translateY(-2px); border-color: var(--line); }
-      .card h3 { margin: 0 0 .34rem; font-size: .97rem; }
-      .card p { margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.48; }
-
-      .feature-strip {
-        margin-top: .9rem;
-        border: 1px solid var(--line-soft);
-        border-radius: 14px;
-        padding: .9rem;
+      .cluster {
+        margin-top: 2rem;
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: .7rem;
-        background: color-mix(in oklab, var(--panel-soft) 65%, black 35%);
+        gap: .9rem;
       }
-      .feature-strip b {
-        display: block;
-        font-size: .76rem;
+      .cluster-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .grid {
+        display: grid;
+        gap: .8rem;
+      }
+      .g-tools { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .g-skills { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+      .tile {
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--surface);
+        padding: .95rem;
+        transition: transform .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
+      }
+      .tile:hover {
+        transform: translateY(-2px);
+        border-color: var(--line-strong);
+        box-shadow: 0 12px 26px -22px oklch(0.28 0.03 255 / 0.4);
+      }
+      .tile h3 { margin: 0 0 .34rem; font-size: .96rem; }
+      .tile p {
+        margin: 0;
+        color: var(--muted);
+        font-size: .89rem;
+        line-height: 1.45;
+      }
+
+      .install-terminal {
+        margin-top: 1rem;
+        border: 1px solid var(--line-strong);
+        border-radius: 16px;
+        background: oklch(0.99 0.003 250);
+        padding: .8rem;
         font-family: "IBM Plex Mono", monospace;
-        color: var(--teal);
-        letter-spacing: .05em;
-        text-transform: uppercase;
-        margin-bottom: .2rem;
+        font-size: .8rem;
+        color: oklch(0.36 0.02 255);
+        line-height: 1.6;
       }
-      .feature-strip span { color: var(--muted); font-size: .9rem; }
+
+      .final-cta {
+        margin-top: 2rem;
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        background: linear-gradient(135deg, oklch(0.98 0.02 250), oklch(0.95 0.03 80));
+        padding: 1.2rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: .8rem;
+      }
+      .final-cta h3 {
+        margin: 0;
+        font-family: Newsreader, serif;
+        font-size: 1.5rem;
+      }
+      .final-cta p { margin: .3rem 0 0; color: var(--muted); }
 
       footer {
-        padding: 2rem 0 2.5rem;
+        padding: 2rem 0 2.6rem;
         color: var(--muted);
         font-size: .86rem;
       }
 
-      @media (max-width: 980px) {
+      @media (max-width: 1024px) {
+        .hero-grid,
+        .g-tools,
+        .g-skills { grid-template-columns: 1fr; }
         .setup-grid { grid-template-columns: 1fr; }
         .or {
-          width: 100%;
-          min-height: 56px;
-          border-left: 0;
-          border-right: 0;
-          border-top: 1px solid var(--line-soft);
-          border-bottom: 1px solid var(--line-soft);
+          min-height: 58px;
+          border-top: 1px solid var(--line);
+          border-bottom: 1px solid var(--line);
           grid-template-columns: 1fr auto 1fr;
           grid-template-rows: none;
-          gap: .6rem;
+          gap: .65rem;
         }
         .or .line { width: 100%; height: 1px; }
-        .path + .path { border-left: 0; }
-        .g4, .g3, .feature-strip { grid-template-columns: 1fr; }
+        .recommended, .open-source { border: 0; }
         .nav-links a:not(.btn) { display: none; }
       }
     </style>
@@ -271,7 +365,7 @@
   <body>
     <header class="nav">
       <div class="wrap nav-inner">
-        <a class="brand" href="#">0xClaw</a>
+        <a href="#" class="brand">0xClaw</a>
         <nav class="nav-links" aria-label="Primary navigation">
           <a href="#setup">Setup</a>
           <a href="#tools">Tools</a>
@@ -283,34 +377,48 @@
 
     <main>
       <section class="hero">
-        <div class="wrap">
-          <span class="chip">solana meme trading toolkit</span>
-          <h1>Set up your agent. Start trading.</h1>
-          <p>Aave-style structure, Family-style polish. Fast path for most operators. Open source path for full-stack control.</p>
-          <div class="hero-actions">
-            <a class="btn btn-main" href="#setup">Set up your agent</a>
-            <a class="btn btn-ghost" href="https://github.com/wrensignal/0xClaw" target="_blank" rel="noreferrer">View repo</a>
+        <div class="wrap hero-grid">
+          <div>
+            <span class="kicker">solana meme trading toolkit</span>
+            <h1>Set up your agent. Choose your lane.</h1>
+            <p>
+              Built for fast operators and deep builders. Take the simple one-click path,
+              or use the full open source stack with OpenClaw.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-main" href="#setup">Set up your agent</a>
+              <a class="btn btn-soft" href="https://github.com/wrensignal/0xClaw" target="_blank" rel="noreferrer">Explore repository</a>
+              <a class="btn btn-text" href="#tools">See stack →</a>
+            </div>
           </div>
-          <div class="hero-orbit" aria-label="Status strip">
-            <span class="dot"></span>
-            <span>Live-ready defaults · paper mode first · adapter-based execution</span>
-            <span class="chip" style="padding:.24rem .58rem">v0.1</span>
-          </div>
+
+          <aside class="hero-panel" aria-label="Quick profile panel">
+            <div class="meta">
+              <span class="chip">operator profile</span>
+              <h3>Designed like fintech UX, wired like protocol infrastructure.</h3>
+              <p>Clear defaults, explicit risk boundaries, composable adapters and packs.</p>
+            </div>
+            <div class="hero-stats">
+              <article><b>Mode</b><span>Paper by default</span></article>
+              <article><b>Deploy</b><span>Railway / OSS</span></article>
+              <article><b>Stack</b><span>CLI + adapters</span></article>
+            </div>
+          </aside>
         </div>
       </section>
 
       <section id="setup">
         <div class="wrap">
           <h2>Set up your agent</h2>
-          <p class="sub">Choose your path.</p>
+          <p class="sub">Two paths. One destination.</p>
 
-          <div class="setup-shell">
+          <div class="setup">
             <div class="setup-grid">
               <article class="path recommended">
                 <div class="tag">● Recommended</div>
                 <h3>Simple Path</h3>
-                <p>One-click Railway deploy.</p>
-                <div class="meta">Best for most users</div>
+                <p>One-click Railway deploy with the fastest route to operations.</p>
+                <div class="micro">Best for most users</div>
                 <div class="hero-actions" style="margin-top:1rem">
                   <a class="btn btn-main" href="../RAILWAY_DEPLOY.md">Start simple setup</a>
                 </div>
@@ -322,60 +430,73 @@
                 <div class="line"></div>
               </div>
 
-              <article class="path alt">
+              <article class="path open-source">
                 <h3>Open Source Path</h3>
-                <p>Manual OpenClaw integration.</p>
-                <div class="meta">More control · more setup</div>
+                <p>Manual OpenClaw integration with maximum flexibility.</p>
+                <div class="micro">More control · more setup</div>
                 <div class="hero-actions" style="margin-top:1rem">
-                  <a class="btn btn-ghost" href="../README.md">Learn more</a>
+                  <a class="btn btn-soft" href="../README.md">Learn more</a>
                 </div>
               </article>
             </div>
           </div>
 
-          <div class="feature-strip">
-            <div><b>Liquidity mindset</b><span>Unified flows, not fragmented setup branches.</span></div>
-            <div><b>Risk posture</b><span>Paper mode defaults and explicit operator controls.</span></div>
-            <div><b>Extensibility</b><span>Composable packs, adapters, and profiles.</span></div>
-          </div>
+          <div class="install-terminal">npm install
+node packages/cli/src/index.mjs init --profile research-agent
+node packages/cli/src/index.mjs doctor</div>
         </div>
       </section>
 
-      <section id="tools">
+      <section class="cluster" id="tools">
         <div class="wrap">
-          <h2>Tools</h2>
-          <p class="sub">Comprehensive stack with production-minded defaults.</p>
-          <div class="grid g4">
-            <article class="card"><h3>Jupiter</h3><p>Swap routing and execution support.</p></article>
-            <article class="card"><h3>pump.fun</h3><p>Direct bonding-curve workflows.</p></article>
-            <article class="card"><h3>Helius</h3><p>Solana RPC and indexed data pathing.</p></article>
-            <article class="card"><h3>Telegram</h3><p>Operator commands in chat.</p></article>
-            <article class="card"><h3>Speakeasy</h3><p>Default inference endpoint routing.</p></article>
-            <article class="card"><h3>agenti-lite</h3><p>MCP interoperability layer.</p></article>
-            <article class="card"><h3>pump-fun-sdk-lite</h3><p>Execution-focused SDK integration.</p></article>
-            <article class="card"><h3>0xClaw CLI</h3><p>init, config, wallet, doctor, and test.</p></article>
+          <div class="cluster-head">
+            <div>
+              <h2>Tools</h2>
+              <p class="sub">Comprehensive stack for Solana meme execution and operator workflows.</p>
+            </div>
+          </div>
+          <div class="grid g-tools">
+            <article class="tile"><h3>Jupiter</h3><p>Swap routing and execution support.</p></article>
+            <article class="tile"><h3>pump.fun</h3><p>Direct bonding-curve trade flows.</p></article>
+            <article class="tile"><h3>Helius</h3><p>Solana RPC and indexed data pathing.</p></article>
+            <article class="tile"><h3>Telegram</h3><p>Operate status, health, and actions from chat.</p></article>
+            <article class="tile"><h3>Speakeasy</h3><p>Default inference routing endpoint.</p></article>
+            <article class="tile"><h3>agenti-lite</h3><p>MCP interoperability runtime.</p></article>
+            <article class="tile"><h3>pump-fun-sdk-lite</h3><p>Execution toolkit integration.</p></article>
+            <article class="tile"><h3>0xClaw CLI</h3><p>init, config, wallet, test, doctor.</p></article>
           </div>
         </div>
       </section>
 
-      <section id="skills">
+      <section class="cluster" id="skills">
         <div class="wrap">
           <h2>Skills & packs</h2>
-          <p class="sub">Prebuilt behavior layers with composable operating patterns.</p>
-          <div class="grid g3">
-            <article class="card"><h3>Research Agent</h3><p>Discovery and signal context gathering.</p></article>
-            <article class="card"><h3>Solo Trader</h3><p>Lean discretionary workflow.</p></article>
-            <article class="card"><h3>Dual Agent Pack</h3><p>Split strategy and execution responsibilities.</p></article>
-            <article class="card"><h3>Meme Discovery Pack</h3><p>Meme opportunity detection flow.</p></article>
-            <article class="card"><h3>Safety Policies</h3><p>Paper defaults and approvals.</p></article>
-            <article class="card"><h3>Adaptive Loops</h3><p>Heartbeat and regression controls.</p></article>
+          <p class="sub">Prebuilt behavior layers to launch faster and iterate safely.</p>
+          <div class="grid g-skills">
+            <article class="tile"><h3>Research Agent</h3><p>Discovery and signal context gathering.</p></article>
+            <article class="tile"><h3>Solo Trader</h3><p>Lean discretionary operating loop.</p></article>
+            <article class="tile"><h3>Dual Agent Pack</h3><p>Split strategy and execution across agents.</p></article>
+            <article class="tile"><h3>Meme Discovery Pack</h3><p>Meme opportunity scanning flow.</p></article>
+            <article class="tile"><h3>Safety Policies</h3><p>Paper defaults with explicit approvals.</p></article>
+            <article class="tile"><h3>Adaptive Loops</h3><p>Heartbeat and regression-aware controls.</p></article>
+          </div>
+
+          <div class="final-cta">
+            <div>
+              <h3>Ready to run 0xClaw?</h3>
+              <p>Start simple. Expand into full control when you want it.</p>
+            </div>
+            <div class="hero-actions" style="margin:0">
+              <a class="btn btn-main" href="#setup">Start setup</a>
+              <a class="btn btn-soft" href="https://github.com/wrensignal/0xClaw" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
           </div>
         </div>
       </section>
     </main>
 
     <footer>
-      <div class="wrap">0xClaw • Easy-install Solana meme trading toolkit • Open source first</div>
+      <div class="wrap">0xClaw • Solana meme trading toolkit • Open source first</div>
     </footer>
   </body>
 </html>
