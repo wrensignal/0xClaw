@@ -5,7 +5,7 @@ export function createInferenceClient(config = {}) {
     config.inferenceUrl ||
     config.baseUrl ||
     process.env.SPEAKEASY_BASE_URL ||
-    'https://speakeasy.ing';
+    'https://api.speakeasyrelay.com';
 
   const privateKey =
     config.privateKey ||

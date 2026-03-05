@@ -21,7 +21,7 @@ On first use, the runtime should ensure a hot wallet exists (generate if absent)
 ## Configure
 
 1. Require local env vars (never commit secrets):
-   - `SPEAKEASY_BASE_URL` (default `https://speakeasy.ing`)
+   - `SPEAKEASY_BASE_URL` (default `https://api.speakeasyrelay.com`)
    - `AGENT_WALLET_PRIVATE_KEY` (or runtime-managed first-use wallet)
 2. Route by task type:
    - `research`

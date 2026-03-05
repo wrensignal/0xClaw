@@ -80,7 +80,7 @@ import { SpeakeasyClient } from 'speakeasy-ai';
 
 const client = new SpeakeasyClient({
   privateKey: process.env.AGENT_WALLET_PRIVATE_KEY,
-  // defaults to https://speakeasy.ing
+  // defaults to https://api.speakeasyrelay.com
 });
 
 const response = await client.chat.completions.create({
@@ -101,4 +101,4 @@ for await (const chunk of response) {
   - OpenAI-compatible `chat.completions.create`
   - built-in x402 flow (402 parse → sign → replay)
   - streaming async iterator support
-  - default base URL: `https://speakeasy.ing`
+  - default base URL: `https://api.speakeasyrelay.com`

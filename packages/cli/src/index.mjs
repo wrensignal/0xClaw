@@ -150,7 +150,7 @@ async function cmdInitPack() {
       },
       inference: {
         provider: 'speakeasy',
-        baseUrl: 'https://speakeasy.ing'
+        baseUrl: 'https://api.speakeasyrelay.com'
       }
     };
 
@@ -386,8 +386,8 @@ regression:
 
 const MCP_JSON_TEMPLATE = {
   "agenti-lite": {
-    "command": "node",
-    "args": ["./vendor/agenti-lite/dist/index.js"]
+    "command": "npx",
+    "args": ["-y", "tsx", "./vendor/agenti-lite/src/index.ts"]
   },
   "pump-fun-sdk-lite": {
     "command": "node",

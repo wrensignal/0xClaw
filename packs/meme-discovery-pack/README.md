@@ -15,7 +15,7 @@ Generates `.0xclaw/pack-meme-discovery.json` with:
 - handoff contract for meme watchlists
 - composite scoring model weights
 - default execution adapter for Jupiter/Raydium (referral env placeholders)
-- Speakeasy inference routing (`https://speakeasy.ing`)
+- Speakeasy inference routing (`https://api.speakeasyrelay.com`)
 
 ## Handoff schema
 

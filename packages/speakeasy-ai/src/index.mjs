@@ -1,6 +1,6 @@
 import { privateKeyToAccount } from 'viem/accounts';
 
-const DEFAULT_BASE_URL = 'https://speakeasy.ing';
+const DEFAULT_BASE_URL = 'https://api.speakeasyrelay.com';
 
 export class SpeakeasyError extends Error {}
 export class X402ChallengeParseError extends SpeakeasyError {}
