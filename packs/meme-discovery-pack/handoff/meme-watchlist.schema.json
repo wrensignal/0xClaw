@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "meme-watchlist",
+  "type": "object",
+  "required": ["generatedAt", "source", "timeframe", "candidates"],
+  "properties": {
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "source": { "type": "string", "enum": ["research-agent", "scout"] },
+    "timeframe": { "type": "string", "enum": ["intraday", "swing", "daily"] },
+    "feedHealth": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["symbol", "chain", "compositeScore", "thesis", "invalidation"],
+        "properties": {
+          "symbol": { "type": "string" },
+          "chain": { "type": "string" },
+          "address": { "type": "string" },
+          "compositeScore": { "type": "number", "minimum": 0, "maximum": 1 },
+          "componentScores": {
+            "type": "object",
+            "properties": {
+              "walletFlow": { "type": "number" },
+              "liquidityQuality": { "type": "number" },
+              "volumeMomentum": { "type": "number" },
+              "socialVelocity": { "type": "number" },
+              "holderDistribution": { "type": "number" },
+              "newsCatalyst": { "type": "number" },
+              "contractSafety": { "type": "number" }
+            },
+            "additionalProperties": false
+          },
+          "thesis": { "type": "string" },
+          "invalidation": { "type": "string" },
+          "riskNotes": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

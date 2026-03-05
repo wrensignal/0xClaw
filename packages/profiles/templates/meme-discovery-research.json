@@ -1,0 +1,43 @@
+{
+  "profile": "meme-discovery-research",
+  "liveExecution": false,
+  "loop": {
+    "enabled": true,
+    "heartbeatAdaptive": true,
+    "tradeExecution": false
+  },
+  "dataSources": {
+    "nansen": true,
+    "dexscreener": true,
+    "coingecko": true,
+    "pumpfun": true,
+    "cryptoNews": true,
+    "lunar": true,
+    "birdeye": true,
+    "agenti": true
+  },
+  "inference": {
+    "provider": "speakeasy",
+    "baseUrl": "https://speakeasy.ing",
+    "routes": {
+      "research": "deepseek-v3.2",
+      "deep_think": "qwen3-235b-a22b-thinking-2507",
+      "codegen": "qwen3-coder-480b-a35b-instruct",
+      "uncensored": "venice-uncensored"
+    }
+  },
+  "memeDiscovery": {
+    "scoring": {
+      "compositeWeights": {
+        "walletFlow": 0.3,
+        "liquidityQuality": 0.2,
+        "volumeMomentum": 0.15,
+        "socialVelocity": 0.1,
+        "holderDistribution": 0.1,
+        "newsCatalyst": 0.05,
+        "contractSafety": 0.1
+      },
+      "minComposite": 0.55
+    }
+  }
+}

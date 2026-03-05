@@ -84,6 +84,10 @@ const response = await client.chat.completions.create({
 0xclaw wallet setup
 0xclaw wallet setup --private-key 0x...
 
+# init packs
+0xclaw init-pack --pack dual-agent-pack
+0xclaw init-pack --pack meme-discovery
+
 # connectivity checks
 0xclaw test inference
 0xclaw test execution

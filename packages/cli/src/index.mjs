@@ -59,16 +59,19 @@ async function cmdInit() {
     body = { profile, liveExecution: false, loop: { heartbeatAdaptive: true } };
   }
   await writeFile(configPath, JSON.stringify({ ...body, createdAt: new Date().toISOString() }, null, 2));
+
+  const mcpPath = path.join(cwd, '.mcp.json');
+  if (!existsSync(mcpPath)) {
+    await writeFile(mcpPath, JSON.stringify(MCP_JSON_TEMPLATE, null, 2));
+    console.log(`Created ${path.relative(cwd, mcpPath)} with agenti-lite, pump-fun-sdk-lite, helius`);
+  }
+
   console.log(`Initialized 0xclaw in ${configDir} with profile=${profile}`);
 }
 
 
 async function cmdInitPack() {
   const pack = arg('--pack', 'dual-agent-pack');
-  if (pack !== 'dual-agent-pack') {
-    console.error(`Unknown pack: ${pack}`);
-    process.exit(1);
-  }
   await mkdir(configDir, { recursive: true });
 
   const load = async (name, fallback) => {
@@ -76,30 +79,94 @@ async function cmdInitPack() {
     try { return JSON.parse(await readFile(p, 'utf8')); } catch { return fallback; }
   };
 
-  const research = await load('research-agent', { profile: 'research-agent', liveExecution: false });
-  const trading = await load('trading-agent-paper', { profile: 'trading-agent-paper', liveExecution: false });
+  let packCfg;
 
-  const packCfg = {
-    pack: 'dual-agent-pack',
-    createdAt: new Date().toISOString(),
-    agents: {
-      researchAgent: {
-        name: arg('--research-name', 'research-agent'),
-        config: research
+  if (pack === 'dual-agent-pack') {
+    const research = await load('research-agent', { profile: 'research-agent', liveExecution: false });
+    const trading = await load('trading-agent-paper', { profile: 'trading-agent-paper', liveExecution: false });
+
+    packCfg = {
+      pack: 'dual-agent-pack',
+      createdAt: new Date().toISOString(),
+      agents: {
+        researchAgent: {
+          name: arg('--research-name', 'research-agent'),
+          config: research
+        },
+        tradingAgent: {
+          name: arg('--trading-name', 'trading-agent'),
+          config: trading
+        }
       },
-      tradingAgent: {
-        name: arg('--trading-name', 'trading-agent'),
-        config: trading
+      handoff: {
+        channel: 'inbox/research-*.json',
+        format: 'json'
       }
-    },
-    handoff: {
-      channel: 'inbox/research-*.json',
-      format: 'json'
-    }
-  };
+    };
 
-  await writeFile(path.join(configDir, 'pack-dual-agent.json'), JSON.stringify(packCfg, null, 2));
-  console.log(`Initialized pack dual-agent-pack in ${configDir}`);
+    await writeFile(path.join(configDir, 'pack-dual-agent.json'), JSON.stringify(packCfg, null, 2));
+  } else if (pack === 'meme-discovery') {
+    const research = await load('meme-discovery-research', { profile: 'meme-discovery-research', liveExecution: false });
+    const trading = await load('meme-discovery-trading-paper', { profile: 'meme-discovery-trading-paper', liveExecution: false });
+
+    packCfg = {
+      pack: 'meme-discovery',
+      createdAt: new Date().toISOString(),
+      agents: {
+        researchAgent: {
+          name: arg('--research-name', 'meme-research-agent'),
+          role: 'scout',
+          config: research
+        },
+        tradingAgent: {
+          name: arg('--trading-name', 'meme-trading-agent'),
+          role: 'rook',
+          config: trading
+        }
+      },
+      handoff: {
+        channel: 'inbox/meme-watchlist-*.json',
+        format: 'json',
+        schema: 'packs/meme-discovery-pack/handoff/meme-watchlist.schema.json'
+      },
+      scoring: {
+        model: 'composite-weighted',
+        weights: {
+          walletFlow: 0.30,
+          liquidityQuality: 0.20,
+          volumeMomentum: 0.15,
+          socialVelocity: 0.10,
+          holderDistribution: 0.10,
+          newsCatalyst: 0.05,
+          contractSafety: 0.10
+        }
+      },
+      execution: {
+        adapter: 'default',
+        venues: {
+          jupiter: { enabled: true, referralAccount: '${JUPITER_REFERRAL_ACCOUNT}' },
+          raydium: { enabled: true, referralAccount: '${RAYDIUM_REFERRAL_ACCOUNT}' }
+        }
+      },
+      inference: {
+        provider: 'speakeasy',
+        baseUrl: 'https://speakeasy.ing'
+      }
+    };
+
+    await writeFile(path.join(configDir, 'pack-meme-discovery.json'), JSON.stringify(packCfg, null, 2));
+  } else {
+    console.error(`Unknown pack: ${pack}`);
+    process.exit(1);
+  }
+
+  const mcpPath = path.join(cwd, '.mcp.json');
+  if (!existsSync(mcpPath)) {
+    await writeFile(mcpPath, JSON.stringify(MCP_JSON_TEMPLATE, null, 2));
+    console.log(`Created ${path.relative(cwd, mcpPath)} with agenti-lite, pump-fun-sdk-lite, helius`);
+  }
+
+  console.log(`Initialized pack ${pack} in ${configDir}`);
 }
 
 async function cmdDoctor() {
@@ -315,6 +382,25 @@ regression:
   worstDrawdownPctLimit: 15   # Halt loop if drawdown exceeds 15%
   lookbackCycles: 24          # Window for drawdown calculation
 `;
+
+
+const MCP_JSON_TEMPLATE = {
+  "agenti-lite": {
+    "command": "node",
+    "args": ["./vendor/agenti-lite/dist/index.js"]
+  },
+  "pump-fun-sdk-lite": {
+    "command": "node",
+    "args": ["./vendor/pump-fun-sdk-lite/mcp-server/dist/index.js"]
+  },
+  "helius": {
+    "command": "npx",
+    "args": ["-y", "@mcp-dockmaster/mcp-server-helius"],
+    "env": {
+      "HELIUS_API_KEY": "<set-your-helius-api-key>"
+    }
+  }
+};
 
 const TEMPLATES_README = `# OpenClaw Operator Templates
 

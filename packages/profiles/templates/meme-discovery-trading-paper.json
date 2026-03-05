@@ -1,0 +1,42 @@
+{
+  "profile": "meme-discovery-trading-paper",
+  "liveExecution": false,
+  "loop": {
+    "enabled": true,
+    "heartbeatAdaptive": true,
+    "tradeExecution": "paper"
+  },
+  "risk": {
+    "maxTradeUsd": 25,
+    "maxDailyNotionalUsd": 75
+  },
+  "strategy": {
+    "managementMode": "zoo",
+    "zooSize": 5,
+    "retuneWorstPerCycle": true,
+    "promoteChampion": true
+  },
+  "inference": {
+    "provider": "speakeasy",
+    "baseUrl": "https://speakeasy.ing",
+    "routes": {
+      "research": "deepseek-v3.2",
+      "deep_think": "qwen3-235b-a22b-thinking-2507",
+      "codegen": "qwen3-coder-480b-a35b-instruct",
+      "uncensored": "venice-uncensored"
+    }
+  },
+  "execution": {
+    "adapter": "default",
+    "venues": {
+      "jupiter": {
+        "enabled": true,
+        "referralAccount": "${JUPITER_REFERRAL_ACCOUNT}"
+      },
+      "raydium": {
+        "enabled": true,
+        "referralAccount": "${RAYDIUM_REFERRAL_ACCOUNT}"
+      }
+    }
+  }
+}
