@@ -65,6 +65,58 @@ test('402 flow retries with payment headers', async () => {
   assert.equal(calls, 2);
 });
 
+test('supports challenge from x402-payment-requirement header', async () => {
+  let calls = 0;
+  const challenge = {
+    challengeId: 'hdr-1',
+    typedData: {
+      domain: { name: 'USDC', version: '2', chainId: 8453, verifyingContract: '0x0000000000000000000000000000000000000001' },
+      primaryType: 'TransferWithAuthorization',
+      types: {
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'verifyingContract', type: 'address' }
+        ],
+        TransferWithAuthorization: [
+          { name: 'from', type: 'address' },
+          { name: 'to', type: 'address' },
+          { name: 'value', type: 'uint256' },
+          { name: 'validAfter', type: 'uint256' },
+          { name: 'validBefore', type: 'uint256' },
+          { name: 'nonce', type: 'bytes32' }
+        ]
+      },
+      message: {
+        from: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+        to: '0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC',
+        value: '1',
+        validAfter: '0',
+        validBefore: '9999999999',
+        nonce: '0x' + '22'.repeat(32)
+      }
+    }
+  };
+
+  const fetchImpl = async (_url, init = {}) => {
+    calls += 1;
+    if (calls === 1) {
+      return new Response(JSON.stringify({ error: 'payment required' }), {
+        status: 402,
+        headers: { 'x402-payment-requirement': JSON.stringify(challenge) }
+      });
+    }
+    assert.ok(init.headers['x402-payment']);
+    assert.ok(init.headers['x402-challenge-id']);
+    return jsonResponse({ id: 'header-paid', choices: [] }, 200);
+  };
+
+  const client = new SpeakeasyClient({ privateKey: PK, fetchImpl });
+  const out = await client.chat.completions.create({ model: 'deepseek-v3.2', messages: [] });
+  assert.equal(out.id, 'header-paid');
+});
+
 test('streaming returns async iterator chunks', async () => {
   const encoder = new TextEncoder();
   const body = new ReadableStream({

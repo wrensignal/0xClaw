@@ -1,13 +1,19 @@
 {
   "name": "speakeasy-ai",
   "version": "0.1.0",
+  "description": "OpenAI-compatible Speakeasy SDK with built-in x402 payment flow",
   "type": "module",
   "main": "src/index.mjs",
   "exports": {
     ".": "./src/index.mjs"
   },
+  "files": [
+    "src",
+    "README.md"
+  ],
   "scripts": {
-    "test": "node --test test/*.test.mjs"
+    "test": "node --test test/*.test.mjs",
+    "prepublishOnly": "npm test"
   },
   "dependencies": {
     "viem": "^2.22.23"
