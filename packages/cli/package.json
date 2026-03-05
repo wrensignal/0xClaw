@@ -5,5 +5,8 @@
   "type": "module",
   "bin": {
     "0xclaw": "src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
   }
 }
