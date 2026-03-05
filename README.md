@@ -23,6 +23,8 @@ You can fully self-host and override defaults. The hosted/recommended path is op
   - Jupiter (referral-capable)
   - pump.fun (direct bonding-curve path)
 
+Jupiter defaults to a built-in 0xClaw referral account unless overridden via `JUPITER_REFERRAL_ACCOUNT`.
+
 ## Quick start
 
 ### Option A — one-command local install

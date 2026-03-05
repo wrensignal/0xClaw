@@ -13,9 +13,7 @@ Trim non-runtime vendor fat while preserving tool/runtime paths used by 0xClaw a
 - Core source/runtime code (`src/**`)
 - MCP server implementation paths (`mcp-server/src/**`, `mcp-server/api/**`)
 - Package metadata required for use (`package.json`, lockfiles, license/notice, server manifests)
-- Rook/ops helper scripts explicitly retained:
-  - `vendor/agenti-lite/scripts/rook_preflight.mjs`
-  - `vendor/agenti-lite/scripts/rook_smoke_check.mjs`
+- Rook-specific helper scripts removed from vendor bundle for generic distribution.
 
 ## Removed (non-runtime)
 ### pump-fun-sdk-lite
@@ -26,7 +24,7 @@ Trim non-runtime vendor fat while preserving tool/runtime paths used by 0xClaw a
 
 ### agenti-lite
 - Test files (`**/*.test.ts`, `src/x402/__tests__/**`)
-- Non-runtime helper scripts (all under `scripts/**` except `rook_preflight.mjs` and `rook_smoke_check.mjs`)
+- Non-runtime helper scripts (`scripts/**`, including prior rook-specific helpers)
 - Formatting/meta docs (`README.md`, `VENDOR_NOTES.md`, prettier/editor metadata)
 
 ## Result

@@ -14,7 +14,7 @@ Generates `.0xclaw/pack-meme-discovery.json` with:
 - trading agent config with zoo-style strategy management
 - handoff contract for meme watchlists
 - composite scoring model weights
-- default execution adapter for Jupiter/Raydium (referral env placeholders)
+- default execution adapter for Jupiter + pump.fun (Jupiter referral env placeholder)
 - Speakeasy inference routing (`https://api.speakeasyrelay.com`)
 
 ## Handoff schema
@@ -25,7 +25,6 @@ Generates `.0xclaw/pack-meme-discovery.json` with:
 ## Referral env placeholders
 
 - `JUPITER_REFERRAL_ACCOUNT`
-- `RAYDIUM_REFERRAL_ACCOUNT`
 
 ## Notes
 

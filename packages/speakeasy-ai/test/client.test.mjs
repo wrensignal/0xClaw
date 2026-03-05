@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { SpeakeasyClient } from '../src/index.mjs';
 
+// Hardhat default test private key (well-known dev key, not a real secret)
 const PK = '0x59c6995e998f97a5a0044966f094538e8b4f9f347b0ce8b57f0c7a2f4c5e4f64';
 
 function jsonResponse(obj, status = 200, headers = {}) {

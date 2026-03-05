@@ -145,7 +145,7 @@ async function cmdInitPack() {
         adapter: 'default',
         venues: {
           jupiter: { enabled: true, referralAccount: '${JUPITER_REFERRAL_ACCOUNT}' },
-          raydium: { enabled: true, referralAccount: '${RAYDIUM_REFERRAL_ACCOUNT}' }
+          pumpfun: { enabled: true }
         }
       },
       inference: {
@@ -461,7 +461,6 @@ async function main() {
     case 'init-pack': return cmdInitPack();
     case 'doctor': return cmdDoctor();
     case 'status': return cmdStatus();
-    case 'start': return cmdStart();
     case 'config': return cmdConfig();
     case 'wallet': {
       if (process.argv[3] === 'setup') return cmdWalletSetup();
@@ -476,7 +475,7 @@ async function main() {
     }
     case 'bootstrap-openclaw': return cmdBootstrapOpenclaw();
     default:
-      console.log('Usage: 0xclaw <init|init-pack|doctor|status|start|config|wallet|test|bootstrap-openclaw> ...');
+      console.log('Usage: 0xclaw <init|init-pack|doctor|status|config|wallet|test|bootstrap-openclaw> ...');
       process.exit(1);
   }
 }
