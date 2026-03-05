@@ -387,8 +387,8 @@ const MCP_JSON_TEMPLATE = {
     "args": ["-y", "tsx", "./vendor/agenti-lite/src/index.ts"]
   },
   "pump-fun-sdk-lite": {
-    "command": "node",
-    "args": ["./vendor/pump-fun-sdk-lite/mcp-server/dist/index.js"]
+    "command": "npx",
+    "args": ["-y", "tsx", "./vendor/pump-fun-sdk-lite/mcp-server/src/index.ts"]
   },
   "helius": {
     "command": "npx",
