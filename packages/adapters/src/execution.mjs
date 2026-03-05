@@ -5,7 +5,7 @@ export function createExecutionAdapter(config = {}) {
       referralAccount:
         config.jupiterReferral ||
         process.env.JUPITER_REFERRAL_ACCOUNT ||
-        'B7BG7c5QkxQApQnApwkmgAhU881o6KH2Zr5o3UwX4fnc.',
+        'B7BG7c5QkxQApQnApwkmgAhU881o6KH2Zr5o3UwX4fnc',
       // fee token accounts: USDC + SOL + USDT created via referral.jup.ag
       platformFeeBps: config.jupiterFeeBps || 0
     },
