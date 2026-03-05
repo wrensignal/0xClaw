@@ -10,7 +10,7 @@ export function createInferenceClient(config = {}) {
   const privateKey =
     config.privateKey ||
     process.env.AGENT_WALLET_PRIVATE_KEY ||
-    process.env.ROOK_EVM_PRIVATE_KEY;
+    process.env.EVM_PRIVATE_KEY;
 
   const client = privateKey
     ? new SpeakeasyClient({ privateKey, baseURL: baseUrl })
