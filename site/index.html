@@ -105,13 +105,17 @@
       }
 
       .hero {
+        position: relative;
+        min-height: calc(100vh - var(--navH));
+        display: grid;
+        align-items: center;
         padding-top: var(--sectionY);
-        padding-bottom: var(--sectionY);
+        padding-bottom: calc(var(--sectionY) + 32px);
       }
       .hero-layout {
         display: grid;
-        align-content: start;
-        gap: var(--componentGap);
+        align-content: center;
+        gap: calc(var(--componentGap) + 4px);
       }
       .hero-top {
         max-width: 980px;
@@ -135,15 +139,17 @@
         margin: 0;
         font-family: var(--fontDisplay);
         font-size: var(--h1);
-        line-height: var(--lhDisplay);
+        line-height: 1;
         font-weight: var(--regular);
         letter-spacing: -0.01em;
         text-wrap: balance;
       }
       .sub {
-        margin-top: var(--stackGap);
+        margin-top: calc(var(--stackGap) + 4px);
         color: var(--textMuted);
-        font-size: var(--body);
+        font-size: 20px;
+        line-height: 1.72;
+        max-width: 760px;
       }
       .meta {
         margin-top: calc(var(--stackGap) / 2);
@@ -154,16 +160,16 @@
       }
 
       .hero-cards {
-        margin-top: var(--componentGap);
+        margin-top: calc(var(--componentGap) + 6px);
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: var(--stackGap);
-        max-width: 980px;
+        max-width: 760px;
       }
       .card {
         border: 1px solid rgba(239, 234, 216, 0.10);
         border-radius: var(--radiusMd);
-        padding: 16px;
+        padding: 18px 16px;
         background: var(--surface);
         box-shadow: var(--shadowCard);
       }
@@ -207,6 +213,31 @@
         color: var(--textMuted);
         line-height: var(--lhSmall);
       }
+      .scroll-indicator {
+        position: absolute;
+        left: 50%;
+        bottom: 18px;
+        transform: translateX(-50%);
+        color: var(--textMuted);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .scroll-indicator::before {
+        content: "⌄";
+        width: 22px;
+        height: 22px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        line-height: 1;
+      }
       .card-top {
         display: flex;
         align-items: center;
@@ -220,15 +251,26 @@
         transform: translateX(-50%);
         font-size: 11px;
         color: var(--text);
-        border: 1px solid var(--senpiEdge);
+        border: 1px solid var(--accent);
         background: var(--bg);
         border-radius: 999px;
         padding: 2px 8px;
         white-space: nowrap;
       }
       .card.recommended {
-        border-color: var(--senpiEdge);
-        box-shadow: 0 0 0 1px rgba(138, 124, 255, 0.22) inset;
+        border-color: var(--accent);
+        box-shadow:
+          0 0 0 1px rgba(143, 169, 143, 0.24) inset,
+          0 0 36px rgba(143, 169, 143, 0.18);
+        position: relative;
+      }
+      .card.recommended::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: var(--radiusMd);
+        pointer-events: none;
+        background: radial-gradient(circle at 22% 20%, rgba(143, 169, 143, 0.22), transparent 55%);
       }
 
       @media (max-width: 860px) {
@@ -257,8 +299,8 @@
       <section class="hero">
         <div class="container hero-layout">
           <div class="hero-top">
-            <h1>Deploy an agent that trades Solana memecoins.</h1>
-            <p class="sub">Open source. Private inference. Paper mode by default.</p>
+            <h1>Your agent's trading stack for Solana memecoins.</h1>
+            <p class="sub">Open source trading agents with private inference and safe defaults.</p>
           </div>
 
           <div class="hero-cards">
@@ -278,6 +320,7 @@
               </div>
             </article>
           </div>
+          <div class="scroll-indicator">Scroll</div>
         </div>
       </section>
     </main>
