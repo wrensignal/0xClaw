@@ -110,17 +110,17 @@
 
       .hero {
         position: relative;
-        min-height: calc(100vh - var(--navH));
+        height: calc(100vh - var(--navH));
         display: grid;
         align-items: center;
-        padding-top: var(--sectionY);
-        padding-bottom: calc(var(--sectionY) + 16px);
+        padding-top: calc(var(--sectionY) - 24px);
+        padding-bottom: calc(var(--sectionY) - 8px);
       }
       .hero-layout {
         display: grid;
         align-content: center;
         gap: calc(var(--componentGap) + 4px);
-        transform: translateY(-18px);
+        transform: translateY(-5vh);
       }
       .hero-top {
         max-width: 980px;
@@ -224,9 +224,9 @@
         line-height: var(--lhSmall);
       }
       .scroll-indicator {
-        position: absolute;
+        position: fixed;
         left: 50%;
-        bottom: 16px;
+        bottom: 40px;
         transform: translateX(-50%);
         color: var(--textMuted);
         font-size: 12px;
@@ -235,6 +235,10 @@
         display: grid;
         justify-items: center;
         gap: 6px;
+        opacity: 0.52;
+        animation: scrollBob 3.6s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 50;
       }
       .scroll-indicator::after {
         content: "↓";
@@ -276,13 +280,67 @@
         background: radial-gradient(circle at 22% 20%, rgba(79, 123, 255, 0.24), transparent 55%);
       }
 
+      @keyframes scrollBob {
+        0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.48; }
+        50% { transform: translateX(-50%) translateY(4px); opacity: 0.62; }
+      }
+
+      .how {
+        background: rgba(239, 234, 216, 0.02);
+        padding-top: calc(var(--sectionY) + 16px);
+        padding-bottom: calc(var(--sectionY) + 16px);
+      }
+      .how-kicker {
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--textMuted);
+        margin-bottom: 20px;
+      }
+      .how-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--componentGap);
+      }
+      .how-card {
+        background: var(--surface);
+        border: 0;
+        border-top: 1px solid var(--border);
+        border-radius: var(--radiusMd);
+        padding: var(--cardPad);
+        box-shadow: none;
+        transition: opacity .2s ease;
+      }
+      .how-card:hover { opacity: 0.92; }
+      .how-card.teal { border-top-color: rgba(46, 186, 198, 0.62); }
+      .how-card.purple { border-top-color: rgba(138, 124, 255, 0.62); }
+      .how-card.green { border-top-color: rgba(143, 169, 143, 0.7); }
+      .how-step {
+        font-size: 12px;
+        color: var(--textMuted);
+        margin-bottom: 10px;
+      }
+      .how-title {
+        font-size: 24px;
+        line-height: 1.16;
+        font-weight: 700;
+        margin: 0 0 10px;
+      }
+      .how-copy {
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--textMuted);
+        font-weight: 400;
+      }
+
       @media (max-width: 860px) {
         .hero-layout {
           min-height: auto;
           gap: var(--componentGap);
           transform: none;
         }
-        .hero-cards {
+        .hero-cards,
+        .how-grid {
           grid-template-columns: 1fr;
         }
       }
@@ -324,9 +382,32 @@
               </div>
             </article>
           </div>
-          <div class="scroll-indicator">Scroll</div>
+        </div>
+      </section>
+
+      <section class="how" id="how">
+        <div class="container">
+          <div class="how-kicker">How it works</div>
+          <div class="how-grid">
+            <article class="how-card teal">
+              <div class="how-step">01</div>
+              <h3 class="how-title">Discover</h3>
+              <p class="how-copy">Research agent scans on-chain data, social signals, and market feeds. Surfaces a ranked watchlist of tokens worth looking at.</p>
+            </article>
+            <article class="how-card purple">
+              <div class="how-step">02</div>
+              <h3 class="how-title">Evaluate</h3>
+              <p class="how-copy">Trading agent backtests each candidate against multiple strategies. Only tokens that pass the regression gate get promoted.</p>
+            </article>
+            <article class="how-card green">
+              <div class="how-step">03</div>
+              <h3 class="how-title">Execute</h3>
+              <p class="how-copy">Paper trades by default. When you're ready, flip to live — Jupiter and pump.fun routes are already wired.</p>
+            </article>
+          </div>
         </div>
       </section>
     </main>
+    <div class="scroll-indicator">Scroll</div>
   </body>
 </html>
