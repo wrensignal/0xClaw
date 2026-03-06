@@ -155,42 +155,54 @@
       .hero-cards {
         margin-top: var(--componentGap);
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--componentGap);
-        max-width: 980px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--stackGap);
+        max-width: 1080px;
       }
       .card {
-        border: 1px solid var(--border);
+        border: 1px solid rgba(239, 234, 216, 0.10);
         border-radius: var(--radiusMd);
-        padding: var(--cardPad);
+        padding: 16px;
         background: var(--surface);
         box-shadow: var(--shadowCard);
       }
       .hero-cards .card {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: var(--componentGap);
+        gap: var(--stackGap);
       }
       .card:hover {
         background: var(--surfaceElevated);
         box-shadow: var(--shadowHover);
       }
-      .card-title {
-        display: flex;
+      .card-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: inline-flex;
         align-items: center;
-        gap: 10px;
-        font-size: 18px;
-        font-weight: var(--medium);
+        justify-content: center;
+        font-size: 20px;
+        flex: 0 0 48px;
+      }
+      .card-icon-rail { background: rgba(46, 186, 198, 0.22); }
+      .card-icon-self { background: rgba(138, 124, 255, 0.20); font-size: 16px; }
+      .card-content {
+        display: grid;
+        align-content: center;
+        gap: 4px;
+      }
+      .card-title {
+        font-size: var(--body);
+        font-weight: var(--semibold);
         color: var(--text);
-        white-space: nowrap;
+        line-height: 1.2;
       }
       .card-copy {
         margin: 0;
         font-size: var(--small);
         color: var(--textMuted);
         line-height: var(--lhSmall);
-        text-align: right;
       }
 
       @media (max-width: 860px) {
@@ -219,19 +231,24 @@
       <section class="hero">
         <div class="container hero-layout">
           <div class="hero-top">
-            <div class="hero-mark"><span class="hero-mark-dot"></span><span>Quiet mode</span></div>
-            <h1>Your Agents Memecoin Trading Stack.</h1>
+            <h1>Deploy an agent that trades Solana memecoins.</h1>
             <p class="sub">Open source. Private inference. Paper mode by default.</p>
           </div>
 
           <div class="hero-cards">
             <article class="card">
-              <div class="card-title">◉ 0xClaw + Railway</div>
-              <p class="card-copy">One-click deploy. Safe defaults. Recommended.</p>
+              <div class="card-icon card-icon-rail">⚡</div>
+              <div class="card-content">
+                <div class="card-title">0xClaw + Railway</div>
+                <p class="card-copy">Easy · Safe · Recommended</p>
+              </div>
             </article>
             <article class="card">
-              <div class="card-title">◎ Self-hosted</div>
-              <p class="card-copy">Clone, configure, full control.</p>
+              <div class="card-icon card-icon-self">&gt;_</div>
+              <div class="card-content">
+                <div class="card-title">Self-hosted</div>
+                <p class="card-copy">Full control · Open source</p>
+              </div>
             </article>
           </div>
         </div>
