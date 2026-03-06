@@ -6,7 +6,7 @@
     <title>0xClaw</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400&display=swap" rel="stylesheet" />
     <style>
       :root {
         --bg: rgb(14, 15, 14);
@@ -14,9 +14,9 @@
         --surfaceElevated: rgba(239, 234, 216, 0.06);
         --text: rgb(239, 234, 216);
         --textMuted: rgb(165, 165, 156);
-        --accent: rgb(79, 123, 255);
-        --accentSoft: rgba(79, 123, 255, 0.20);
-        --accentSoft2: rgba(116, 147, 255, 0.24);
+        --accent: #32afff;
+        --accentSoft: rgba(50, 175, 255, 0.22);
+        --accentSoft2: rgba(50, 175, 255, 0.16);
         --border: rgba(239, 234, 216, 0.18);
 
         --fontBody: 'DM Sans', system-ui, sans-serif;
@@ -197,11 +197,12 @@
         justify-content: center;
         flex: 0 0 48px;
       }
-      .ms {
-        font-family: 'Material Symbols Rounded';
+      .sfs {
         font-size: 22px;
         line-height: 1;
         color: var(--text);
+        font-family: var(--fontBody);
+        font-weight: 600;
       }
       .card-icon-rail { background: var(--accentSoft); }
       .card-icon-self { background: var(--accentSoft2); }
@@ -267,8 +268,8 @@
       .card.recommended {
         border-color: var(--accent);
         box-shadow:
-          0 0 0 1px rgba(79, 123, 255, 0.24) inset,
-          0 0 36px rgba(79, 123, 255, 0.20);
+          0 0 0 1px rgba(50, 175, 255, 0.24) inset,
+          0 0 36px rgba(50, 175, 255, 0.20);
         position: relative;
       }
       .card.recommended::before {
@@ -277,25 +278,33 @@
         inset: -1px;
         border-radius: var(--radiusMd);
         pointer-events: none;
-        background: radial-gradient(circle at 22% 20%, rgba(79, 123, 255, 0.24), transparent 55%);
+        background: radial-gradient(circle at 22% 20%, rgba(50, 175, 255, 0.24), transparent 55%);
       }
 
       @keyframes scrollBob {
-        0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.48; }
-        50% { transform: translateX(-50%) translateY(4px); opacity: 0.62; }
+        0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.42; }
+        50% { transform: translateX(-50%) translateY(4px); opacity: 0.56; }
       }
 
       .how {
-        background: rgba(239, 234, 216, 0.02);
-        padding-top: calc(var(--sectionY) + 16px);
-        padding-bottom: calc(var(--sectionY) + 16px);
+        background: transparent;
+        padding-top: 136px;
+        padding-bottom: 152px;
       }
       .how-kicker {
         font-size: 12px;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
-        color: var(--textMuted);
-        margin-bottom: 20px;
+        color: #729fcf;
+        margin-bottom: 16px;
+        font-weight: 600;
+      }
+      .how-heading {
+        font-family: var(--fontDisplay);
+        font-size: clamp(34px, 4vw, 48px);
+        line-height: 1.05;
+        font-weight: 400;
+        margin: 0 0 56px;
       }
       .how-grid {
         display: grid;
@@ -303,34 +312,93 @@
         gap: var(--componentGap);
       }
       .how-card {
-        background: var(--surface);
-        border: 0;
-        border-top: 1px solid var(--border);
-        border-radius: var(--radiusMd);
+        background: rgba(239, 234, 216, 0.015);
+        border: 1px solid rgba(239, 234, 216, 0.14);
+        border-radius: 12px;
         padding: var(--cardPad);
         box-shadow: none;
-        transition: opacity .2s ease;
+        transition: opacity .2s ease, border-color .2s ease;
       }
-      .how-card:hover { opacity: 0.92; }
-      .how-card.teal { border-top-color: rgba(46, 186, 198, 0.62); }
-      .how-card.purple { border-top-color: rgba(138, 124, 255, 0.62); }
-      .how-card.green { border-top-color: rgba(143, 169, 143, 0.7); }
+      .how-card:hover { opacity: 0.95; border-color: rgba(239, 234, 216, 0.22); }
+      .how-card.teal,
+      .how-card.purple,
+      .how-card.green { border-top-color: rgba(239, 234, 216, 0.14); }
       .how-step {
         font-size: 12px;
         color: var(--textMuted);
         margin-bottom: 10px;
+        letter-spacing: 0.08em;
       }
       .how-title {
-        font-size: 24px;
-        line-height: 1.16;
-        font-weight: 700;
-        margin: 0 0 10px;
+        font-size: 28px;
+        line-height: 1.1;
+        font-weight: 500;
+        margin: 0 0 12px;
+        color: var(--text);
       }
       .how-copy {
         font-size: 16px;
+        line-height: 1.68;
+        color: var(--textMuted);
+        font-weight: 400;
+      }
+
+      .cred {
+        background: transparent;
+        padding-top: 120px;
+        padding-bottom: 120px;
+      }
+      .cred-kicker {
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--textMuted);
+        margin-bottom: 16px;
+      }
+      .cred-heading {
+        font-family: var(--fontDisplay);
+        font-size: clamp(40px, 5vw, 64px);
+        line-height: 1.02;
+        font-weight: 400;
+        margin: 0;
+        max-width: 780px;
+      }
+      .cred-stats {
+        margin-top: 48px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--componentGap);
+        max-width: 820px;
+      }
+      .cred-stat-number {
+        font-family: var(--fontDisplay);
+        font-size: clamp(48px, 5vw, 64px);
+        line-height: 1;
+        font-weight: 400;
+        color: var(--text);
+      }
+      .cred-stat-label {
+        margin-top: 10px;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--textMuted);
+      }
+      .cred-prose {
+        margin-top: 48px;
+        max-width: 680px;
+        font-size: 17px;
         line-height: 1.6;
         color: var(--textMuted);
         font-weight: 400;
+      }
+      .cred-prose p + p {
+        margin-top: 24px;
+      }
+
+      .scroll-indicator.is-scrolled {
+        animation: none;
+        transition: opacity .32s ease-out;
       }
 
       @media (max-width: 860px) {
@@ -340,7 +408,8 @@
           transform: none;
         }
         .hero-cards,
-        .how-grid {
+        .how-grid,
+        .cred-stats {
           grid-template-columns: 1fr;
         }
       }
@@ -367,7 +436,7 @@
 
           <div class="hero-cards">
             <article class="card recommended">
-              <div class="card-icon card-icon-rail"><span class="ms">rocket_launch</span></div>
+              <div class="card-icon card-icon-rail"><span class="sfs">↗</span></div>
               <div class="card-content">
                 <div class="card-title">0xClaw + Railway</div>
                 <p class="card-copy">Easy. Safe. One-click deploy.</p>
@@ -375,7 +444,7 @@
               <span class="card-badge">Recommended</span>
             </article>
             <article class="card">
-              <div class="card-icon card-icon-self"><span class="ms">terminal</span></div>
+              <div class="card-icon card-icon-self"><span class="sfs">⌘</span></div>
               <div class="card-content">
                 <div class="card-title">Self-hosted</div>
                 <p class="card-copy">Advanced. Full control over everything.</p>
@@ -388,6 +457,7 @@
       <section class="how" id="how">
         <div class="container">
           <div class="how-kicker">How it works</div>
+          <h2 class="how-heading">How your agent thinks</h2>
           <div class="how-grid">
             <article class="how-card teal">
               <div class="how-step">01</div>
@@ -407,7 +477,47 @@
           </div>
         </div>
       </section>
+
+      <section class="cred" id="credibility">
+        <div class="container">
+          <div class="cred-kicker">— BUILT ON OPENCLAW</div>
+          <h2 class="cred-heading">Real infrastructure, not a whitepaper.</h2>
+
+          <div class="cred-stats">
+            <div>
+              <div class="cred-stat-number">5</div>
+              <div class="cred-stat-label">Active strategies</div>
+            </div>
+            <div>
+              <div class="cred-stat-number">21</div>
+              <div class="cred-stat-label">Vendored skills</div>
+            </div>
+            <div>
+              <div class="cred-stat-number">3</div>
+              <div class="cred-stat-label">MCP servers</div>
+            </div>
+          </div>
+
+          <div class="cred-prose">
+            <p>Two agents work in tandem — a research agent scans on-chain data, social signals, and market feeds to surface candidates. A trading agent backtests each one against multiple strategies and only promotes what passes the gate. Briefs flow between them through a structured handoff contract.</p>
+            <p>Paper mode is the default. Live execution requires explicit approval. Confidence tiers degrade gracefully when data quality drops — from normal operation down to hold-and-observe. Everything is open source and Apache-2.0 licensed. Inspect it all.</p>
+          </div>
+        </div>
+      </section>
     </main>
     <div class="scroll-indicator">Scroll</div>
+    <script>
+      const indicator = document.querySelector('.scroll-indicator');
+      const fadeDistance = 160;
+      const onScroll = () => {
+        if (!indicator) return;
+        const y = window.scrollY || 0;
+        const t = Math.max(0, 1 - Math.min(y / fadeDistance, 1));
+        indicator.classList.toggle('is-scrolled', y > 0);
+        indicator.style.opacity = String(0.52 * t);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    </script>
   </body>
 </html>
