@@ -1,6 +1,6 @@
 # Data Archive Policy
 
-This repository is the **0xClaw core product repo**.
+This repository is the **WrenOS core product repo**.
 
 ## Scope
 Keep only:
@@ -21,12 +21,12 @@ Keeping archive payloads out of core repo avoids:
 ## Approved archive locations
 Use one of:
 1. Object storage (S3/R2) for raw/archive payloads
-2. Separate `0xclaw-data` repo (or equivalent)
+2. Separate `wrenos-data` repo (or equivalent)
 3. Git LFS in a dedicated data repo if versioning is required
 
 ## Suggested data repo layout
 ```text
-0xclaw-data/
+wrenos-data/
   raw/
   normalized/
   snapshots/

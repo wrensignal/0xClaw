@@ -1,4 +1,4 @@
-# Contributing to 0xClaw
+# Contributing to WrenOS
 
 Thanks for contributing.
 
@@ -28,4 +28,4 @@ Include in PR description:
 
 ## Vendor policy
 
-Vendored dependencies should stay runtime-focused. Remove upstream clutter that is not required for 0xClaw operation.
+Vendored dependencies should stay runtime-focused. Remove upstream clutter that is not required for WrenOS operation.

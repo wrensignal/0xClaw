@@ -1,8 +1,18 @@
 {
-  "name": "@0xclaw/adapters",
+  "name": "@wrenos/adapters",
   "version": "0.1.0",
   "private": true,
+  "description": "WrenOS-compatible adapters for inference, execution, and operator interfaces",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wrensignal/wrenOS.git",
+    "directory": "packages/adapters"
+  },
+  "homepage": "https://github.com/wrensignal/wrenOS/tree/main/packages/adapters",
+  "bugs": {
+    "url": "https://github.com/wrensignal/wrenOS/issues"
+  },
   "main": "src/index.mjs",
   "dependencies": {
     "speakeasy-ai": "0.1.0"

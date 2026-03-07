@@ -1,9 +1,20 @@
 {
-  "name": "@0xclaw/cli",
+  "name": "@wrenos/cli",
   "version": "0.1.0",
   "private": true,
+  "description": "WrenOS CLI for operator workflows and inspectable config management",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wrensignal/wrenOS.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/wrensignal/wrenOS/tree/main/packages/cli",
+  "bugs": {
+    "url": "https://github.com/wrensignal/wrenOS/issues"
+  },
   "bin": {
+    "wrenos": "src/index.mjs",
     "0xclaw": "src/index.mjs"
   },
   "scripts": {

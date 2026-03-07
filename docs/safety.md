@@ -1,6 +1,6 @@
 # Safety Posture
 
-0xClaw is designed for staged rollout: research mode -> paper mode -> explicitly approved live mode.
+WrenOS is designed for staged rollout: research mode -> paper mode -> explicitly approved live mode.
 
 ## Default safety gates
 
@@ -32,9 +32,9 @@ Recommended minimum controls before enabling live execution:
 
 ## Operational checklist (pre-live)
 
-1. `0xclaw doctor` passes
-2. `0xclaw test inference` passes against intended endpoint
-3. `0xclaw test execution` passes with intended venue/referral config
+1. `wrenos doctor` passes
+2. `wrenos test inference` passes against intended endpoint
+3. `wrenos test execution` passes with intended venue/referral config
 4. Alerting/monitoring and runbooks are in place
 5. Operator has tested rollback/kill-switch path
 

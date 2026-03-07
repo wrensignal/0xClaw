@@ -1,7 +1,17 @@
 {
-  "name": "@0xclaw/core",
+  "name": "@wrenos/core",
   "version": "0.1.0",
   "private": true,
+  "description": "WrenOS core policy defaults, safety primitives, and shared utilities",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wrensignal/wrenOS.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/wrensignal/wrenOS/tree/main/packages/core",
+  "bugs": {
+    "url": "https://github.com/wrensignal/wrenOS/issues"
+  },
   "main": "src/index.mjs"
 }

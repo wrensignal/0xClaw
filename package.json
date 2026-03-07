@@ -1,18 +1,28 @@
 {
-  "name": "0xclaw",
+  "name": "wrenos",
   "private": true,
   "version": "0.1.0",
-  "description": "OpenClaw crypto compatibility kit",
+  "description": "WrenOS OpenClaw-compatible crypto agent control plane",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wrensignal/wrenOS.git"
+  },
+  "homepage": "https://github.com/wrensignal/wrenOS#readme",
+  "bugs": {
+    "url": "https://github.com/wrensignal/wrenOS/issues"
+  },
   "workspaces": [
     "packages/*"
   ],
   "bin": {
+    "wrenos": "packages/cli/src/index.mjs",
     "0xclaw": "packages/cli/src/index.mjs"
   },
   "scripts": {
-    "build": "echo 'build: placeholder'",
-    "test": "echo 'test: placeholder'",
-    "lint": "echo 'lint: placeholder'"
+    "build": "node scripts/build.mjs",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "node scripts/lint.mjs",
+    "typecheck": "node scripts/typecheck.mjs"
   },
   "engines": {
     "node": ">=20"

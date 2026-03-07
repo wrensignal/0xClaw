@@ -1,12 +1,20 @@
 #!/usr/bin/env node
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, copyFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { randomBytes, createHash } from 'node:crypto';
 import path from 'node:path';
 
+const invokedAs = path.basename(process.argv[1] || '');
+const DEPRECATION_REMOVAL_TARGET = 'v0.3.0';
+if (invokedAs === '0xclaw') {
+  console.error("[deprecation] The `0xclaw` command has been renamed to `wrenos`. This alias will be removed in "+DEPRECATION_REMOVAL_TARGET+". Please update your scripts and workflows. Run `wrenos migrate` and see docs/migrating-from-0xclaw-to-wrenos.md for details.");
+}
+
 const cwd = process.cwd();
-const configDir = path.join(cwd, '.0xclaw');
+const configDir = path.join(cwd, '.wrenos');
+const legacyConfigDir = path.join(cwd, '.0xclaw');
 const configPath = path.join(configDir, 'config.json');
+const legacyConfigPath = path.join(legacyConfigDir, 'config.json');
 
 function arg(name, fallback = null) {
   const idx = process.argv.indexOf(name);
@@ -35,12 +43,22 @@ function setByPath(obj, dotPath, value) {
   return obj;
 }
 
+function getActiveConfigPath() {
+  if (existsSync(configPath)) return configPath;
+  if (existsSync(legacyConfigPath)) return legacyConfigPath;
+  return configPath;
+}
+
 async function loadConfigOrFail() {
-  if (!existsSync(configPath)) {
-    console.error('Config not found. Run: 0xclaw init --profile research-agent');
+  const active = getActiveConfigPath();
+  if (!existsSync(active)) {
+    console.error('Config not found. Run: wrenos init --profile research-agent');
     process.exit(1);
   }
-  return JSON.parse(await readFile(configPath, 'utf8'));
+  if (active === legacyConfigPath) {
+    console.error('Using legacy config path (.0xclaw/config.json). Use `.wrenos/` going forward. Run `wrenos migrate` (or `wrenos migrate --force`) to migrate now. Planned removal: '+DEPRECATION_REMOVAL_TARGET+'.');
+  }
+  return JSON.parse(await readFile(active, 'utf8'));
 }
 
 async function saveConfig(cfg) {
@@ -66,7 +84,7 @@ async function cmdInit() {
     console.log(`Created ${path.relative(cwd, mcpPath)} with agenti-lite, pump-fun-sdk-lite, helius`);
   }
 
-  console.log(`Initialized 0xclaw in ${configDir} with profile=${profile}`);
+  console.log(`Initialized wrenos in ${configDir} with profile=${profile}`);
 }
 
 
@@ -172,7 +190,7 @@ async function cmdInitPack() {
 async function cmdDoctor() {
   const checks = [];
   checks.push({ name: 'node', ok: Number(process.versions.node.split('.')[0]) >= 20 });
-  checks.push({ name: 'config', ok: existsSync(configPath) });
+  checks.push({ name: 'config', ok: existsSync(configPath) || existsSync(legacyConfigPath) });
   checks.push({ name: 'cli-runtime', ok: true });
 
   const failed = checks.filter((c) => !c.ok);
@@ -181,10 +199,12 @@ async function cmdDoctor() {
 }
 
 async function cmdStatus() {
-  const cfg = existsSync(configPath) ? JSON.parse(await readFile(configPath, 'utf8')) : null;
+  const activeConfigPath = getActiveConfigPath();
+  const cfg = existsSync(activeConfigPath) ? JSON.parse(await readFile(activeConfigPath, 'utf8')) : null;
   console.log(JSON.stringify({
     ready: Boolean(cfg),
-    configPath,
+    configPath: activeConfigPath,
+    configFormat: activeConfigPath === legacyConfigPath ? 'legacy-compat' : 'wrenos',
     profile: cfg?.profile || null,
     liveExecution: cfg?.liveExecution ?? null,
     heartbeatAdaptive: cfg?.loop?.heartbeatAdaptive ?? null
@@ -194,13 +214,13 @@ async function cmdStatus() {
 async function cmdConfig() {
   const sub = process.argv[3];
   if (sub !== 'set') {
-    console.log('Usage: 0xclaw config set <dot.path> <value>');
+    console.log('Usage: wrenos config set <dot.path> <value>');
     process.exit(1);
   }
   const key = process.argv[4];
   const raw = process.argv[5];
   if (!key || typeof raw === 'undefined') {
-    console.log('Usage: 0xclaw config set <dot.path> <value>');
+    console.log('Usage: wrenos config set <dot.path> <value>');
     process.exit(1);
   }
   const cfg = await loadConfigOrFail();
@@ -233,7 +253,8 @@ async function cmdWalletSetup() {
 }
 
 async function cmdTestInference() {
-  const cfg = existsSync(configPath) ? JSON.parse(await readFile(configPath, 'utf8')) : {};
+  const activeConfigPath = getActiveConfigPath();
+  const cfg = existsSync(activeConfigPath) ? JSON.parse(await readFile(activeConfigPath, 'utf8')) : {};
   const baseUrl = cfg?.inference?.baseUrl || process.env.SPEAKEASY_BASE_URL || 'https://api.speakeasyrelay.com';
 
   const t0 = Date.now();
@@ -255,7 +276,8 @@ async function cmdTestInference() {
 }
 
 async function cmdTestExecution() {
-  const cfg = existsSync(configPath) ? JSON.parse(await readFile(configPath, 'utf8')) : {};
+  const activeConfigPath = getActiveConfigPath();
+  const cfg = existsSync(activeConfigPath) ? JSON.parse(await readFile(activeConfigPath, 'utf8')) : {};
   const j = cfg?.execution?.venues?.jupiter || {};
   const referral = j.referralAccount || process.env.JUPITER_REFERRAL_ACCOUNT || null;
   const platformFeeBps = j.platformFeeBps || 0;
@@ -298,11 +320,81 @@ async function cmdTestExecution() {
   }
 }
 
-const AGENTS_MD = `# AGENTS.md — OpenClaw Agent Configuration Template
-# Copy this file to .0xclaw/AGENTS.md and customise for your deployment.
+async function cmdMigrate() {
+  if (!existsSync(legacyConfigDir)) {
+    console.log('No legacy .0xclaw directory found. Nothing to migrate.');
+    return;
+  }
+
+  const force = process.argv.includes('--force');
+  await mkdir(configDir, { recursive: true });
+
+  const legacyToNew = [
+    ['config.json', 'config.json'],
+    ['pack-dual-agent.json', 'pack-dual-agent.json'],
+    ['pack-meme-discovery.json', 'pack-meme-discovery.json'],
+    ['wallet.json', 'wallet.json'],
+    ['AGENTS.md', 'AGENTS.md'],
+    ['HEARTBEAT.md', 'HEARTBEAT.md'],
+    ['openclaw-templates/AGENTS.md', 'wrenos-templates/AGENTS.md'],
+    ['openclaw-templates/HEARTBEAT.md', 'wrenos-templates/HEARTBEAT.md'],
+    ['openclaw-templates/README.md', 'wrenos-templates/README.md'],
+    ['wrenos-templates/AGENTS.md', 'wrenos-templates/AGENTS.md'],
+    ['wrenos-templates/HEARTBEAT.md', 'wrenos-templates/HEARTBEAT.md'],
+    ['wrenos-templates/README.md', 'wrenos-templates/README.md']
+  ];
+
+  const copied = [];
+  const skipped = [];
+
+  for (const [srcRel, dstRel] of legacyToNew) {
+    const src = path.join(legacyConfigDir, srcRel);
+    const dst = path.join(configDir, dstRel);
+    if (!existsSync(src)) continue;
+    if (existsSync(dst) && !force) {
+      skipped.push(dstRel);
+      continue;
+    }
+    await mkdir(path.dirname(dst), { recursive: true });
+    await copyFile(src, dst);
+    copied.push(dstRel);
+  }
+
+  const validation = {
+    configExists: existsSync(path.join(configDir, 'config.json')),
+    templatesDirExists: existsSync(path.join(configDir, 'wrenos-templates')),
+    configJsonValid: null
+  };
+
+  if (validation.configExists) {
+    try {
+      JSON.parse(await readFile(path.join(configDir, 'config.json'), 'utf8'));
+      validation.configJsonValid = true;
+    } catch {
+      validation.configJsonValid = false;
+    }
+  }
+
+  const ok = validation.configExists ? validation.configJsonValid === true : true;
+
+  console.log(JSON.stringify({
+    ok,
+    legacyDir: legacyConfigDir,
+    targetDir: configDir,
+    copied,
+    skipped,
+    validation,
+    note: force ? 'Existing files were overwritten with --force.' : 'Use --force to overwrite existing .wrenos files.'
+  }, null, 2));
+
+  if (!ok) process.exit(1);
+}
+
+const AGENTS_MD = `# AGENTS.md — WrenOS Agent Configuration Template
+# Copy this file to .wrenos/AGENTS.md and customise for your deployment.
 
 ## Agent Identity
-name: my-openclaw-agent
+name: my-wrenos-agent
 description: Research-grade crypto signal agent (no live execution)
 
 ## Safety Posture (safe-by-default — do not change liveExecution without review)
@@ -339,8 +431,8 @@ targetBasketSize: 8
 # maxDailyNotionalUsd: 75
 `;
 
-const HEARTBEAT_MD = `# HEARTBEAT.md — OpenClaw Heartbeat Loop Template
-# Copy this file to .0xclaw/HEARTBEAT.md and customise for your deployment.
+const HEARTBEAT_MD = `# HEARTBEAT.md — WrenOS Heartbeat Loop Template
+# Copy this file to .wrenos/HEARTBEAT.md and customise for your deployment.
 
 ## Loop Configuration
 heartbeatAdaptive: true   # Allow loop cadence to self-tune based on data quality
@@ -399,10 +491,10 @@ const MCP_JSON_TEMPLATE = {
   }
 };
 
-const TEMPLATES_README = `# OpenClaw Operator Templates
+const TEMPLATES_README = `# WrenOS Operator Templates
 
-These are starter templates generated by \`bootstrap-openclaw\`.
-They live in \`.0xclaw/openclaw-templates/\` and are **not** active until you copy them.
+These are starter templates generated by \`bootstrap-wrenos\`.
+They live in \`.wrenos/wrenos-templates/\` and are **not** active until you copy them.
 
 ## Files
 
@@ -416,10 +508,10 @@ They live in \`.0xclaw/openclaw-templates/\` and are **not** active until you co
 1. Review each template and adjust values for your deployment.
 2. Copy to the active config directory:
    \`\`\`bash
-   cp .0xclaw/openclaw-templates/AGENTS.md .0xclaw/AGENTS.md
-   cp .0xclaw/openclaw-templates/HEARTBEAT.md .0xclaw/HEARTBEAT.md
+   cp .wrenos/wrenos-templates/AGENTS.md .wrenos/AGENTS.md
+   cp .wrenos/wrenos-templates/HEARTBEAT.md .wrenos/HEARTBEAT.md
    \`\`\`
-3. Run \`node packages/cli/src/index.mjs status\` to confirm the core config is healthy.
+3. Run \`wrenos status\` to confirm the core config is healthy.
 
 ## Safety defaults
 
@@ -428,8 +520,8 @@ They live in \`.0xclaw/openclaw-templates/\` and are **not** active until you co
 - See \`docs/safety.md\` for the full safety posture.
 `;
 
-async function cmdBootstrapOpenclaw() {
-  const templatesDir = path.join(configDir, 'openclaw-templates');
+async function cmdBootstrapWrenos() {
+  const templatesDir = path.join(configDir, 'wrenos-templates');
   await mkdir(templatesDir, { recursive: true });
 
   const files = [
@@ -447,8 +539,8 @@ async function cmdBootstrapOpenclaw() {
       console.log(`  exists   ${path.relative(cwd, dest)} (skipped)`);
     }
   }
-  console.log(`\nbootstrap-openclaw complete. Templates in ${path.relative(cwd, templatesDir)}/`);
-  console.log('Next: review templates, then copy to .0xclaw/ when ready (see README.md inside).');
+  console.log(`\nbootstrap-wrenos complete. Templates in ${path.relative(cwd, templatesDir)}/`);
+  console.log('Next: review templates, then copy to .wrenos/ when ready (see README.md inside).');
 }
 
 async function main() {
@@ -461,18 +553,27 @@ async function main() {
     case 'config': return cmdConfig();
     case 'wallet': {
       if (process.argv[3] === 'setup') return cmdWalletSetup();
-      console.log('Usage: 0xclaw wallet setup [--private-key 0x...] [--public-key ...] [--chain solana]');
+      console.log('Usage: wrenos wallet setup [--private-key 0x...] [--public-key ...] [--chain solana]');
       process.exit(1);
     }
     case 'test': {
       if (process.argv[3] === 'inference') return cmdTestInference();
       if (process.argv[3] === 'execution') return cmdTestExecution();
-      console.log('Usage: 0xclaw test <inference|execution>');
+      console.log('Usage: wrenos test <inference|execution>');
       process.exit(1);
     }
-    case 'bootstrap-openclaw': return cmdBootstrapOpenclaw();
+    case 'migrate':
+      return cmdMigrate();
+    case 'upgrade-config':
+      console.error('[deprecation] `wrenos upgrade-config` is deprecated; use `wrenos migrate` instead. Planned removal: '+DEPRECATION_REMOVAL_TARGET+'.');
+      return cmdMigrate();
+    case 'bootstrap-wrenos':
+      return cmdBootstrapWrenos();
+    case 'bootstrap-openclaw':
+      console.error('[deprecation] `wrenos bootstrap-openclaw` is deprecated; use `wrenos bootstrap-wrenos` instead. Planned removal: '+DEPRECATION_REMOVAL_TARGET+'.');
+      return cmdBootstrapWrenos();
     default:
-      console.log('Usage: 0xclaw <init|init-pack|doctor|status|config|wallet|test|bootstrap-openclaw> ...');
+      console.log('Usage: wrenos <init|init-pack|doctor|status|config|wallet|test|migrate|bootstrap-wrenos> ...');
       process.exit(1);
   }
 }

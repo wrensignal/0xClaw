@@ -1,6 +1,18 @@
-# 0xClaw Architecture
+# WrenOS Architecture
 
-0xClaw is a composable operator kit for OpenClaw deployments. The architecture is designed so operators can start in paper mode quickly, then progressively harden for production.
+WrenOS is a composable operator control plane for crypto-agent deployments. The architecture is designed so operators can start in paper mode quickly, then progressively harden for production.
+
+## Repository boundary (what this repo is)
+
+This repository is the open-source **WrenOS control plane**.
+It includes:
+- WrenOS CLI
+- profiles and packs
+- loop/adaptation primitives
+- adapters
+- inspectable file-based operator config
+
+It can run fully self-hosted, and can also integrate with hosted-default runtime/inference services (for example Speakeasy).
 
 ## Layer model
 
@@ -21,7 +33,7 @@
 
 4. **CLI control plane (`packages/cli`)**
    - Operator bootstrap and local runtime configuration.
-   - `init`, `init-pack`, `doctor`, `status`, `config set`, `wallet setup`, `test inference`, `test execution`, `bootstrap-openclaw`.
+   - `init`, `init-pack`, `doctor`, `status`, `config set`, `wallet setup`, `test inference`, `test execution`, `bootstrap-wrenos`.
 
 5. **Vendored MCP and skills (`vendor/*`, `vendor/skills/*`)**
    - Curated local dependencies for deterministic setup.

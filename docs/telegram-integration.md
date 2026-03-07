@@ -1,6 +1,6 @@
 # Telegram Integration (Phase 2B)
 
-0xClaw uses OpenClaw's built-in Telegram channel support. This gives operators a fast chat UX after deploy.
+WrenOS supports Telegram via OpenClaw-compatible channel routing. This gives operators a fast chat UX after deploy.
 
 ## Commands
 - `/status`
@@ -25,7 +25,7 @@ You can wire adapter output to your runtime by passing hooks:
 
 ## Minimal usage
 ```javascript
-import { createTelegramAdapter } from '@0xclaw/adapters/src/index.mjs';
+import { createTelegramAdapter } from '@wrenos/adapters/src/index.mjs';
 
 const tg = createTelegramAdapter({
   profile: 'trading-agent-paper',

@@ -1,11 +1,11 @@
 {
   "$schema": "https://railway.com/railway.schema.json",
-  "name": "0xClaw Agent",
+  "name": "WrenOS Agent",
   "description": "Crypto trading agent with private inference and meme discovery",
   "services": [
     {
       "name": "agent",
-      "source": "github:wrensignal/0xClaw",
+      "source": "github:wrensignal/wrenOS",
       "envVars": {
         "PROFILE": {
           "description": "Agent profile",

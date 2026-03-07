@@ -1,6 +1,6 @@
 # Dual Agent Pack (Neutral)
 
-This pack provides a bare-bones two-agent operating model for OpenClaw:
+This WrenOS pack provides a bare-bones two-agent operating model (OpenClaw-compatible):
 
 - `research-agent` — signal gathering + evidence briefs
 - `trading-agent` — strategy testing + regression/risk gates

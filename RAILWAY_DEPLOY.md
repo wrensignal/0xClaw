@@ -1,10 +1,10 @@
-# 0xClaw One-Click Railway Deploy
+# WrenOS One-Click Railway Deploy
 
-This guide covers template-based deploy for a full 0xClaw agent stack.
+This guide covers template-based deploy for a full WrenOS agent stack.
 
 ## Template
 - `railway.json` in repo root defines the deploy template.
-- Intended deploy URL after publishing template: `https://railway.com/deploy/0xclaw`
+- Intended deploy URL after publishing template: `https://railway.com/deploy/wrenos`
 
 ## Required Environment Variables
 
@@ -22,7 +22,7 @@ This guide covers template-based deploy for a full 0xClaw agent stack.
 
 ## Deploy Steps
 1. Open Railway template deploy URL (after publish):
-   - `https://railway.com/deploy/0xclaw`
+   - `https://railway.com/deploy/wrenos`
 2. Select project/account.
 3. Confirm env vars:
    - keep `SPEAKEASY_BASE_URL=https://api.speakeasyrelay.com`
@@ -55,7 +55,7 @@ This guide covers template-based deploy for a full 0xClaw agent stack.
 
 ### 6) Telegram chat UX (2-minute path)
 - Set `TELEGRAM_BOT_TOKEN` in Railway.
-- Connect OpenClaw Telegram routing for this agent.
+- Connect WrenOS Telegram routing (OpenClaw-compatible) for this agent.
 - Verify command responses:
   - `/status`
   - `/watchlist`

@@ -26,30 +26,30 @@ npm install
 
 ### 2) Validate environment
 ```bash
-node packages/cli/src/index.mjs doctor
+wrenos doctor
 ```
 
 ### 3) Initialize profile
 ```bash
-node packages/cli/src/index.mjs init --profile research-agent
+wrenos init --profile research-agent
 ```
 
 ### 4) Check status
 ```bash
-node packages/cli/src/index.mjs status
+wrenos status
 ```
 
 ---
 
-## Generating OpenClaw operator templates
+## Generating WrenOS operator templates
 
 After initialising, scaffold starter `AGENTS.md` and `HEARTBEAT.md` templates:
 
 ```bash
-node packages/cli/src/index.mjs bootstrap-openclaw
+wrenos bootstrap-wrenos
 ```
 
-This creates `.0xclaw/openclaw-templates/` containing:
+This creates `.wrenos/wrenos-templates/` containing:
 
 | File | Purpose |
 |------|---------|
@@ -57,11 +57,11 @@ This creates `.0xclaw/openclaw-templates/` containing:
 | `HEARTBEAT.md` | Heartbeat loop cadence, lanes, adaptive tuner, regression guard |
 | `README.md` | Instructions for copying and activating the templates |
 
-Templates are **not** active until you copy them into `.0xclaw/`:
+Templates are **not** active until you copy them into `.wrenos/`:
 
 ```bash
-cp .0xclaw/openclaw-templates/AGENTS.md .0xclaw/AGENTS.md
-cp .0xclaw/openclaw-templates/HEARTBEAT.md .0xclaw/HEARTBEAT.md
+cp .wrenos/wrenos-templates/AGENTS.md .wrenos/AGENTS.md
+cp .wrenos/wrenos-templates/HEARTBEAT.md .wrenos/HEARTBEAT.md
 ```
 
 All templates default to `liveExecution: false`. See `docs/safety.md` before enabling live execution.
@@ -78,21 +78,32 @@ All templates default to `liveExecution: false`. See `docs/safety.md` before ena
 Switch profiles at any time by re-running `init`:
 
 ```bash
-node packages/cli/src/index.mjs init --profile solo-trader-paper
+wrenos init --profile solo-trader-paper
 ```
 
 
 ## Optional: initialize a neutral dual-agent pack
 
 ```bash
-node packages/cli/src/index.mjs init-pack --pack dual-agent-pack
+wrenos init-pack --pack dual-agent-pack
 ```
 
-This creates `.0xclaw/pack-dual-agent.json` with neutral names (`research-agent`, `trading-agent`) and a handoff contract.
+This creates `.wrenos/pack-dual-agent.json` with neutral names (`research-agent`, `trading-agent`) and a handoff contract.
 
 
 ## Roadmap note
 
-`0xclaw start` orchestration command is not shipped yet. Use heartbeat/cron wiring from your OpenClaw setup for now.
+`wrenos start` orchestration command is not shipped yet. Use your existing heartbeat/cron wiring for now.
+
+## Migration note
+
+If you're coming from `0xClaw`:
+- use `wrenos` as the primary CLI name
+- `0xclaw` remains as temporary compatibility alias
+- `.wrenos/` is the new primary config directory (`.0xclaw/` fallback still supported)
+- optional migration command: `wrenos migrate` (or `wrenos migrate --force`)
+- after migration, validate with: `wrenos doctor && wrenos status`
+
+See: `docs/migration-0xclaw-to-wrenos.md`
 
 See also: `docs/speakeasy-integration.md` for private inference routing guidance.

@@ -1,7 +1,17 @@
 {
-  "name": "@0xclaw/loops",
+  "name": "@wrenos/loops",
   "version": "0.1.0",
   "private": true,
+  "description": "WrenOS control-plane loops for heartbeat planning and validation summaries",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wrensignal/wrenOS.git",
+    "directory": "packages/loops"
+  },
+  "homepage": "https://github.com/wrensignal/wrenOS/tree/main/packages/loops",
+  "bugs": {
+    "url": "https://github.com/wrensignal/wrenOS/issues"
+  },
   "main": "src/index.mjs"
 }

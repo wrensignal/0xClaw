@@ -1,4 +1,4 @@
-import { fallbackOrder } from '@0xclaw/core/src/index.mjs';
+import { fallbackOrder } from '@wrenos/core/src/index.mjs';
 export { createInferenceClient } from './inference.mjs';
 export { createExecutionAdapter } from './execution.mjs';
 export { createTelegramAdapter } from './telegram.mjs';

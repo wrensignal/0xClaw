@@ -2,6 +2,15 @@
   "name": "speakeasy-ai",
   "version": "0.1.0",
   "description": "OpenAI-compatible Speakeasy SDK with built-in x402 payment flow",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wrensignal/wrenOS.git",
+    "directory": "packages/speakeasy-ai"
+  },
+  "homepage": "https://github.com/wrensignal/wrenOS/tree/main/packages/speakeasy-ai",
+  "bugs": {
+    "url": "https://github.com/wrensignal/wrenOS/issues"
+  },
   "type": "module",
   "main": "src/index.mjs",
   "exports": {

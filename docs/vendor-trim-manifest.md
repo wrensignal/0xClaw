@@ -3,7 +3,7 @@
 Date: 2026-03-03
 
 ## Objective
-Trim non-runtime vendor fat while preserving tool/runtime paths used by 0xClaw and OpenClaw agent workflows.
+Trim non-runtime vendor fat while preserving tool/runtime paths used by WrenOS and OpenClaw agent workflows.
 
 ## Scope
 - `vendor/pump-fun-sdk-lite`

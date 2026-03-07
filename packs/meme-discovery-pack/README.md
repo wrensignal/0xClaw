@@ -7,10 +7,10 @@ Dual-agent meme discovery in a box.
 One-command init:
 
 ```bash
-0xclaw init-pack --pack meme-discovery
+wrenos init-pack --pack meme-discovery
 ```
 
-Generates `.0xclaw/pack-meme-discovery.json` with:
+Generates `.wrenos/pack-meme-discovery.json` with:
 - research agent config with signal sources:
   - Nansen, Dexscreener, CoinGecko, pump.fun, crypto-news, LunarCrush, Birdeye, agenti
 - trading agent config with zoo-style strategy management

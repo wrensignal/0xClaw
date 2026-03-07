@@ -14,7 +14,7 @@ npm whoami
 ## 1) Validate package locally
 
 ```bash
-cd /Users/clawd/Desktop/Wren/projects/0xclaw/repo
+cd <repo-root>
 npm --workspace packages/speakeasy-ai test
 cd packages/speakeasy-ai
 npm pack --dry-run

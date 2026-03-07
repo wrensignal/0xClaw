@@ -1,7 +1,17 @@
 {
-  "name": "@0xclaw/profiles",
+  "name": "@wrenos/profiles",
   "version": "0.1.0",
   "private": true,
+  "description": "WrenOS profile templates for paper-first and safety-first agent operations",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wrensignal/wrenOS.git",
+    "directory": "packages/profiles"
+  },
+  "homepage": "https://github.com/wrensignal/wrenOS/tree/main/packages/profiles",
+  "bugs": {
+    "url": "https://github.com/wrensignal/wrenOS/issues"
+  },
   "main": "src/index.mjs"
 }

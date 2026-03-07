@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# scripts/install.sh — One-command installer for fresh 0xclaw/OpenClaw operators.
+# scripts/install.sh — One-command installer for fresh WrenOS operators.
 # Idempotent: safe to run multiple times on the same machine.
 set -euo pipefail
 
@@ -30,9 +30,9 @@ npm install --prefer-offline 2>&1 | tail -3
 ok "Dependencies installed."
 
 # ── Step 3: Init profile (idempotent) ────────────────────────────────────────
-CONFIG="$REPO_ROOT/.0xclaw/config.json"
+CONFIG="$REPO_ROOT/.wrenos/config.json"
 if [ -f "$CONFIG" ]; then
-  info "Config already exists at .0xclaw/config.json — skipping init."
+  info "Config already exists at .wrenos/config.json — skipping init."
 else
   info "Initializing profile research-agent..."
   $CLI init --profile research-agent
@@ -48,15 +48,15 @@ ok "Doctor passed."
 # ── Done ─────────────────────────────────────────────────────────────────────
 echo ""
 echo "╔══════════════════════════════════════════════════════════╗"
-echo "║           0xclaw / OpenClaw — installation complete       ║"
+echo "║                WrenOS — installation complete              ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
 echo "Next steps:"
 echo "  1. Check status:"
-echo "       node packages/cli/src/index.mjs status"
+echo "       wrenos status"
 echo ""
-echo "  2. Generate OpenClaw operator templates:"
-echo "       node packages/cli/src/index.mjs bootstrap-openclaw"
+echo "  2. Generate WrenOS operator templates:"
+echo "       wrenos bootstrap-wrenos"
 echo ""
 echo "  3. Review docs/quickstart.md for a full walkthrough."
 echo ""

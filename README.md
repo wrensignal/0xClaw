@@ -1,132 +1,120 @@
-# 0xClaw
+# WrenOS
 
-0xClaw is a **crypto agent compatibility kit for OpenClaw**.
+WrenOS is a **crypto agent control plane**: safe-by-default, inspectable, paper-first, and operator-oriented.
 
-Pick a profile, deploy fast, and get a working agent stack with safe defaults.
+It is OpenClaw-compatible and can run with hosted-default or self-hosted infrastructure.
 
-## Product model (open + hosted)
+> This project was previously known as **0xClaw**. See `docs/migrating-from-0xclaw-to-wrenos.md` for migration details.
+> Legacy `0xclaw` CLI + `.0xclaw` config compatibility is supported during the migration window (planned removal: **v0.3.0**).
 
-- **Open source (this repo):** CLI, profiles, adapters, loops, packs, examples
-- **Hosted default path:** pre-wired to Speakeasy inference + execution routing defaults
+## What this repo is
 
-You can fully self-host and override defaults. The hosted/recommended path is optimized for speed, reliability, and better out-of-box economics.
+- WrenOS CLI + inspectable file-based configuration for operator workflows
+- WrenOS profiles, packs, loops, and adapters
+- hosted-default routing (Speakeasy), fully self-hostable overrides
+- reproducible paper-first control-plane patterns
 
-## Default architecture
+## WrenOS pipeline (evidence-first)
 
-- Inference default: `https://api.speakeasyrelay.com`
-- Model routing defaults:
-  - `research` → `deepseek-v3.2`
-  - `deep_think` → `qwen3-235b-a22b-thinking-2507`
-  - `codegen` → `qwen3-coder-480b-a35b-instruct`
-  - `uncensored` → `venice-uncensored`
-- Execution venues:
-  - Jupiter (referral-capable)
-  - pump.fun (direct bonding-curve path)
+WrenOS is designed around a technical loop:
 
-Jupiter defaults to a built-in 0xClaw referral account unless overridden via `JUPITER_REFERRAL_ACCOUNT`.
+1. **discover** market/research inputs
+2. **score** candidates with explicit signals
+3. **validate** via gating and safety constraints
+4. **execute** in paper mode first (live only by explicit approval)
+
+Every stage is inspectable through config and generated artifacts.
+
+## What is usable today vs experimental vs planned
+
+| Status | Surface |
+|---|---|
+| **Usable today** | `wrenos init`, `doctor`, `status`, `config`, `wallet setup`, `test inference`, `test execution`, `init-pack`, `bootstrap-wrenos` |
+| **Usable today** | `packages/core`, `packages/loops`, `packages/profiles`, `packages/adapters`, `packages/speakeasy-ai` |
+| **Experimental** | Turnkey Telegram-agent UX templates and pack conventions |
+| **Planned** | `wrenos start` orchestration command (not shipped yet) |
+
+## Clone and install
+
+```bash
+git clone https://github.com/wrensignal/wrenOS.git
+cd wrenOS
+npm install
+```
 
 ## Quick start
 
-### Option A — one-command local install
+```bash
+wrenos init --profile research-agent
+wrenos doctor
+wrenos status
+```
+
+## End-to-end happy path (paper-first)
+
+Concrete flow: discovery input → validation/gating → paper decision → audit log
 
 ```bash
-bash scripts/install.sh
+node examples/wrenos-paper-happy-path/run.mjs
+cat examples/wrenos-paper-happy-path/out/paper-decision-log.json
 ```
-
-### Option B — manual local setup
-
-```bash
-npm install
-node packages/cli/src/index.mjs init --profile research-agent
-node packages/cli/src/index.mjs doctor
-node packages/cli/src/index.mjs status
-```
-
-After `init`, a workspace-root `.mcp.json` is generated (if missing) with:
-- `agenti-lite`
-- `pump-fun-sdk-lite`
-- `helius` (placeholder API key)
-
-For Helius, create a free key at `https://dashboard.helius.dev` (no credit card), then set `HELIUS_API_KEY` in `.mcp.json`.
-
-## `speakeasy-ai` SDK (x402 handled internally)
-
-```bash
-npm install speakeasy-ai
-```
-
-```javascript
-import { SpeakeasyClient } from 'speakeasy-ai';
-
-const client = new SpeakeasyClient({
-  privateKey: process.env.AGENT_WALLET_PRIVATE_KEY,
-  // defaults to https://api.speakeasyrelay.com
-});
-
-const response = await client.chat.completions.create({
-  model: 'deepseek-v3.2',
-  messages: [{ role: 'user', content: 'Analyze this token...' }],
-  stream: true,
-});
-```
-
-`speakeasy-ai` handles x402 flow internally: request → 402 challenge → EIP-3009 signature → replay → response stream.
 
 ## CLI highlights
 
 ```bash
-# initialize profile
-0xclaw init --profile research-agent
-
-# set config overrides
-0xclaw config set inference.baseUrl https://my-inference.example.com
-0xclaw config set execution.venues.jupiter.referralAccount <pubkey>
-
-# wallet setup (generated or import)
-0xclaw wallet setup
-0xclaw wallet setup --private-key 0x...
-
-# init packs
-0xclaw init-pack --pack dual-agent-pack
-0xclaw init-pack --pack meme-discovery
-
-# connectivity checks
-0xclaw test inference
-0xclaw test execution
+wrenos init --profile research-agent
+wrenos config set inference.baseUrl https://api.speakeasyrelay.com
+wrenos wallet setup
+wrenos init-pack --pack meme-discovery
+wrenos test inference
+wrenos test execution
+wrenos bootstrap-wrenos
 ```
 
-## One-click deploy (Railway)
+Legacy alias support (temporary):
+- `0xclaw ...` still works
+- `.0xclaw/config.json` is read if `.wrenos/config.json` is absent
 
-- Template config: `railway.json`
-- Deploy guide: `RAILWAY_DEPLOY.md`
-- Target flow: deploy → set env vars → connect Telegram → chat with agent in minutes
-
-## Telegram operator UX
-
-Supported commands:
-- `/status`
-- `/watchlist`
-- `/health`
-- `/trade <symbol>`
-- `/paper on|off`
-
-See `docs/telegram-integration.md`.
-
-## Package map
-
-- `packages/core` — schemas, safety policy defaults, shared utilities
-- `packages/adapters` — inference/execution/telegram adapters + data-quality logic
-- `packages/loops` — heartbeat, regression, adaptive controller primitives
-- `packages/cli` — operator commands (`init`, `doctor`, `config`, `wallet`, `test`, etc.)
-- `packages/profiles` — starter OpenClaw profile templates
-- Vendored MCP servers: `agenti-lite`, `pump-fun-sdk-lite`, `helius` (via `.mcp.json` template)
+Migration command for existing operators:
+```bash
+wrenos migrate
+# or, to overwrite existing .wrenos files:
+wrenos migrate --force
+```
 
 ## Safety posture
 
-- Live execution disabled by default
-- Explicit approvals required for external side effects
-- Data-quality confidence tiers and fallback paths are mandatory
-- Paper mode is the default operating mode
+- `liveExecution: false` by default
+- explicit approvals required for external side effects
+- confidence-tier fallback behavior is mandatory
+- inspectable JSON/Markdown outputs for auditability
+
+## Package map
+
+- `packages/core` — policy defaults, fallback semantics
+- `packages/adapters` — inference/execution/telegram adapters + quality tier logic
+- `packages/loops` — heartbeat + scorecard primitives
+- `packages/cli` — operator commands
+- `packages/profiles` — starter templates
+- `packages/speakeasy-ai` — OpenAI-compatible client with built-in x402 flow
+
+## Scripts
+
+```bash
+npm run build
+npm run test
+npm run lint
+npm run typecheck
+```
+
+## Docs
+
+- `docs/quickstart.md`
+- `docs/safety.md`
+- `docs/speakeasy-integration.md`
+- `docs/migrating-from-0xclaw-to-wrenos.md`
+- `docs/migration-0xclaw-to-wrenos.md` (legacy alias doc)
+- `CHANGELOG.md`
 
 ## Landing page prototype
 
@@ -138,4 +126,4 @@ Open it locally in your browser to preview.
 
 ## License
 
-Apache-2.0 (see `LICENSE`).
+Apache-2.0

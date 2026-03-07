@@ -1,0 +1,70 @@
+{
+  "ts": "2026-03-07T16:23:34.796Z",
+  "stage": {
+    "discovery": {
+      "walletFlowRows": 5,
+      "selectedSymbols": 5
+    },
+    "validation": {
+      "quality": {
+        "tier": 0,
+        "label": "normal",
+        "fallbackOrder": [
+          "primary:wallet+birdeye+lunar",
+          "fallbackA:dexscreener_enriched",
+          "fallbackB:agenti_geckoterminal_market_social_wallet",
+          "fallbackC:safe_mode_or_hold"
+        ]
+      },
+      "scorecards": {
+        "exploit": {
+          "pools": 2,
+          "totalTrades": 69,
+          "avgEdgeBps": 20.95,
+          "worstDrawdownPct": 13.8
+        },
+        "explore": {
+          "pools": 1,
+          "totalTrades": 17,
+          "avgEdgeBps": 6.1,
+          "worstDrawdownPct": 21.4
+        },
+        "unclassified": null
+      },
+      "gatePass": true
+    },
+    "execution": {
+      "mode": "paper",
+      "action": "propose_trade_set",
+      "reason": "gate_pass edge=20.95bps dd=13.8%"
+    },
+    "observability": {
+      "heartbeatPlan": {
+        "ts": "2026-03-07T16:23:34.795Z",
+        "confidence": "normal",
+        "lanes": {
+          "exploit": [
+            "solana:SOL",
+            "solana:JUP",
+            "solana:WIF"
+          ],
+          "explore": [
+            "solana:BONK",
+            "solana:POPCAT"
+          ],
+          "basket": [
+            "solana:SOL",
+            "solana:JUP",
+            "solana:WIF",
+            "solana:BONK",
+            "solana:POPCAT"
+          ]
+        },
+        "tuner": {
+          "cadence": "adaptive",
+          "gatePass": true
+        }
+      }
+    }
+  }
+}

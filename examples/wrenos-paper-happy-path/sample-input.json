@@ -1,0 +1,20 @@
+{
+  "feedQuality": {
+    "lunarCoverage": 82,
+    "lunarErrors": 1,
+    "birdeyeCoverage": 76,
+    "walletRows": 24
+  },
+  "walletFlow": [
+    { "chain": "solana", "symbol": "SOL" },
+    { "chain": "solana", "symbol": "JUP" },
+    { "chain": "solana", "symbol": "WIF" },
+    { "chain": "solana", "symbol": "BONK" },
+    { "chain": "solana", "symbol": "POPCAT" }
+  ],
+  "backtests": [
+    { "lane": "exploit", "pool": "SOL/USDC", "trades": 41, "netEdgeBps": 23.2, "worstDrawdownPct": 11.3 },
+    { "lane": "exploit", "pool": "JUP/USDC", "trades": 28, "netEdgeBps": 18.7, "worstDrawdownPct": 13.8 },
+    { "lane": "explore", "pool": "WIF/USDC", "trades": 17, "netEdgeBps": 6.1, "worstDrawdownPct": 21.4 }
+  ]
+}

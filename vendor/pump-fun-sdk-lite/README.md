@@ -1,6 +1,6 @@
 > ## pump-fun-sdk-lite
 >
-> This is a trimmed fork focused on read-only market intelligence and core SDK workflows for 0xClaw integration.
+> This is a trimmed fork focused on read-only market intelligence and core SDK workflows for wrenOS integration.
 > Removed in this lite cut: Telegram bot, websocket relay server, x402, fee-sharing/social-fee tracks, vanity generators, DeFi agent bundles, and plugin.delivery package.
 
 <div align="center">
