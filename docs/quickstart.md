@@ -1,6 +1,6 @@
 # Quickstart
 
-This guide gives you a smooth first run for WrenOS, even while some orchestration features are still evolving.
+This guide gives you a smooth setup + validation path for WrenOS, while continuous orchestration remains a beta surface.
 
 ## Recommended operator path (canonical onboarding)
 

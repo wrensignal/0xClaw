@@ -9,7 +9,7 @@ This repository provides the WrenOS CLI, profiles, packs, adapters, loop primiti
 It is designed for operators who want explicit control and auditability, not black-box automation.
 
 - **Who it is for:** solo operators, small teams, and infra-minded builders running agent workflows.
-- **What works today:** bootstrap/config flows, safety checks, profile/pack setup, inference/execution connectivity tests, and CLI-driven inspectable runtime config.
+- **What works today:** bootstrap/config flows, safety checks, profile/pack setup, inference/execution connectivity tests, and CLI-driven inspectable operator/control-plane config.
 - **Hosted default vs self-host override:** works with hosted-default services (for example Speakeasy inference routing), and can run with self-host overrides by replacing endpoints/config.
 - **Safety guarantees:** `liveExecution: false` by default, explicit approvals, confidence-tier fallback behavior, and inspectable JSON/Markdown artifacts.
 - **Beta surface:** one-command orchestration loop is available as `wrenos start` (beta).
