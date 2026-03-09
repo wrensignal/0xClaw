@@ -3,6 +3,7 @@ import { mkdir, readFile, writeFile, copyFile, appendFile } from 'node:fs/promis
 import { existsSync } from 'node:fs';
 import { randomBytes, createHash } from 'node:crypto';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 const invokedAs = path.basename(process.argv[1] || '');
 const DEPRECATION_REMOVAL_TARGET = 'v0.3.0';
@@ -572,9 +573,31 @@ async function cmdStart() {
   };
   console.log(JSON.stringify(header, null, 2));
 
+  const runHeartbeatGitAutoSync = async (tsIso) => {
+    const configured = cfg?.loop?.gitAutoSyncScript || process.env.WREN_GIT_AUTO_SYNC_SCRIPT || path.join(cwd, 'scripts', 'git_auto_sync.mjs');
+    const scriptPath = path.resolve(configured);
+    if (!existsSync(scriptPath)) {
+      return { attempted: false, skipped: true, reason: 'script_missing', scriptPath };
+    }
+    const r = spawnSync('node', [scriptPath], { cwd, encoding: 'utf8' });
+    let parsed = null;
+    try { parsed = JSON.parse((r.stdout || '').trim() || '{}'); } catch {}
+    return {
+      attempted: true,
+      scriptPath,
+      exitCode: r.status,
+      ok: r.status === 0,
+      result: parsed,
+      stderr: (r.stderr || '').trim() || null,
+      ts: tsIso,
+    };
+  };
+
   const tick = async () => {
+    const ts = new Date().toISOString();
+    const gitAutoSync = await runHeartbeatGitAutoSync(ts);
     const event = {
-      ts: new Date().toISOString(),
+      ts,
       type: 'heartbeat_tick',
       profile: cfg?.profile || null,
       mode,
@@ -582,7 +605,8 @@ async function cmdStart() {
       approvalsRequired,
       confidenceTierPolicyPresent: Boolean(cfg?.confidenceTierPolicy),
       inferenceBaseUrl: cfg?.inference?.baseUrl || process.env.SPEAKEASY_BASE_URL || null,
-      warning: mode === 'live' ? 'Live mode configured; explicit approval gates must be enforced by operator workflow.' : null
+      warning: mode === 'live' ? 'Live mode configured; explicit approval gates must be enforced by operator workflow.' : null,
+      gitAutoSync,
     };
     await appendFile(logPath, `${JSON.stringify(event)}\n`);
     console.log(JSON.stringify(event, null, 2));
