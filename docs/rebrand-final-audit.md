@@ -70,7 +70,7 @@ Reason: guide users to canonical WrenOS commands/paths.
 Reason: cleanup complete; no action pending.
 
 ### E) Maintainer-local path residue (minor doc cleanup)
-- No remaining maintainer-local `/projects/0xclaw/repo` path in `packages/speakeasy-ai/PUBLISH_SPEAKEASY_AI.md` (updated to `<repo-root>`).
+- No remaining maintainer-local legacy project path in `packages/speakeasy-ai/PUBLISH_SPEAKEASY_AI.md` (updated to `<repo-root>`).
 
 Reason: cleanup complete; no action pending.
 

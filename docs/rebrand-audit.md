@@ -76,7 +76,7 @@ Notes:
 |---|---|---|---|
 | `docs/rebrand-plan.md` | historical `0xClaw` references | Planning documentation | Keep |
 | `docs/migration-0xclaw-to-wrenos.md` | historical `0xClaw` references | Migration documentation | Keep |
-| `packages/speakeasy-ai/PUBLISH_SPEAKEASY_AI.md` | local path `/projects/0xclaw/repo` | Maintainer local doc path | Update to neutral path (`<repo-root>`) |
+| `packages/speakeasy-ai/PUBLISH_SPEAKEASY_AI.md` | legacy local project path | Maintainer local doc path | Update to neutral path (`<repo-root>`) |
 
 ---
 
