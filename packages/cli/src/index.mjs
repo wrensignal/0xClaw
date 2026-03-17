@@ -84,7 +84,7 @@ async function cmdInit() {
   const mcpPath = path.join(cwd, '.mcp.json');
   if (!existsSync(mcpPath)) {
     await writeFile(mcpPath, JSON.stringify(MCP_JSON_TEMPLATE, null, 2));
-    console.log(`Created ${path.relative(cwd, mcpPath)} with agenti-lite, pump-fun-sdk-lite, helius`);
+    console.log(`Created ${path.relative(cwd, mcpPath)} with starter servers: agenti-lite, pump-fun-sdk-lite, helius (additional vendored MCPs require manual wiring)`);
   }
 
   console.log(JSON.stringify({
@@ -192,7 +192,7 @@ async function cmdInitPack() {
   const mcpPath = path.join(cwd, '.mcp.json');
   if (!existsSync(mcpPath)) {
     await writeFile(mcpPath, JSON.stringify(MCP_JSON_TEMPLATE, null, 2));
-    console.log(`Created ${path.relative(cwd, mcpPath)} with agenti-lite, pump-fun-sdk-lite, helius`);
+    console.log(`Created ${path.relative(cwd, mcpPath)} with starter servers: agenti-lite, pump-fun-sdk-lite, helius (additional vendored MCPs require manual wiring)`);
   }
 
   console.log(`Initialized pack ${pack} in ${configDir}`);
