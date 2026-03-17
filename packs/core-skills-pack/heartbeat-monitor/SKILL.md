@@ -33,6 +33,7 @@ Reads `feed_health` from every active skill's latest output:
 | token-deep-dive | all configured sources |
 | crypto-news-scanner | crypto-news-lite, agenti-lite social, LunarCrush |
 | whale-tracker | agenti-lite wallet analytics, crypto-news-lite whale tools, Helius |
+| solana-token-scan | token-deep-dive + whale-tracker + pump-fun-monitor + crypto-news-scanner aggregate health |
 
 For each feed, the heartbeat tracks: current status, time since last successful response, degradation duration, whether an alternate source is active, and recovery attempts.
 
