@@ -16,3 +16,16 @@ dist/
 **/*.parquet
 **/*.feather
 **/*.arrow
+
+# OpenClaw workspace files (Heron agent identity/memory)
+SOUL.md
+AGENTS.md
+HEARTBEAT.md
+IDENTITY.md
+USER.md
+TOOLS.md
+MEMORY.md
+memory/
+
+# Paperclip worktrees (stage 2)
+.paperclip/

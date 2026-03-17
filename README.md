@@ -83,6 +83,9 @@ wrenos start --once
 wrenos bootstrap-wrenos
 ```
 
+Note: generated `.mcp.json` includes a starter wiring (`agenti-lite`, `pump-fun-sdk-lite`, `helius`).
+Other vendored components are available in `vendor/` but must be added to `.mcp.json` manually.
+
 Legacy alias support (temporary):
 - `0xclaw ...` still works
 - `.0xclaw/config.json` is read if `.wrenos/config.json` is absent
