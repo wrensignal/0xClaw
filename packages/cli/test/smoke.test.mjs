@@ -63,3 +63,23 @@ test('config set writes nested values', () => {
 
   rmSync(cwd, { recursive: true, force: true });
 });
+
+test('wallet setup supports privy provider metadata', () => {
+  const cwd = setupWorkspace();
+  const out = run(cwd, [
+    'wallet', 'setup',
+    '--provider', 'privy',
+    '--private-key', '0x' + '11'.repeat(32),
+    '--privy-user-id', 'user_test',
+    '--privy-wallet-id', 'wallet_test'
+  ]);
+  assert.equal(out.status, 0, out.stderr || out.stdout);
+
+  const wallet = JSON.parse(readFileSync(path.join(cwd, '.wrenos/wallet.json'), 'utf8'));
+  assert.equal(wallet.provider, 'privy');
+  assert.equal(wallet.source, 'privy');
+  assert.equal(wallet.privy.userId, 'user_test');
+  assert.equal(wallet.privy.walletId, 'wallet_test');
+
+  rmSync(cwd, { recursive: true, force: true });
+});

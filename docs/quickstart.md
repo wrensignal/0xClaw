@@ -78,6 +78,8 @@ Optional integrations after baseline validation:
 wrenos test inference
 wrenos test execution
 wrenos wallet setup
+# Privy-backed provisioning (exported key provided by your Privy backend):
+# PRIVY_EXPORTED_PRIVATE_KEY=0x... wrenos wallet setup --provider privy --privy-user-id user_123 --privy-wallet-id wallet_abc
 wrenos init-pack --pack dual-agent-pack
 ```
 
