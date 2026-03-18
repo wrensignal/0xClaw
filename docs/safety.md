@@ -5,11 +5,13 @@ WrenOS is designed for staged rollout: research mode -> paper mode -> explicitly
 Execution begins in paper mode by default.
 Live execution requires explicit enablement.
 External side effects require approvals.
+Operator command interfaces (including Telegram) should default to proposal/paper behavior unless live mode is explicitly approved.
 
 ## Default safety gates
 
 - `liveExecution: false` by default in shipped profiles.
-- External side effects should require explicit operator approval.
+- External side effects require explicit operator approval before any live-impacting action.
+- Operator chat commands should produce proposals or paper-mode actions by default.
 - Data-quality degradation should trigger confidence-tier fallback behavior instead of silent continuation.
 
 ## Secrets and keys
@@ -33,6 +35,8 @@ Recommended minimum controls before enabling live execution:
 3. Drawdown stop/halt thresholds
 4. Venue health checks with fail-closed behavior
 5. Explicit paper-to-live promotion checklist
+6. Named human approver and approval record for live-mode transition
+7. Kill-switch/rollback path tested in the target deployment environment
 
 ## Operational checklist (pre-live)
 
