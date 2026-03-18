@@ -143,6 +143,8 @@ npm run verify
 - `docs/runtime-status.md`
 - `docs/safety.md`
 - `docs/speakeasy-integration.md`
+- `docs/bootstrap-wiring-parity.md`
+- `docs/community-registry-model.md`
 - `docs/migrating-from-0xclaw-to-wrenos.md` (canonical migration guide)
 - `docs/migration-0xclaw-to-wrenos.md` (legacy pointer)
 - `CHANGELOG.md`
