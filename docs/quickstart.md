@@ -5,8 +5,8 @@ This guide gives you a smooth setup + validation path for WrenOS, while continuo
 ## Recommended operator path (canonical onboarding)
 
 1. Install dependencies
-2. Run system diagnostics (`doctor`)
-3. Initialize a profile
+2. Initialize a profile
+3. Run system diagnostics (`doctor`)
 4. Inspect system snapshot (`status`)
 5. Generate and review templates
 6. Run the paper happy-path example
@@ -32,14 +32,14 @@ The installer is idempotent and covers install + baseline diagnostics.
 npm install
 ```
 
-### 2) Doctor
-```bash
-wrenos doctor
-```
-
-### 3) Init
+### 2) Init
 ```bash
 wrenos init --profile research-agent
+```
+
+### 3) Doctor
+```bash
+wrenos doctor
 ```
 
 ### 4) Status

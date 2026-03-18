@@ -1,0 +1,11 @@
+{
+  "name": "@wrenos/mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WrenOS native MCP tool surface for external agents",
+  "type": "module",
+  "main": "src/index.mjs",
+  "bin": {
+    "wrenos-mcp": "src/index.mjs"
+  }
+}

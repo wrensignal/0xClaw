@@ -369,9 +369,44 @@ async function cmdConfig() {
 }
 
 async function cmdWalletSetup() {
+  const provider = arg('--provider', 'local');
   const importPk = arg('--private-key', null);
   const walletPath = path.join(configDir, 'wallet.json');
   await mkdir(configDir, { recursive: true });
+
+  if (provider === 'privy') {
+    const privyWalletId = arg('--privy-wallet-id', process.env.PRIVY_WALLET_ID || null);
+    const privyUserId = arg('--privy-user-id', process.env.PRIVY_USER_ID || null);
+    const privateKey = importPk || process.env.PRIVY_EXPORTED_PRIVATE_KEY || process.env.AGENT_WALLET_PRIVATE_KEY || null;
+
+    if (!privateKey) {
+      console.error('Privy provisioning requires an exported private key via --private-key, PRIVY_EXPORTED_PRIVATE_KEY, or AGENT_WALLET_PRIVATE_KEY.');
+      console.error('Use your Privy backend to export/provision the key material, then run this command again.');
+      process.exit(1);
+    }
+
+    const pseudoPublic = createHash('sha256').update(privateKey).digest('hex').slice(0, 44);
+    const wallet = {
+      createdAt: new Date().toISOString(),
+      source: 'privy',
+      chain: arg('--chain', 'solana'),
+      provider: 'privy',
+      privateKey,
+      publicKey: arg('--public-key', pseudoPublic),
+      privy: {
+        walletId: privyWalletId,
+        userId: privyUserId
+      },
+      warning: 'Public key is a placeholder hash for bootstrap UX, not guaranteed chain-valid derivation. Use chain-native wallet derivation before live trading.'
+    };
+
+    await writeFile(walletPath, JSON.stringify(wallet, null, 2));
+    console.log(`Wallet saved: ${walletPath}`);
+    console.log('Provisioned wallet source: privy');
+    console.log(`Public key (placeholder): ${wallet.publicKey}`);
+    console.log('WARNING: This bootstrap public key is not chain-derived. Replace with a real Solana/EVM address before any live funds.');
+    return;
+  }
 
   const privateKey = importPk || `0x${randomBytes(32).toString('hex')}`;
   const pseudoPublic = createHash('sha256').update(privateKey).digest('hex').slice(0, 44);
@@ -380,6 +415,7 @@ async function cmdWalletSetup() {
     createdAt: new Date().toISOString(),
     source: importPk ? 'import' : 'generated',
     chain: arg('--chain', 'solana'),
+    provider: 'local',
     privateKey,
     publicKey: arg('--public-key', pseudoPublic),
     warning: 'Public key is a placeholder hash for bootstrap UX, not guaranteed chain-valid derivation. Use chain-native wallet derivation before live trading.'
@@ -797,7 +833,7 @@ async function main() {
     case 'config': return cmdConfig();
     case 'wallet': {
       if (process.argv[3] === 'setup') return cmdWalletSetup();
-      console.log('Usage: wrenos wallet setup [--private-key 0x...] [--public-key ...] [--chain solana]');
+      console.log('Usage: wrenos wallet setup [--provider local|privy] [--private-key 0x...] [--public-key ...] [--chain solana] [--privy-wallet-id ...] [--privy-user-id ...]');
       process.exit(1);
     }
     case 'test': {

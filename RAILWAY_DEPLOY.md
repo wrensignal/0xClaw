@@ -1,74 +1,119 @@
-# WrenOS One-Click Railway Deploy
+# WrenOS Production-Grade Railway Deploy Wrapper
 
-This guide covers template-based deploy for a full WrenOS agent stack.
+This guide defines a production-oriented Railway onboarding flow for WrenOS.
 
-## Template
-- `railway.json` in repo root defines the deploy template.
-- Intended deploy URL after publishing template: `https://railway.com/deploy/wrenos`
+## 1) Template Scope
 
-## Required Environment Variables
+- Template source: `railway.json`
+- Service target: single `agent` service (expand to multi-service later if needed)
+- Deploy URL (after publish): `https://railway.com/deploy/wrenos`
 
-### Core
-- `PROFILE` (default: `research-agent`)
-  - Valid examples: `research-agent`, `research-only`, `solo-trader-paper`, `trading-agent-paper`, `trading-agent-live-disabled`
-- `SPEAKEASY_BASE_URL` (default: `https://api.speakeasyrelay.com`)
+## 2) First-Run Onboarding Flow
+
+On first deploy, use this order:
+
+1. Set base env vars (profile, auth, inference, Telegram)
+2. Deploy service
+3. Confirm startup health in logs
+4. Run bootstrap sanity checks:
+   - profile resolved
+   - `.wrenos/` config path healthy
+   - MCP starter wiring present/expected
+5. Verify operator channel wiring (Telegram)
+6. Keep execution in paper-safe mode until explicit operator approval
+
+Recommended first profile: `research-agent`.
+
+## 3) Environment Variables
+
+### Required
+- `PROFILE` (default `research-agent`)
 - `OPENCLAW_API_KEY` (sensitive)
-- `TELEGRAM_BOT_TOKEN` (required for Telegram chat UX)
-- `TELEGRAM_CHAT_ALLOWLIST` (optional comma-separated chat IDs)
+- `TELEGRAM_BOT_TOKEN` (sensitive)
 
-### Optional / conditional
-- `SPEAKEASY_API_KEY` (optional)
-- `AGENT_WALLET_PRIVATE_KEY` (sensitive; required for execution-enabled profiles)
+### Common
+- `SPEAKEASY_BASE_URL` (default `https://api.speakeasyrelay.com`)
+- `SPEAKEASY_API_KEY` (optional, sensitive)
+- `TELEGRAM_CHAT_ALLOWLIST` (optional)
+- `WORKSPACE_DIR` (default `/app`)
+- `WRENOS_BOOTSTRAP_ON_START` (default `true`)
 
-## Deploy Steps
-1. Open Railway template deploy URL (after publish):
-   - `https://railway.com/deploy/wrenos`
-2. Select project/account.
-3. Confirm env vars:
-   - keep `SPEAKEASY_BASE_URL=https://api.speakeasyrelay.com`
-   - choose `PROFILE`
-   - set required secrets
-4. Deploy.
+### Conditional
+- `AGENT_WALLET_PRIVATE_KEY` (only if execution-enabled paths are used)
+- `OPENCLAW_GATEWAY_BASE_URL` (optional proxy/gateway override)
+- `RAILWAY_PUBLIC_DOMAIN` (if public routing/webhook behavior is needed)
 
-## Post-Deploy Verification
+## 4) Persistence Assumptions
 
-### 1) Service health
-- Confirm Railway service is up and restart-stable.
-- Check logs for startup errors.
+WrenOS depends on local workspace artifacts (`.wrenos`, `.mcp.json`, generated state/memory files).
 
-### 2) Inference connectivity
-- Verify requests target `SPEAKEASY_BASE_URL`.
-- Confirm successful response from `/health` and model route usage.
+Assume:
+- container filesystem may be ephemeral across rebuilds/redeploys
+- runtime memory/state should be treated as re-creatable unless mounted/persisted
 
-### 3) Agent config sanity
-- Confirm selected `PROFILE` is loaded.
-- Confirm `liveExecution=false` unless explicitly intended.
+Operator guidance:
+- persist critical config and secrets externally
+- treat generated state as cache/operational telemetry unless explicit persistence is configured
 
-### 4) Heartbeat loop
-- Confirm heartbeat loop starts and writes expected artifacts/logs.
-- Confirm no crash loop under normal cadence.
+## 5) Proxy / Gateway Behavior
 
-### 5) Execution path (if enabled)
-- Verify wallet env is present.
-- Run a dry execution path (quote-level / paper mode).
-- Confirm Jupiter referral account is attached via config defaults/overrides.
+- OpenClaw gateway/API routing should be explicit via env (`OPENCLAW_API_KEY`, optional `OPENCLAW_GATEWAY_BASE_URL`).
+- If public ingress is enabled, use Railway domain + upstream routing rules; do not expose unnecessary endpoints.
+- Keep network surface minimal: only required runtime ports/routes.
 
-### 6) Telegram chat UX (2-minute path)
-- Set `TELEGRAM_BOT_TOKEN` in Railway.
-- Connect WrenOS Telegram routing (OpenClaw-compatible) for this agent.
-- Verify command responses:
-  - `/status`
-  - `/watchlist`
-  - `/health`
-  - `/trade <symbol>`
-  - `/paper on|off`
+## 6) Auth / Token Handling
 
-## Troubleshooting
-- Missing config error: ensure profile exists and env vars are set.
-- Inference errors: verify `SPEAKEASY_BASE_URL` and network egress.
-- Wallet errors: confirm `AGENT_WALLET_PRIVATE_KEY` format and chain compatibility.
-- Rate limit behavior: inspect logs and retry/backoff settings in runtime config.
+- Keep all secrets in Railway secret env vars (never committed).
+- Rotate `OPENCLAW_API_KEY` on suspected leak.
+- Restrict Telegram interaction with `TELEGRAM_CHAT_ALLOWLIST` when possible.
+- Avoid logging raw secrets/tokens.
 
-## Operator Notes
-- Defaults are optimized for fast start and safety.
-- Operators can override inference and execution settings via CLI/config after deploy.
+## 7) Workspace Bootstrap Expectations
+
+Bootstrap should ensure:
+- profile config exists and parses
+- expected control files exist (`.wrenos/config.json`, optional `.mcp.json`)
+- startup does not implicitly enable live execution
+
+If bootstrap fails:
+- fail fast with actionable log messages
+- do not start in partially configured live-capable state
+
+## 8) Telegram Wiring (Operator Path)
+
+After deploy:
+1. set `TELEGRAM_BOT_TOKEN`
+2. set optional `TELEGRAM_CHAT_ALLOWLIST`
+3. verify command path:
+   - `/status`
+   - `/watchlist`
+   - `/health`
+   - `/heartbeat`
+   - `/performance`
+   - `/trade <symbol>`
+   - `/paper on|off`
+
+## 9) Security Posture
+
+Non-negotiable defaults:
+- `liveExecution: false` unless explicitly enabled by operator
+- approval-gated external side effects
+- conservative fallback when config/data quality is degraded
+- least-privilege env and network exposure
+
+## 10) Verification Checklist
+
+- [ ] Service starts without crash loop
+- [ ] Profile and config loaded correctly
+- [ ] Inference route health check succeeds
+- [ ] Telegram command interface responds
+- [ ] Heartbeat/performance command hooks return structured data
+- [ ] Paper mode default confirmed
+- [ ] No secrets printed in logs
+
+## 11) Troubleshooting
+
+- **Startup config error:** confirm `PROFILE` and workspace write permissions
+- **Inference failures:** verify `SPEAKEASY_BASE_URL`/egress and optional API key
+- **Telegram not responding:** validate bot token and allowlist chat IDs
+- **Execution/wallet errors:** confirm wallet env only when execution path is intended

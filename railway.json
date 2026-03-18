@@ -12,19 +12,41 @@
           "default": "research-agent"
         },
         "SPEAKEASY_BASE_URL": {
-          "description": "Speakeasy inference endpoint",
+          "description": "Inference endpoint base URL",
           "default": "https://api.speakeasyrelay.com"
         },
         "SPEAKEASY_API_KEY": {
-          "description": "Optional API key"
-        },
-        "AGENT_WALLET_PRIVATE_KEY": {
-          "description": "Agent hot wallet private key",
+          "description": "Optional inference API key",
           "sensitive": true
         },
         "OPENCLAW_API_KEY": {
           "description": "OpenClaw API key",
           "sensitive": true
+        },
+        "TELEGRAM_BOT_TOKEN": {
+          "description": "Telegram bot token for operator chat UX",
+          "sensitive": true
+        },
+        "TELEGRAM_CHAT_ALLOWLIST": {
+          "description": "Optional comma-separated Telegram chat IDs allowed to interact with bot"
+        },
+        "AGENT_WALLET_PRIVATE_KEY": {
+          "description": "Agent hot wallet private key (only for execution-enabled flows)",
+          "sensitive": true
+        },
+        "RAILWAY_PUBLIC_DOMAIN": {
+          "description": "Railway-assigned public domain (if gateway/webhook routing is enabled)"
+        },
+        "OPENCLAW_GATEWAY_BASE_URL": {
+          "description": "Optional explicit OpenClaw gateway/proxy base URL override"
+        },
+        "WORKSPACE_DIR": {
+          "description": "Workspace root path inside container",
+          "default": "/app"
+        },
+        "WRENOS_BOOTSTRAP_ON_START": {
+          "description": "Run init/bootstrap checks on startup (true/false)",
+          "default": "true"
         }
       }
     }

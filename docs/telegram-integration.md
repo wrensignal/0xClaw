@@ -6,6 +6,8 @@ WrenOS supports Telegram via OpenClaw-compatible channel routing. This gives ope
 - `/status`
 - `/watchlist`
 - `/health`
+- `/heartbeat` (heartbeat-monitor summary)
+- `/performance` (performance-report summary)
 - `/trade <symbol>`
 - `/paper on|off`
 
@@ -19,6 +21,8 @@ You can wire adapter output to your runtime by passing hooks:
 - `getStatus(state)`
 - `getWatchlist(state)`
 - `getHealth(state)`
+- `getHeartbeat(state)` (wire heartbeat-monitor latest state)
+- `getPerformance(state)` (wire performance-report latest summary)
 - `proposeTrade({ symbol, paperMode })`
 - `onPaperModeChange(enabled)`
 - `defaultChat({ text, state, commandLike })` (free-form Telegram message passthrough)
@@ -33,6 +37,8 @@ const tg = createTelegramAdapter({
 }, {
   getStatus: async () => ({ ok: true, profile: 'trading-agent-paper' }),
   getWatchlist: async () => ({ ok: true, watchlist: ['BONK', 'WIF'] }),
+  getHeartbeat: async () => ({ ok: true, type: 'heartbeat', summary: 'All feeds healthy', severity: 'ok' }),
+  getPerformance: async () => ({ ok: true, type: 'performance', period: '24h', pnlUsd: 124.5, winRate: 0.58 }),
   defaultChat: async ({ text }) => ({
     ok: true,
     message: `Agent reply: ${text}`
