@@ -146,6 +146,7 @@ npm run verify
 - `docs/bootstrap-wiring-parity.md`
 - `docs/community-registry-model.md`
 - `docs/profile-matrix.md`
+- `docs/wrenos-mcp-surface.md`
 - `docs/migrating-from-0xclaw-to-wrenos.md` (canonical migration guide)
 - `docs/migration-0xclaw-to-wrenos.md` (legacy pointer)
 - `CHANGELOG.md`
