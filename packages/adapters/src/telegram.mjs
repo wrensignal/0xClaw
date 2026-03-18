@@ -17,6 +17,8 @@ export function createTelegramAdapter(config = {}, hooks = {}) {
     '/status',
     '/watchlist',
     '/health',
+    '/heartbeat',
+    '/performance',
     '/trade <symbol>',
     '/paper on|off'
   ].join('\n');
@@ -45,6 +47,24 @@ export function createTelegramAdapter(config = {}, hooks = {}) {
     return {
       ok: true,
       upstream: config.inferenceBaseUrl || process.env.SPEAKEASY_BASE_URL || 'https://api.speakeasyrelay.com'
+    };
+  }
+
+  async function cmdHeartbeat() {
+    if (hooks.getHeartbeat) return hooks.getHeartbeat(state);
+    return {
+      ok: true,
+      type: 'heartbeat',
+      message: 'Heartbeat summary unavailable (no getHeartbeat hook wired).'
+    };
+  }
+
+  async function cmdPerformance() {
+    if (hooks.getPerformance) return hooks.getPerformance(state);
+    return {
+      ok: true,
+      type: 'performance',
+      message: 'Performance summary unavailable (no getPerformance hook wired).'
     };
   }
 
@@ -85,6 +105,10 @@ export function createTelegramAdapter(config = {}, hooks = {}) {
         return cmdWatchlist();
       case '/health':
         return cmdHealth();
+      case '/heartbeat':
+        return cmdHeartbeat();
+      case '/performance':
+        return cmdPerformance();
       case '/trade':
         return cmdTrade(arg);
       case '/paper':
@@ -106,7 +130,7 @@ export function createTelegramAdapter(config = {}, hooks = {}) {
 
   return {
     platform: 'telegram',
-    commands: ['/status', '/watchlist', '/health', '/trade <symbol>', '/paper on|off'],
+    commands: ['/status', '/watchlist', '/health', '/heartbeat', '/performance', '/trade <symbol>', '/paper on|off'],
     state,
     handleText
   };
