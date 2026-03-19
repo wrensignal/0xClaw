@@ -124,3 +124,4 @@ See:
 - `docs/migration-0xclaw-to-wrenos.md` (legacy pointer)
 
 For hosted/private inference routing details, see `docs/speakeasy-integration.md`.
+For Privy onboarding and wallet auth-state flows, see `docs/privy-wallet-provisioning.md`.

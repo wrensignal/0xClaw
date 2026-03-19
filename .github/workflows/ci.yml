@@ -32,3 +32,6 @@ jobs:
 
       - name: CLI smoke
         run: npm run smoke:cli
+
+      - name: Bootstrap smoke
+        run: npm run smoke:bootstrap
