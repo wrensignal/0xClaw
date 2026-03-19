@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wrenos.dev/schemas/strategy-builder/backtest-contract.schema.json",
+  "title": "Strategy Builder Backtest Contract",
+  "type": "object",
+  "required": ["strategy_name", "window", "metrics", "gates", "status", "generated_at"],
+  "properties": {
+    "strategy_name": {"type": "string", "minLength": 1},
+    "window": {
+      "type": "object",
+      "required": ["from", "to"],
+      "properties": {
+        "from": {"type": "string", "format": "date-time"},
+        "to": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": true
+    },
+    "metrics": {
+      "type": "object",
+      "required": ["total_trades", "win_rate", "avg_edge_bps", "worst_drawdown_pct"],
+      "properties": {
+        "total_trades": {"type": "integer", "minimum": 0},
+        "win_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "avg_edge_bps": {"type": "number"},
+        "worst_drawdown_pct": {"type": "number", "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": true
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "ok", "threshold", "observed"],
+        "properties": {
+          "name": {"type": "string"},
+          "ok": {"type": "boolean"},
+          "threshold": {},
+          "observed": {}
+        },
+        "additionalProperties": true
+      }
+    },
+    "status": {"type": "string", "enum": ["pass", "fail", "insufficient_data"]},
+    "failure_semantics": {
+      "type": "object",
+      "properties": {
+        "mode": {"type": "string", "enum": ["fail_closed", "partial_degraded"]},
+        "reason": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "generated_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": true
+}
