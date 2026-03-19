@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wrenos.dev/schemas/portfolio-optimizer/parameter-bounds.schema.json",
+  "title": "Portfolio Optimizer Parameter Bounds Contract",
+  "type": "object",
+  "required": ["capital", "constraints", "generated_at"],
+  "properties": {
+    "capital": {
+      "type": "object",
+      "required": ["total_usd", "max_total_exposure_pct"],
+      "properties": {
+        "total_usd": {"type": "number", "exclusiveMinimum": 0},
+        "max_total_exposure_pct": {"type": "number", "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": true
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["max_weight_per_strategy", "min_weight_per_strategy", "max_strategies", "turnover_limit_pct"],
+      "properties": {
+        "max_weight_per_strategy": {"type": "number", "minimum": 0.01, "maximum": 1},
+        "min_weight_per_strategy": {"type": "number", "minimum": 0, "maximum": 0.5},
+        "max_strategies": {"type": "integer", "minimum": 1, "maximum": 100},
+        "turnover_limit_pct": {"type": "number", "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": true
+    },
+    "conflict_resolution": {
+      "type": "object",
+      "required": ["policy", "priority_order"],
+      "properties": {
+        "policy": {"type": "string", "enum": ["safety_first", "return_first_with_guardrails"]},
+        "priority_order": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["risk_limits", "exposure_limits", "turnover_limits", "return_objective"]},
+          "minItems": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "generated_at": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "constraints": {
+            "properties": {
+              "min_weight_per_strategy": {"type": "number"},
+              "max_weight_per_strategy": {"type": "number"}
+            },
+            "required": ["min_weight_per_strategy", "max_weight_per_strategy"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "constraints": {
+            "properties": {
+              "min_weight_per_strategy": {
+                "type": "number",
+                "maximum": {"$data": "1/max_weight_per_strategy"}
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": true
+}
