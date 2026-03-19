@@ -28,7 +28,7 @@
     "verify": "npm run build && npm run lint && npm run typecheck && npm run test && npm run smoke:cli && npm run smoke:bootstrap",
     "railway:preflight": "node scripts/railway-env-preflight.mjs",
     "railway:health": "node scripts/railway-postdeploy-health.mjs",
-    "railway:first-run": "node scripts/railway-first-run.mjs"
+    "railway:first-run": "node scripts/railway-first-run.mjs",
     "smoke:bootstrap": "node scripts/bootstrap-smoke.mjs"
   },
   "engines": {
