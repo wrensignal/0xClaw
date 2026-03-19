@@ -25,7 +25,11 @@ function remediation(step) {
 }
 
 for (const args of steps) {
-  const r = spawnSync('node', [cli, ...args], { cwd: dir, encoding: 'utf8' });
+  const r = spawnSync('node', [cli, ...args], {
+    cwd: dir,
+    encoding: 'utf8',
+    env: { ...process.env, HELIUS_API_KEY: process.env.HELIUS_API_KEY || 'smoke-helius-key' }
+  });
   if (r.status !== 0) {
     console.error(JSON.stringify({
       ok: false,
