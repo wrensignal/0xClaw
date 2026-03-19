@@ -569,3 +569,20 @@ clawhub install strategy-builder
 2. Install at minimum `vendor/agenti-lite`
 3. Configure `.mcp.json` with MCP servers
 4. Tell your agent: "Build a strategy and backtest it"
+
+
+## Contract Decomposition
+
+This skill is now explicitly decomposed into three machine-readable subcontracts:
+
+1. NL Rule Translation Contract
+2. Backtest Contract
+3. Zoo Governance Contract
+
+Schemas:
+- `packs/core-skills-pack/strategy-builder/contracts/nl-rule-translation.schema.json`
+- `packs/core-skills-pack/strategy-builder/contracts/backtest-contract.schema.json`
+- `packs/core-skills-pack/strategy-builder/contracts/zoo-governance-contract.schema.json`
+
+Decomposition artifact:
+- `docs/release-readiness/strategy-builder-contract-decomposition.md`
