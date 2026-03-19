@@ -71,7 +71,8 @@ test('wallet setup supports privy provider metadata', () => {
     '--provider', 'privy',
     '--private-key', '0x' + '11'.repeat(32),
     '--privy-user-id', 'user_test',
-    '--privy-wallet-id', 'wallet_test'
+    '--privy-wallet-id', 'wallet_test',
+    '--auth-state', 'signed_in'
   ]);
   assert.equal(out.status, 0, out.stderr || out.stdout);
 
@@ -80,6 +81,57 @@ test('wallet setup supports privy provider metadata', () => {
   assert.equal(wallet.source, 'privy');
   assert.equal(wallet.privy.userId, 'user_test');
   assert.equal(wallet.privy.walletId, 'wallet_test');
+  assert.equal(wallet.privy.auth.state, 'signed_in');
+
+  rmSync(cwd, { recursive: true, force: true });
+});
+
+test('wallet setup supports privy signed_out metadata state', () => {
+  const cwd = setupWorkspace();
+  const out = run(cwd, [
+    'wallet', 'setup',
+    '--provider', 'privy',
+    '--auth-state', 'signed_out',
+    '--privy-user-id', 'user_signed_out'
+  ]);
+  assert.equal(out.status, 0, out.stderr || out.stdout);
+
+  const wallet = JSON.parse(readFileSync(path.join(cwd, '.wrenos/wallet.json'), 'utf8'));
+  assert.equal(wallet.provider, 'privy');
+  assert.equal(wallet.privateKey, null);
+  assert.equal(wallet.privy.auth.state, 'signed_out');
+
+  rmSync(cwd, { recursive: true, force: true });
+});
+
+test('wallet setup supports privy expired state with refresh token', () => {
+  const cwd = setupWorkspace();
+  const out = run(cwd, [
+    'wallet', 'setup',
+    '--provider', 'privy',
+    '--auth-state', 'expired',
+    '--privy-refresh-token', 'refresh_token_test',
+    '--privy-user-id', 'user_expired'
+  ]);
+  assert.equal(out.status, 0, out.stderr || out.stdout);
+
+  const wallet = JSON.parse(readFileSync(path.join(cwd, '.wrenos/wallet.json'), 'utf8'));
+  assert.equal(wallet.provider, 'privy');
+  assert.equal(wallet.privy.auth.state, 'expired');
+  assert.equal(wallet.privy.auth.refreshToken, 'refresh_token_test');
+
+  rmSync(cwd, { recursive: true, force: true });
+});
+
+test('wallet setup rejects malformed privy auth state', () => {
+  const cwd = setupWorkspace();
+  const out = run(cwd, [
+    'wallet', 'setup',
+    '--provider', 'privy',
+    '--auth-state', 'weird_state'
+  ]);
+  assert.notEqual(out.status, 0);
+  assert.match(out.stderr, /Invalid --auth-state/);
 
   rmSync(cwd, { recursive: true, force: true });
 });
