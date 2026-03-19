@@ -596,3 +596,18 @@ If the skill already defines a stricter schema above, that schema is authoritati
 - Never fabricate missing data; mark unavailable fields explicitly.
 - If all core sources fail, return a hard failure response with actionable remediation steps.
 
+## Contract Decomposition
+
+This skill is now explicitly decomposed into three machine-readable subcontracts:
+
+1. NL Rule Translation Contract
+2. Backtest Contract
+3. Zoo Governance Contract
+
+Schemas:
+- `packs/core-skills-pack/strategy-builder/contracts/nl-rule-translation.schema.json`
+- `packs/core-skills-pack/strategy-builder/contracts/backtest-contract.schema.json`
+- `packs/core-skills-pack/strategy-builder/contracts/zoo-governance-contract.schema.json`
+
+Decomposition artifact:
+- `docs/release-readiness/strategy-builder-contract-decomposition.md`
