@@ -70,3 +70,38 @@ wrensignal/wrenOS (main)
 - [ ] Core pipeline owner — source-of-truth policy confirmed
 
 Until all sign-offs are checked in issue comments, this item remains in_progress.
+
+
+## Sign-off protocol
+
+To satisfy final acceptance for this issue, capture explicit comments in the linked Paperclip issue from the following roles:
+
+1. Site pipeline owner
+2. Core pipeline owner
+3. Quill (owner acknowledgment)
+
+Use this exact sign-off format in issue comments:
+
+```text
+[WRE-106 SIGNOFF]
+role: <site-pipeline-owner|core-pipeline-owner|quill-owner>
+decision: approve
+notes: <optional>
+```
+
+If any role declines approval, post:
+
+```text
+[WRE-106 SIGNOFF]
+role: <role>
+decision: changes_requested
+notes: <required remediation>
+```
+
+### Decision log template
+
+| Role | Decision | Comment link |
+|---|---|---|
+| site-pipeline-owner | pending | pending |
+| core-pipeline-owner | pending | pending |
+| quill-owner | pending | pending |
