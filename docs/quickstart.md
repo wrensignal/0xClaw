@@ -125,3 +125,4 @@ See:
 
 For hosted/private inference routing details, see `docs/speakeasy-integration.md`.
 For Privy onboarding and wallet auth-state flows, see `docs/privy-wallet-provisioning.md`.
+For MCP doctor pass/fail signatures and remediations, see `docs/mcp-doctor-signatures.md`.

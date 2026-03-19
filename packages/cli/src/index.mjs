@@ -54,6 +54,62 @@ function normalizePrivyAuthState(rawState, hasPrivateKey) {
   return { ok: true, state };
 }
 
+function commandExists(command) {
+  const probe = spawnSync('which', [command], { encoding: 'utf8' });
+  return probe.status === 0;
+}
+
+function diagnoseMcpServers(mcpConfig) {
+  const results = [];
+  for (const [name, server] of Object.entries(mcpConfig || {})) {
+    const command = server?.command || '';
+    const args = Array.isArray(server?.args) ? server.args : [];
+    const env = server?.env || {};
+
+    const commandOk = Boolean(command) && commandExists(command);
+    const missingEnv = Object.entries(env)
+      .filter(([k, v]) => String(v || '').startsWith('<') && !process.env[k])
+      .map(([k]) => k);
+    const envOk = missingEnv.length === 0;
+
+    let startupProbeOk = true;
+    let startupProbeDetail = 'startup probe passed';
+    if (command === 'npx' && args[0] === '-y' && args[1] === 'tsx' && args[2]) {
+      const entry = path.resolve(cwd, args[2]);
+      const hasVendorTree = existsSync(path.resolve(cwd, 'vendor'));
+      if (!hasVendorTree) {
+        startupProbeOk = true;
+        startupProbeDetail = 'vendor tree not present in current workspace; startup probe skipped';
+      } else {
+        startupProbeOk = existsSync(entry);
+        startupProbeDetail = startupProbeOk ? `entrypoint exists: ${entry}` : `entrypoint missing: ${entry}`;
+      }
+    }
+
+    results.push({
+      server: name,
+      checks: {
+        command: {
+          ok: commandOk,
+          detail: commandOk ? `command found: ${command}` : `command missing: ${command || '(empty)'}`,
+          remediation: `Install/ensure \`${command || 'command'}\` is available in PATH.`
+        },
+        env: {
+          ok: envOk,
+          detail: envOk ? 'required env resolved or not required' : `missing required env: ${missingEnv.join(', ')}`,
+          remediation: missingEnv.length ? `Set env var(s): ${missingEnv.join(', ')}` : 'none'
+        },
+        startupProbe: {
+          ok: startupProbeOk,
+          detail: startupProbeDetail,
+          remediation: startupProbeOk ? 'none' : 'Fix server entrypoint path or reinstall vendor module.'
+        }
+      }
+    });
+  }
+  return results;
+}
+
 function getActiveConfigPath() {
   if (existsSync(configPath)) return configPath;
   if (existsSync(legacyConfigPath)) return legacyConfigPath;
@@ -215,6 +271,16 @@ async function cmdDoctor() {
   const walletPath = path.join(configDir, 'wallet.json');
   const hasWallet = existsSync(walletPath);
   const wallet = hasWallet ? JSON.parse(await readFile(walletPath, 'utf8')) : null;
+  const mcpPath = path.join(cwd, '.mcp.json');
+  let mcpConfig = null;
+  if (existsSync(mcpPath)) {
+    try {
+      mcpConfig = JSON.parse(await readFile(mcpPath, 'utf8'));
+    } catch {
+      mcpConfig = null;
+    }
+  }
+  const mcpDiagnostics = diagnoseMcpServers(mcpConfig || {});
 
   const expectedProfiles = [
     'research-agent',
@@ -291,6 +357,24 @@ async function cmdDoctor() {
     }
   ];
 
+  for (const diag of mcpDiagnostics) {
+    checks.push({
+      name: `mcp.server.${diag.server}.command`,
+      ok: diag.checks.command.ok,
+      detail: `${diag.checks.command.detail} | remediation: ${diag.checks.command.remediation}`
+    });
+    checks.push({
+      name: `mcp.server.${diag.server}.env`,
+      ok: diag.checks.env.ok,
+      detail: `${diag.checks.env.detail} | remediation: ${diag.checks.env.remediation}`
+    });
+    checks.push({
+      name: `mcp.server.${diag.server}.startup`,
+      ok: diag.checks.startupProbe.ok,
+      detail: `${diag.checks.startupProbe.detail} | remediation: ${diag.checks.startupProbe.remediation}`
+    });
+  }
+
   const failed = checks.filter((c) => !c.ok);
   const warnings = [];
 
@@ -307,6 +391,7 @@ async function cmdDoctor() {
     profile: cfg?.profile || null,
     configPath: activeConfigPath,
     checks,
+    mcpDiagnostics,
     warnings,
     next: failed.length
       ? ['Fix failing checks, then re-run: wrenos doctor', 'View snapshot: wrenos status']
