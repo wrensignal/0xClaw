@@ -17,10 +17,11 @@ function setupWorkspace() {
   return dir;
 }
 
-function run(cwd, args) {
+function run(cwd, args, env = {}) {
   return spawnSync('node', [CLI, ...args], {
     cwd,
-    encoding: 'utf8'
+    encoding: 'utf8',
+    env: { ...process.env, ...env }
   });
 }
 
@@ -42,10 +43,25 @@ test('doctor passes after init', () => {
   let out = run(cwd, ['init', '--profile', 'research-agent']);
   assert.equal(out.status, 0, out.stderr || out.stdout);
 
-  out = run(cwd, ['doctor']);
+  out = run(cwd, ['doctor'], { HELIUS_API_KEY: 'test-helius-key' });
   assert.equal(out.status, 0, out.stderr || out.stdout);
   const payload = JSON.parse(out.stdout);
   assert.equal(payload.ok, true);
+
+  rmSync(cwd, { recursive: true, force: true });
+});
+
+test('doctor reports MCP env/startup diagnostics when required env missing', () => {
+  const cwd = setupWorkspace();
+  let out = run(cwd, ['init', '--profile', 'research-agent']);
+  assert.equal(out.status, 0, out.stderr || out.stdout);
+
+  out = run(cwd, ['doctor']);
+  assert.notEqual(out.status, 0);
+  const payload = JSON.parse(out.stdout);
+  const mcpEnvCheck = payload.checks.find((c) => c.name === 'mcp.server.helius.env');
+  assert.equal(Boolean(mcpEnvCheck), true);
+  assert.equal(mcpEnvCheck.ok, false);
 
   rmSync(cwd, { recursive: true, force: true });
 });
