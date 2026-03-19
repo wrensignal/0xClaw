@@ -106,3 +106,28 @@ Optional:
 ## Notes
 
 This is an optimization/recommendation skill only. It generates weight and parameter guidance for operator review, not autonomous execution.
+
+## How It Works
+
+This skill is invoked by natural-language intent matching. It gathers required inputs, runs its internal analysis pipeline, and returns a structured output payload suitable for downstream WrenOS skills and operator review.
+
+## Output Contract
+
+This skill should return a JSON-compatible payload containing:
+
+- `summary`: short operator-facing summary
+- `signals`: array of key bullish/bearish/neutral observations
+- `risks`: array of explicit risks/constraints
+- `feed_health`: per-source status (`ok|degraded|down`)
+- `confidence`: `high|medium|low`
+- `generated_at`: ISO 8601 timestamp
+
+If the skill already defines a stricter schema above, that schema is authoritative.
+
+## Failure Handling
+
+- If one data source fails, continue with remaining sources and downgrade confidence.
+- If critical sources are unavailable, return partial output with clear `feed_health` degradation details.
+- Never fabricate missing data; mark unavailable fields explicitly.
+- If all core sources fail, return a hard failure response with actionable remediation steps.
+
