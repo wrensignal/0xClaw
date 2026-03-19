@@ -44,6 +44,16 @@ function setByPath(obj, dotPath, value) {
   return obj;
 }
 
+const PRIVY_AUTH_STATES = new Set(['signed_out', 'signed_in', 'expired']);
+
+function normalizePrivyAuthState(rawState, hasPrivateKey) {
+  const state = rawState || (hasPrivateKey ? 'signed_in' : 'signed_out');
+  if (!PRIVY_AUTH_STATES.has(state)) {
+    return { ok: false, state, error: `Invalid --auth-state \`${state}\`. Allowed: signed_out | signed_in | expired.` };
+  }
+  return { ok: true, state };
+}
+
 function getActiveConfigPath() {
   if (existsSync(configPath)) return configPath;
   if (existsSync(legacyConfigPath)) return legacyConfigPath;
@@ -202,6 +212,9 @@ async function cmdDoctor() {
   const activeConfigPath = getActiveConfigPath();
   const hasConfig = existsSync(activeConfigPath);
   const cfg = hasConfig ? JSON.parse(await readFile(activeConfigPath, 'utf8')) : null;
+  const walletPath = path.join(configDir, 'wallet.json');
+  const hasWallet = existsSync(walletPath);
+  const wallet = hasWallet ? JSON.parse(await readFile(walletPath, 'utf8')) : null;
 
   const expectedProfiles = [
     'research-agent',
@@ -260,10 +273,21 @@ async function cmdDoctor() {
     },
     {
       name: 'secrets.wallet',
-      ok: existsSync(path.join(configDir, 'wallet.json')) || cfg?.liveExecution === false,
-      detail: existsSync(path.join(configDir, 'wallet.json'))
+      ok: hasWallet || cfg?.liveExecution === false,
+      detail: hasWallet
         ? 'wallet scaffold present'
         : (cfg?.liveExecution === false ? 'wallet optional in paper mode' : 'wallet missing for live-capable execution')
+    },
+    {
+      name: 'operator.privy-metadata',
+      ok: !hasWallet
+        || wallet?.provider !== 'privy'
+        || (wallet?.privy?.auth?.state && PRIVY_AUTH_STATES.has(wallet.privy.auth.state)),
+      detail: !hasWallet
+        ? 'wallet not present'
+        : (wallet?.provider !== 'privy'
+            ? `wallet provider=${wallet?.provider || 'unknown'}`
+            : `privy auth state=${wallet?.privy?.auth?.state || 'missing'} (expected signed_out|signed_in|expired)`)
     }
   ];
 
@@ -295,6 +319,8 @@ async function cmdDoctor() {
 async function cmdStatus() {
   const activeConfigPath = getActiveConfigPath();
   const cfg = existsSync(activeConfigPath) ? JSON.parse(await readFile(activeConfigPath, 'utf8')) : null;
+  const walletPath = path.join(configDir, 'wallet.json');
+  const wallet = existsSync(walletPath) ? JSON.parse(await readFile(walletPath, 'utf8')) : null;
 
   const inferenceBase = cfg?.inference?.baseUrl || process.env.SPEAKEASY_BASE_URL || null;
   const executionMode = cfg?.liveExecution === true ? 'live' : (cfg?.liveExecution === false ? 'paper' : 'unknown');
@@ -338,7 +364,9 @@ async function cmdStatus() {
     },
     operatorInterface: {
       mcpConfig: existsSync(path.join(cwd, '.mcp.json')),
-      walletConfigured: existsSync(path.join(configDir, 'wallet.json'))
+      walletConfigured: existsSync(path.join(configDir, 'wallet.json')),
+      walletProvider: wallet?.provider || null,
+      privyAuthState: wallet?.provider === 'privy' ? (wallet?.privy?.auth?.state || null) : null
     },
     packs,
     commands: {
@@ -378,31 +406,69 @@ async function cmdWalletSetup() {
     const privyWalletId = arg('--privy-wallet-id', process.env.PRIVY_WALLET_ID || null);
     const privyUserId = arg('--privy-user-id', process.env.PRIVY_USER_ID || null);
     const privateKey = importPk || process.env.PRIVY_EXPORTED_PRIVATE_KEY || process.env.AGENT_WALLET_PRIVATE_KEY || null;
+    const authStateRaw = arg('--auth-state', process.env.PRIVY_AUTH_STATE || null);
+    const normalized = normalizePrivyAuthState(authStateRaw, Boolean(privateKey));
 
-    if (!privateKey) {
-      console.error('Privy provisioning requires an exported private key via --private-key, PRIVY_EXPORTED_PRIVATE_KEY, or AGENT_WALLET_PRIVATE_KEY.');
-      console.error('Use your Privy backend to export/provision the key material, then run this command again.');
+    if (!normalized.ok) {
+      console.error(normalized.error);
       process.exit(1);
     }
 
-    const pseudoPublic = createHash('sha256').update(privateKey).digest('hex').slice(0, 44);
+    if (normalized.state === 'signed_in' && !privateKey) {
+      console.error('Privy auth-state `signed_in` requires key material via --private-key, PRIVY_EXPORTED_PRIVATE_KEY, or AGENT_WALLET_PRIVATE_KEY.');
+      process.exit(1);
+    }
+
+    const accessToken = arg('--privy-access-token', process.env.PRIVY_ACCESS_TOKEN || null);
+    const refreshToken = arg('--privy-refresh-token', process.env.PRIVY_REFRESH_TOKEN || null);
+    const tokenExpiresAt = arg('--privy-token-expires-at', process.env.PRIVY_TOKEN_EXPIRES_AT || null);
+
+    if (normalized.state === 'expired' && !refreshToken) {
+      console.error('Privy auth-state `expired` requires refresh context (--privy-refresh-token or PRIVY_REFRESH_TOKEN).');
+      process.exit(1);
+    }
+
+    const pseudoPublic = privateKey
+      ? createHash('sha256').update(privateKey).digest('hex').slice(0, 44)
+      : null;
+
     const wallet = {
       createdAt: new Date().toISOString(),
       source: 'privy',
       chain: arg('--chain', 'solana'),
       provider: 'privy',
       privateKey,
-      publicKey: arg('--public-key', pseudoPublic),
+      publicKey: privateKey ? arg('--public-key', pseudoPublic) : null,
       privy: {
         walletId: privyWalletId,
-        userId: privyUserId
+        userId: privyUserId,
+        auth: {
+          state: normalized.state,
+          accessToken: accessToken || null,
+          refreshToken: refreshToken || null,
+          tokenExpiresAt: tokenExpiresAt || null,
+          capturedAt: new Date().toISOString()
+        }
       },
-      warning: 'Public key is a placeholder hash for bootstrap UX, not guaranteed chain-valid derivation. Use chain-native wallet derivation before live trading.'
+      warning: privateKey
+        ? 'Public key is a placeholder hash for bootstrap UX, not guaranteed chain-valid derivation. Use chain-native wallet derivation before live trading.'
+        : 'Privy session metadata captured without local private key. Re-run wallet setup after successful provisioning/export.'
     };
 
     await writeFile(walletPath, JSON.stringify(wallet, null, 2));
     console.log(`Wallet saved: ${walletPath}`);
-    console.log('Provisioned wallet source: privy');
+    console.log(`Provisioned wallet source: privy (${normalized.state})`);
+
+    if (normalized.state === 'signed_out') {
+      console.log('Next step: authenticate with Privy and re-run with --auth-state signed_in plus exported key material.');
+      return;
+    }
+
+    if (normalized.state === 'expired') {
+      console.log('Next step: refresh/re-auth Privy session and re-run with a valid signed_in state and key material.');
+      return;
+    }
+
     console.log(`Public key (placeholder): ${wallet.publicKey}`);
     console.log('WARNING: This bootstrap public key is not chain-derived. Replace with a real Solana/EVM address before any live funds.');
     return;
