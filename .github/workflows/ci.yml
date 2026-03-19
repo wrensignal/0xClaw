@@ -35,3 +35,6 @@ jobs:
 
       - name: Bootstrap smoke
         run: npm run smoke:bootstrap
+
+      - name: CLI acceptance suite
+        run: npm run acceptance:cli
