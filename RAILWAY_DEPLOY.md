@@ -117,3 +117,13 @@ Non-negotiable defaults:
 - **Inference failures:** verify `SPEAKEASY_BASE_URL`/egress and optional API key
 - **Telegram not responding:** validate bot token and allowlist chat IDs
 - **Execution/wallet errors:** confirm wallet env only when execution path is intended
+
+
+## 12) v1 First-Run Contract
+
+See `docs/railway-first-run-playbook.md` for the canonical happy path and three common failure remediations.
+
+Use:
+- `npm run railway:preflight`
+- `npm run railway:first-run`
+- `npm run railway:health`
