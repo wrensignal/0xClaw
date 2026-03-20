@@ -38,3 +38,6 @@ jobs:
 
       - name: CLI acceptance suite
         run: npm run acceptance:cli
+
+      - name: Managed contract gate
+        run: npm run contract:managed
