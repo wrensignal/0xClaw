@@ -137,3 +137,12 @@ For MCP doctor pass/fail signatures and remediations, see `docs/mcp-doctor-signa
 ## Operator evidence artifacts
 
 For standardized decision/health/run-trace evidence, see `docs/observability/artifacts.md`.
+
+
+## Configure values
+
+Use `wrenos config` to set runtime values before launch:
+
+```bash
+wrenos config set loop.enabled true
+```

@@ -30,6 +30,9 @@ jobs:
       - name: Test
         run: npm run test
 
+      - name: Docs drift check
+        run: npm run docs:drift
+
       - name: CLI smoke
         run: npm run smoke:cli
 
