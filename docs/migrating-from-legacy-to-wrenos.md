@@ -1,6 +1,6 @@
-# Migrating from 0xClaw to WrenOS
+# Migrating from WrenOS to WrenOS
 
-This guide explains how to migrate from `0xClaw` naming to `WrenOS` with minimal disruption.
+This guide explains how to migrate from `WrenOS` naming to `WrenOS` with minimal disruption.
 
 ## Why the rename happened
 
@@ -15,15 +15,15 @@ The project has matured from an early compatibility/bootstrap kit into a broader
 ## What changed
 
 ### Repository rename
-- Old: `wrensignal/0xClaw`
+- Old: `wrensignal/WrenOS`
 - New: `wrensignal/wrenOS`
 
 ### CLI rename
-- Old primary command: `0xclaw`
+- Old primary command: `wrenos`
 - New primary command: `wrenos`
 
 ### Config directory rename
-- Old: `.0xclaw/`
+- Old: `.wrenos/`
 - New: `.wrenos/`
 
 ### Command surface updates
@@ -35,26 +35,21 @@ The project has matured from an early compatibility/bootstrap kit into a broader
 - Internal workspace scope moved to `@wrenos/*`
 - `speakeasy-ai` package name intentionally unchanged for compatibility stability
 
-## Compatibility aliases (temporary migration window)
+## Compatibility aliases
 
-Supported today:
-- `0xclaw` command alias (prints deprecation warning)
-- `.0xclaw/config.json` fallback read path (prints migration warning)
-- `bootstrap-openclaw` command alias (prints deprecation warning)
-- `upgrade-config` alias for migration (prints deprecation warning)
-
-These aliases are temporary and planned for removal in **v0.3.0**.
+Legacy aliases and old config fallbacks have been removed in the full naming purge.
+Use only the canonical `wrenos` command and `.wrenos/` config path.
 
 ## Manual migration steps
 
 ```bash
 # from repo root
 mkdir -p .wrenos
-cp .0xclaw/config.json .wrenos/config.json
+cp .wrenos/config.json .wrenos/config.json
 
 # optional: migrate pack/template artifacts manually if present
-cp .0xclaw/pack-*.json .wrenos/ 2>/dev/null || true
-cp -R .0xclaw/openclaw-templates .wrenos/wrenos-templates 2>/dev/null || true
+cp .wrenos/pack-*.json .wrenos/ 2>/dev/null || true
+cp -R .wrenos/openclaw-templates .wrenos/wrenos-templates 2>/dev/null || true
 
 # validate
 wrenos doctor
@@ -80,11 +75,11 @@ wrenos migrate --force
 
 | Before | After |
 |---|---|
-| `0xclaw init --profile research-agent` | `wrenos init --profile research-agent` |
-| `0xclaw doctor` | `wrenos doctor` |
-| `0xclaw status` | `wrenos status` |
-| `0xclaw bootstrap-openclaw` | `wrenos bootstrap-wrenos` |
-| `.0xclaw/config.json` | `.wrenos/config.json` |
+| `wrenos init --profile research-agent` | `wrenos init --profile research-agent` |
+| `wrenos doctor` | `wrenos doctor` |
+| `wrenos status` | `wrenos status` |
+| `wrenos bootstrap-openclaw` | `wrenos bootstrap-wrenos` |
+| `.wrenos/config.json` | `.wrenos/config.json` |
 
 ## What stayed the same
 

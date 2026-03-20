@@ -15,8 +15,7 @@
     "packages/*"
   ],
   "bin": {
-    "wrenos": "packages/cli/src/index.mjs",
-    "0xclaw": "packages/cli/src/index.mjs"
+    "wrenos": "packages/cli/src/index.mjs"
   },
   "scripts": {
     "build": "node scripts/build.mjs",
@@ -34,7 +33,10 @@
     "contract:managed": "node scripts/validate-managed-referral-contract.mjs && node scripts/contract-managed-matrix.mjs && node scripts/contract-oss-invariant.mjs",
     "contract:oss-invariant": "node scripts/contract-oss-invariant.mjs",
     "artifacts:generate": "node scripts/generate-observability-samples.mjs",
-    "artifacts:validate": "node scripts/validate-observability-artifacts.mjs"
+    "artifacts:validate": "node scripts/validate-observability-artifacts.mjs",
+    "contract:migrate:strategy": "node scripts/migrate-contract-v1-to-v2.mjs strategy-check examples/contracts/strategy-check.v1.sample.json",
+    "contract:migrate:explainability": "node scripts/migrate-contract-v1-to-v2.mjs explainability examples/contracts/explainability.v1.sample.json",
+    "contract:migrate:all": "npm run contract:migrate:strategy && npm run contract:migrate:explainability"
   },
   "engines": {
     "node": ">=20"

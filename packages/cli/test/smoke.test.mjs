@@ -209,8 +209,8 @@ test('wallet setup rejects malformed privy auth state', () => {
 
 test('legacy config fallback emits migration warning in status', () => {
   const cwd = setupWorkspace();
-  mkdirSync(path.join(cwd, '.wrenos'), { recursive: true });
-  writeFileSync(path.join(cwd, '.wrenos/config.json'), JSON.stringify({ profile: 'research-agent', liveExecution: false }, null, 2));
+  mkdirSync(path.join(cwd, '.legacy'), { recursive: true });
+  writeFileSync(path.join(cwd, '.legacy/config.json'), JSON.stringify({ profile: 'research-agent', liveExecution: false }, null, 2));
 
   const out = run(cwd, ['status']);
   assert.equal(out.status, 0);
@@ -220,9 +220,9 @@ test('legacy config fallback emits migration warning in status', () => {
   rmSync(cwd, { recursive: true, force: true });
 });
 
-test('wrenos compatibility alias emits deprecation warning', () => {
+test('legacy compatibility alias emits deprecation warning', () => {
   const cwd = setupWorkspace();
-  const legacyEntry = path.join(cwd, 'wrenos');
+  const legacyEntry = path.join(cwd, 'legacy');
   copyFileSync(CLI, legacyEntry);
 
   const out = spawnSync('node', [legacyEntry, 'status'], {
@@ -230,7 +230,7 @@ test('wrenos compatibility alias emits deprecation warning', () => {
     encoding: 'utf8',
     env: { ...process.env }
   });
-  assert.match(out.stderr, /\[deprecation\].*wrenos/i);
+  assert.match(out.stderr, /\[deprecation\].*legacy/i);
 
   rmSync(cwd, { recursive: true, force: true });
 });
@@ -239,7 +239,7 @@ test('migrate no-ops safely when no legacy directory exists', () => {
   const cwd = setupWorkspace();
   const out = run(cwd, ['migrate']);
   assert.equal(out.status, 0);
-  assert.match(out.stdout, /No legacy \.wrenos directory found/i);
+  assert.match(out.stdout, /No legacy \.legacy directory found/i);
 
   rmSync(cwd, { recursive: true, force: true });
 });

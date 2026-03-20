@@ -13,5 +13,8 @@
   "bugs": {
     "url": "https://github.com/wrensignal/wrenOS/issues"
   },
-  "main": "src/index.mjs"
+  "main": "src/index.mjs",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
 }

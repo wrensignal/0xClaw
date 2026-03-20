@@ -1,4 +1,4 @@
-# Rebrand Audit — `0xClaw` → `WrenOS`
+# Rebrand Audit — `legacy` → `WrenOS`
 
 Date: 2026-03-07
 Scope: entire repository (excluding `.git/` and `node_modules/`)
@@ -6,9 +6,9 @@ Scope: entire repository (excluding `.git/` and `node_modules/`)
 ## Method
 
 Searched for these terms across all files:
-- `0xClaw`
-- `0xclaw`
-- `.0xclaw`
+- `legacy`
+- `legacy`
+- `.legacy`
 - `openclaw`
 - `bootstrap-openclaw`
 - `claw` (broad derivative scan)
@@ -23,11 +23,11 @@ Notes:
 
 | File path | Old reference | Type | Recommended action |
 |---|---|---|---|
-| `package.json` | `"0xclaw": "packages/cli/src/index.mjs"` | CLI bin alias | Keep as temporary compatibility alias; remove in future major |
-| `packages/cli/package.json` | `"0xclaw": "src/index.mjs"` | CLI bin alias | Keep as temporary compatibility alias; remove in future major |
-| `package-lock.json` | `"0xclaw"` bin entries | lockfile technical residue | Keep (auto-generated); will clear when alias removed |
-| `packages/cli/src/index.mjs` | `legacyConfigDir = '.0xclaw'` | Legacy config path support | Keep during migration window |
-| `packages/cli/src/index.mjs` | `configFormat: 'legacy-0xclaw'` | Runtime compatibility marker | Keep during migration window |
+| `package.json` | `"legacy": "packages/cli/src/index.mjs"` | CLI bin alias | Keep as temporary compatibility alias; remove in future major |
+| `packages/cli/package.json` | `"legacy": "src/index.mjs"` | CLI bin alias | Keep as temporary compatibility alias; remove in future major |
+| `package-lock.json` | `"legacy"` bin entries | lockfile technical residue | Keep (auto-generated); will clear when alias removed |
+| `packages/cli/src/index.mjs` | `legacyConfigDir = '.legacy'` | Legacy config path support | Keep during migration window |
+| `packages/cli/src/index.mjs` | `configFormat: 'legacy-legacy'` | Runtime compatibility marker | Keep during migration window |
 | `packages/cli/src/index.mjs` | `case 'bootstrap-openclaw'` | Legacy command alias | Keep during migration window |
 
 ---
@@ -36,10 +36,10 @@ Notes:
 
 | File path | Old reference | Type | Recommended action |
 |---|---|---|---|
-| `README.md` | "previously branded `0xClaw`" | Migration/product note | Keep (intentional transparency) |
-| `README.md` | "`0xclaw` CLI + `.0xclaw/` config" | Compatibility note | Keep until deprecation date published |
-| `docs/quickstart.md` | "coming from `0xClaw`" | Migration UX copy | Keep |
-| `docs/migration-0xclaw-to-wrenos.md` | multiple `0xClaw`/`0xclaw` references | Migration doc | Keep (this file is explicitly migration-focused) |
+| `README.md` | "previously branded `legacy`" | Migration/product note | Keep (intentional transparency) |
+| `README.md` | "`legacy` CLI + `.legacy/` config" | Compatibility note | Keep until deprecation date published |
+| `docs/quickstart.md` | "coming from `legacy`" | Migration UX copy | Keep |
+| `docs/migration-legacy-to-wrenos.md` | multiple `legacy`/`legacy` references | Migration doc | Keep (this file is explicitly migration-focused) |
 
 ---
 
@@ -47,10 +47,10 @@ Notes:
 
 | File path | Old reference | Type | Recommended action |
 |---|---|---|---|
-| `.gitignore` | `.0xclaw/` | Legacy workspace path | Keep while fallback supported |
-| `README.md` | `.0xclaw/config.json` fallback | Compatibility behavior | Keep |
-| `packages/cli/src/index.mjs` | warning: using `.0xclaw/config.json` | Compatibility runtime messaging | Keep |
-| `docs/rebrand-plan.md` | references to `0xclaw` alias and `.0xclaw` | Rebrand planning doc | Keep |
+| `.gitignore` | `.legacy/` | Legacy workspace path | Keep while fallback supported |
+| `README.md` | `.legacy/config.json` fallback | Compatibility behavior | Keep |
+| `packages/cli/src/index.mjs` | warning: using `.legacy/config.json` | Compatibility runtime messaging | Keep |
+| `docs/rebrand-plan.md` | references to `legacy` alias and `.legacy` | Rebrand planning doc | Keep |
 
 ---
 
@@ -74,8 +74,8 @@ Notes:
 
 | File path | Old reference | Type | Recommended action |
 |---|---|---|---|
-| `docs/rebrand-plan.md` | historical `0xClaw` references | Planning documentation | Keep |
-| `docs/migration-0xclaw-to-wrenos.md` | historical `0xClaw` references | Migration documentation | Keep |
+| `docs/rebrand-plan.md` | historical `legacy` references | Planning documentation | Keep |
+| `docs/migration-legacy-to-wrenos.md` | historical `legacy` references | Migration documentation | Keep |
 | `packages/speakeasy-ai/PUBLISH_SPEAKEASY_AI.md` | legacy local project path | Maintainer local doc path | Update to neutral path (`<repo-root>`) |
 
 ---
@@ -85,7 +85,7 @@ Notes:
 | File path | Old reference | Type | Recommended action |
 |---|---|---|---|
 | `packages/cli/src/index.mjs` | function name `cmdBootstrapOpenclaw` | Internal function name | Optional: rename to `cmdBootstrapWrenos` (no behavior change) |
-| `packages/cli/test/smoke.test.mjs` | temp dir prefix `0xclaw-cli-smoke-` | Test-only string | Optional: rename to `wrenos-cli-smoke-` |
+| `packages/cli/test/smoke.test.mjs` | temp dir prefix `legacy-cli-smoke-` | Test-only string | Optional: rename to `wrenos-cli-smoke-` |
 
 ---
 
@@ -93,7 +93,7 @@ Notes:
 
 | File path | Old reference | Type | Recommended action |
 |---|---|---|---|
-| `docs/migration-0xclaw-to-wrenos.md` | filename includes `0xclaw` | Migration artifact | Keep (clear + explicit) |
+| `docs/migration-legacy-to-wrenos.md` | filename includes `legacy` | Migration artifact | Keep (clear + explicit) |
 | `examples/wrenos-research-only/` | folder name uses WrenOS naming | Example path naming | No action |
 | `examples/wrenos-solo-trader/` | folder name uses WrenOS naming | Example path naming | No action |
 
@@ -103,7 +103,7 @@ Notes:
 
 | File path | Old reference | Type | Recommended action |
 |---|---|---|---|
-| `packages/speakeasy-ai/PUBLISH_SPEAKEASY_AI.md` | local filesystem path with `/0xclaw/` | Local doc path | Update to relative/neutral path |
+| `packages/speakeasy-ai/PUBLISH_SPEAKEASY_AI.md` | local filesystem path with `/legacy/` | Local doc path | Update to relative/neutral path |
 | `railway.json` | `github:wrensignal/wrenOS` | New branding URL | No action |
 
 ---
@@ -113,7 +113,7 @@ Notes:
 | File path | Old reference | Type | Recommended action |
 |---|---|---|---|
 | `packages/cli/src/index.mjs` | `bootstrap-openclaw` | Legacy command alias | Keep temporarily |
-| `package.json`, `packages/cli/package.json` | `0xclaw` bin | Legacy command alias | Keep temporarily |
+| `package.json`, `packages/cli/package.json` | `legacy` bin | Legacy command alias | Keep temporarily |
 
 ---
 
@@ -121,8 +121,8 @@ Notes:
 
 | File path | Old reference | Type | Recommended action |
 |---|---|---|---|
-| `package-lock.json` | lockfile entries referencing `0xclaw` bin alias | Generated metadata | Keep while alias exists |
-| workspace package scopes | prior `@0xclaw/*` (already migrated) | Package namespace | No further action |
+| `package-lock.json` | lockfile entries referencing `legacy` bin alias | Generated metadata | Keep while alias exists |
+| workspace package scopes | prior `@legacy/*` (already migrated) | Package namespace | No further action |
 
 ---
 
@@ -140,8 +140,8 @@ Notes:
 
 ### Keep (intentional)
 - `OpenClaw` platform references
-- Migration references to `0xClaw`/`0xclaw`
-- Temporary compatibility aliases (`0xclaw` bin, `.0xclaw` fallback, `bootstrap-openclaw` alias)
+- Migration references to `legacy`/`legacy`
+- Temporary compatibility aliases (`legacy` bin, `.legacy` fallback, `bootstrap-openclaw` alias)
 
 ### Change next (low-risk cleanup)
 1. `packages/speakeasy-ai/PUBLISH_SPEAKEASY_AI.md` local path cleanup
@@ -149,7 +149,7 @@ Notes:
 3. Optional example folder renames from `openclaw-*` to `wrenos-*`
 
 ### Defer to major-version cut
-- Remove `0xclaw` CLI alias
-- Remove `.0xclaw` fallback
+- Remove `legacy` CLI alias
+- Remove `.legacy` fallback
 - Remove `bootstrap-openclaw` alias
 - Regenerate lockfile without legacy alias entries

@@ -7,13 +7,13 @@ import { spawnSync } from 'node:child_process';
 
 const invokedAs = path.basename(process.argv[1] || '');
 const DEPRECATION_REMOVAL_TARGET = 'v0.3.0';
-if (invokedAs === 'wrenos') {
-  console.error("[deprecation] The `wrenos` command has been renamed to `wrenos`. This alias will be removed in "+DEPRECATION_REMOVAL_TARGET+". Please update your scripts and workflows. Run `wrenos migrate` and see docs/migrating-from-wrenos-to-wrenos.md for details.");
+if (invokedAs === 'legacy') {
+  console.error("[deprecation] The `legacy` command has been renamed to `wrenos`. This alias will be removed in "+DEPRECATION_REMOVAL_TARGET+". Please update your scripts and workflows. Run `wrenos migrate` and see docs/migrating-from-legacy-to-wrenos.md for details.");
 }
 
 const cwd = process.cwd();
 const configDir = path.join(cwd, '.wrenos');
-const legacyConfigDir = path.join(cwd, '.wrenos');
+const legacyConfigDir = path.join(cwd, '.legacy');
 const configPath = path.join(configDir, 'config.json');
 const legacyConfigPath = path.join(legacyConfigDir, 'config.json');
 
@@ -123,7 +123,7 @@ async function loadConfigOrFail() {
     process.exit(1);
   }
   if (active === legacyConfigPath) {
-    console.error('Using legacy config path (.wrenos/config.json). Use `.wrenos/` going forward. Run `wrenos migrate` (or `wrenos migrate --force`) to migrate now. Planned removal: '+DEPRECATION_REMOVAL_TARGET+'.');
+    console.error('Using legacy config path (.legacy/config.json). Use `.wrenos/` going forward. Run `wrenos migrate` (or `wrenos migrate --force`) to migrate now. Planned removal: '+DEPRECATION_REMOVAL_TARGET+'.');
   }
   return JSON.parse(await readFile(active, 'utf8'));
 }
@@ -379,7 +379,7 @@ async function cmdDoctor() {
   const warnings = [];
 
   if (activeConfigPath === legacyConfigPath && hasConfig) {
-    warnings.push(`Legacy config path in use (.wrenos). Run wrenos migrate before ${DEPRECATION_REMOVAL_TARGET}.`);
+    warnings.push(`Legacy config path in use (.legacy). Run wrenos migrate before ${DEPRECATION_REMOVAL_TARGET}.`);
   }
   if (cfg?.liveExecution === true) {
     warnings.push('liveExecution=true: verify approvals, signer policy, and risk limits before trading.');
@@ -661,7 +661,7 @@ async function cmdTestExecution() {
 
 async function cmdMigrate() {
   if (!existsSync(legacyConfigDir)) {
-    console.log('No legacy .wrenos directory found. Nothing to migrate.');
+    console.log('No legacy .legacy directory found. Nothing to migrate.');
     return;
   }
 

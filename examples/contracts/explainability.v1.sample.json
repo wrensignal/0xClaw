@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "decision": "hold",
+  "confidence": "medium",
+  "reasons": ["signal below threshold"],
+  "generated_at": "2026-03-19T20:12:00.000Z"
+}

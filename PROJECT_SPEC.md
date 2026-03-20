@@ -17,7 +17,7 @@ WrenOS is an open-source control plane for operator-managed crypto agents, curre
 - Reversible / paper-safe defaults over premature live automation
 - Operator control is a feature, not a limitation
 
-**Lineage:** WrenOS is the renamed successor to 0xClaw. Use "WrenOS" everywhere new. Legacy `0xclaw` CLI alias exists for backward compat only.
+**Lineage:** WrenOS is the renamed successor to legacy. Use "WrenOS" everywhere new. Legacy `legacy` CLI alias exists for backward compat only.
 
 ---
 
@@ -27,7 +27,7 @@ WrenOS is an open-source control plane for operator-managed crypto agents, curre
 /Users/clawd/Desktop/Wren/projects/WrenOS/repo/
 ├── packages/           # Core npm workspace packages
 │   ├── adapters/       # Inference, execution, operator interface adapters
-│   ├── cli/            # CLI (wrenos / 0xclaw commands)
+│   ├── cli/            # CLI (wrenos / legacy commands)
 │   ├── core/           # Policy defaults, safety primitives, shared utils
 │   ├── loops/          # Heartbeat planning, validation summaries
 │   ├── profiles/       # 7 profile templates (paper-first)
@@ -157,7 +157,7 @@ The docs site at wrenos.ai/docs already exists. Quill should assign tasks to upd
 - Deployment Guide
 
 #### G. Align site/repo naming cleanup
-- Remove remaining 0xClaw links from site
+- Remove remaining legacy links from site
 - Make WrenOS canonical everywhere public
 - Site currently has some legacy routing
 

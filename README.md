@@ -14,8 +14,8 @@ It is designed for operators who want explicit control and auditability, not bla
 - **Safety guarantees:** `liveExecution: false` by default, explicit approvals, confidence-tier fallback behavior, and inspectable JSON/Markdown artifacts.
 - **Beta surface:** one-command orchestration loop is available as `wrenos start` (beta).
 
-> This project was previously known as **0xClaw**. See `docs/migrating-from-0xclaw-to-wrenos.md` for migration details.
-> Legacy `0xclaw` CLI + `.0xclaw` config compatibility is supported during the migration window (planned removal: **v0.3.0**).
+> This project was previously known as **legacy**. See `docs/migrating-from-legacy-to-wrenos.md` for migration details.
+> Legacy `legacy` CLI + `.legacy` config compatibility is supported during the migration window (planned removal: **v0.3.0**).
 
 ## Repository maturity
 
@@ -87,8 +87,8 @@ Note: generated `.mcp.json` includes a starter wiring (`agenti-lite`, `pump-fun-
 Other vendored components are available in `vendor/` but must be added to `.mcp.json` manually.
 
 Legacy alias support (temporary):
-- `0xclaw ...` still works
-- `.0xclaw/config.json` is read if `.wrenos/config.json` is absent
+- `legacy ...` still works
+- `.legacy/config.json` is read if `.wrenos/config.json` is absent
 
 Migration command for existing operators:
 ```bash
@@ -147,8 +147,8 @@ npm run verify
 - `docs/community-registry-model.md`
 - `docs/profile-matrix.md`
 - `docs/wrenos-mcp-surface.md`
-- `docs/migrating-from-0xclaw-to-wrenos.md` (canonical migration guide)
-- `docs/migration-0xclaw-to-wrenos.md` (legacy pointer)
+- `docs/migrating-from-legacy-to-wrenos.md` (canonical migration guide)
+- `docs/migration-legacy-to-wrenos.md` (legacy pointer)
 - `CHANGELOG.md`
 
 ## Landing page prototype
