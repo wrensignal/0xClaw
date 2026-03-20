@@ -164,3 +164,7 @@ Open it locally in your browser to preview.
 Apache-2.0
 
 - Site ownership map: `docs/site-ownership.md`
+
+## Documentation
+
+- **v1 launch gate:** [`docs/release-readiness/v1-checklist.md`](docs/release-readiness/v1-checklist.md)

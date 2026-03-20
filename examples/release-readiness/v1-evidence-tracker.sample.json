@@ -1,0 +1,8 @@
+{
+  "wrenosReleasePr": "https://github.com/wrensignal/wrenOS/pull/<id>",
+  "siteReleasePr": "https://github.com/wrensignal/wrenos-site/pull/<id>",
+  "contractValidationEvidence": "docs/reports/<contract-validation-report>.json",
+  "siteRegressionEvidence": "docs/reports/site-regression-report.json",
+  "rollbackDryRunEvidence": "docs/reports/<rollback-dry-run-log>.md",
+  "decisionTimestamp": "2026-03-20T00:00:00Z"
+}
