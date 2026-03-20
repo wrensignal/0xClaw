@@ -27,6 +27,6 @@ run(['config', 'set', 'risk.maxTradeUsd', '25']);
 run(['init-pack', '--pack', 'dual-agent-pack']);
 run(['bootstrap-wrenos']);
 run(['start', '--once', '--interval', '1']);
-run(['migrate']); // should no-op cleanly when no .0xclaw exists
+run(['migrate']); // should no-op cleanly when no .legacy exists
 
 console.log(JSON.stringify({ ok: true, smokeDir: dir }, null, 2));

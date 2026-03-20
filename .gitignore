@@ -7,7 +7,7 @@ coverage/
 dist/
 .tmp/
 .wrenos/
-.0xclaw/
+.legacy/
 .mcp.json
 
 # keep heavy historical/archive payloads out of core repo

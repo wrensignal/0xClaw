@@ -8,7 +8,7 @@ Scope: full repo (excluding `.git/`, `node_modules/`, `vendor/`)
 - [x] README uses WrenOS consistently as primary identity.
 - [x] CLI help/usage output uses `wrenos` command surface.
 - [x] Config generation writes to `.wrenos/`.
-- [x] Legacy `.0xclaw` paths are handled (read fallback + migration warning).
+- [x] Legacy `.legacy` paths are handled (read fallback + migration warning).
 - [x] Examples use new naming (`examples/wrenos-*`, `wrenos` commands).
 - [x] Docs use new commands (`wrenos ...`) as primary.
 - [x] Repo/package metadata points to `wrensignal/wrenOS`.
@@ -27,7 +27,7 @@ Scope: full repo (excluding `.git/`, `node_modules/`, `vendor/`)
   - `wrenos status` reports `configPath: .../.wrenos/config.json` and `configFormat: "wrenos"`
 
 - Legacy fallback check:
-  - temp workspace with only `.0xclaw/config.json`
+  - temp workspace with only `.legacy/config.json`
   - `wrenos status` reports legacy path with `configFormat: "legacy-compat"`
 
 - Integrity checks:
@@ -40,32 +40,32 @@ Scope: full repo (excluding `.git/`, `node_modules/`, `vendor/`)
 ## Remaining old-name references (intentional)
 
 ### A) Migration documentation (intentional)
-- `docs/migrating-from-0xclaw-to-wrenos.md`
-- `docs/migration-0xclaw-to-wrenos.md`
+- `docs/migrating-from-legacy-to-wrenos.md`
+- `docs/migration-legacy-to-wrenos.md`
 - `CHANGELOG.md` rebrand entry
 - `docs/rebrand-plan.md` / `docs/rebrand-audit.md`
 
 Reason: these files explicitly document rename/migration history.
 
 ### B) Compatibility aliases (intentional, temporary)
-- `package.json` and `packages/cli/package.json` still expose `0xclaw` bin alias
+- `package.json` and `packages/cli/package.json` still expose `legacy` bin alias
 - CLI supports `bootstrap-openclaw` alias
-- CLI supports `.0xclaw` fallback read path
-- `.gitignore` includes `.0xclaw/`
+- CLI supports `.legacy` fallback read path
+- `.gitignore` includes `.legacy/`
 - `package-lock.json` contains alias metadata
 
 Reason: controlled migration window with explicit deprecation warnings.
 
 ### C) Deprecation warnings (intentional)
 - `packages/cli/src/index.mjs`:
-  - warns on `0xclaw` invocation
+  - warns on `legacy` invocation
   - warns on `bootstrap-openclaw`
   - warns on legacy config fallback
 
 Reason: guide users to canonical WrenOS commands/paths.
 
 ### D) Test-only legacy string (non-user-facing)
-- No remaining test-only `0xclaw` temp-dir string in active test files (updated to `wrenos-cli-smoke-`).
+- No remaining test-only `legacy` temp-dir string in active test files (updated to `wrenos-cli-smoke-`).
 
 Reason: cleanup complete; no action pending.
 
@@ -77,7 +77,7 @@ Reason: cleanup complete; no action pending.
 ## Follow-up updates applied (post-rebrand polish)
 
 - Added explicit README rename notice near top with direct link to migration guide.
-- Strengthened `0xclaw` alias warning text to include:
+- Strengthened `legacy` alias warning text to include:
   - rename explanation
   - migration command (`wrenos migrate`)
   - migration doc pointer
@@ -85,8 +85,8 @@ Reason: cleanup complete; no action pending.
 - Added deprecation timeline (`v0.3.0`) in:
   - `README.md`
   - `CHANGELOG.md`
-  - `docs/migrating-from-0xclaw-to-wrenos.md`
-  - `docs/migration-0xclaw-to-wrenos.md`
+  - `docs/migrating-from-legacy-to-wrenos.md`
+  - `docs/migration-legacy-to-wrenos.md`
   - CLI warning output
 - Added architecture boundary section clarifying this repo is the open-source WrenOS control plane and how hosted-default integrations fit.
 

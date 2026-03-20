@@ -1,6 +1,6 @@
 # Changelog
 
-## 2026-03-07 — Rebrand: 0xClaw → WrenOS
+## 2026-03-07 — Rebrand: legacy → WrenOS
 
 ### Summary
 
@@ -10,13 +10,13 @@ This release rebrands the project to **WrenOS** and aligns repo/package/docs/CLI
 
 - Primary CLI command is now `wrenos`.
 - Primary config directory is now `.wrenos/`.
-- Internal workspace packages moved from `@0xclaw/*` to `@wrenos/*`.
+- Internal workspace packages moved from `@legacy/*` to `@wrenos/*`.
 
 ### Compatibility notes
 
 The following are still supported temporarily:
-- `0xclaw` command alias (deprecated)
-- `.0xclaw` config fallback (deprecated)
+- `legacy` command alias (deprecated)
+- `.legacy` config fallback (deprecated)
 - `bootstrap-openclaw` alias (deprecated)
 - `upgrade-config` alias (deprecated)
 
