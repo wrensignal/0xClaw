@@ -331,3 +331,7 @@ Quill proactively creates Paperclip issues from this spec's TODO list. Don't wai
 ---
 
 _This file lives in the WrenOS repo root (gitignored via OpenClaw workspace files). Quill maintains it as a living document._
+
+
+## Launch gate reference
+- v1 go/no-go checklist: `docs/release-readiness/v1-checklist.md`
