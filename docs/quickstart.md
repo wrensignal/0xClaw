@@ -47,6 +47,11 @@ wrenos doctor
 wrenos status
 ```
 
+### 4.5) Zero-config demo (safe signal -> decision walkthrough)
+```bash
+wrenos demo
+```
+
 ### 5) Templates
 ```bash
 wrenos bootstrap-wrenos
@@ -113,15 +118,15 @@ Current expectation:
 
 ## Migration note
 
-If you're coming from `0xClaw`:
+If you're coming from `WrenOS`:
 - use `wrenos` as the primary CLI name
-- `0xclaw` remains as temporary compatibility alias
-- `.wrenos/` is the primary config directory (`.0xclaw/` fallback supported during migration)
+- `wrenos` remains as temporary compatibility alias
+- `.wrenos/` is the primary config directory (`.wrenos/` fallback supported during migration)
 - run `wrenos migrate` (or `wrenos migrate --force`) to move legacy config
 
 See:
-- `docs/migrating-from-0xclaw-to-wrenos.md` (canonical)
-- `docs/migration-0xclaw-to-wrenos.md` (legacy pointer)
+- `docs/migrating-from-wrenos-to-wrenos.md` (canonical)
+- `docs/migration-wrenos-to-wrenos.md` (legacy pointer)
 - `docs/release-readiness/migration-guardrails-checklist.md` (compatibility checks + expected outputs)
 
 For hosted/private inference routing details, see `docs/speakeasy-integration.md`.

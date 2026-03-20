@@ -35,6 +35,20 @@ const PROFILE_TEMPLATES = [
   'meme-discovery-trading-paper'
 ];
 
+test('demo runs zero-config signal->decision flow with safe defaults', () => {
+  const cwd = setupWorkspace();
+  const out = run(cwd, ['demo']);
+  assert.equal(out.status, 0, out.stderr || out.stdout);
+  const payload = JSON.parse(out.stdout);
+  assert.equal(payload.mode, 'demo');
+  assert.equal(payload.liveExecution, false);
+  assert.equal(payload.requireExplicitApproval, true);
+  assert.equal(Array.isArray(payload.flow), true);
+  assert.equal(existsSync(path.join(cwd, '.wrenos/demo-last-run.json')), true);
+
+  rmSync(cwd, { recursive: true, force: true });
+});
+
 test('init creates config and mcp template', () => {
   const cwd = setupWorkspace();
   const out = run(cwd, ['init', '--profile', 'research-agent']);
@@ -195,8 +209,8 @@ test('wallet setup rejects malformed privy auth state', () => {
 
 test('legacy config fallback emits migration warning in status', () => {
   const cwd = setupWorkspace();
-  mkdirSync(path.join(cwd, '.0xclaw'), { recursive: true });
-  writeFileSync(path.join(cwd, '.0xclaw/config.json'), JSON.stringify({ profile: 'research-agent', liveExecution: false }, null, 2));
+  mkdirSync(path.join(cwd, '.wrenos'), { recursive: true });
+  writeFileSync(path.join(cwd, '.wrenos/config.json'), JSON.stringify({ profile: 'research-agent', liveExecution: false }, null, 2));
 
   const out = run(cwd, ['status']);
   assert.equal(out.status, 0);
@@ -206,9 +220,9 @@ test('legacy config fallback emits migration warning in status', () => {
   rmSync(cwd, { recursive: true, force: true });
 });
 
-test('0xclaw compatibility alias emits deprecation warning', () => {
+test('wrenos compatibility alias emits deprecation warning', () => {
   const cwd = setupWorkspace();
-  const legacyEntry = path.join(cwd, '0xclaw');
+  const legacyEntry = path.join(cwd, 'wrenos');
   copyFileSync(CLI, legacyEntry);
 
   const out = spawnSync('node', [legacyEntry, 'status'], {
@@ -216,7 +230,7 @@ test('0xclaw compatibility alias emits deprecation warning', () => {
     encoding: 'utf8',
     env: { ...process.env }
   });
-  assert.match(out.stderr, /\[deprecation\].*0xclaw/i);
+  assert.match(out.stderr, /\[deprecation\].*wrenos/i);
 
   rmSync(cwd, { recursive: true, force: true });
 });
@@ -225,7 +239,7 @@ test('migrate no-ops safely when no legacy directory exists', () => {
   const cwd = setupWorkspace();
   const out = run(cwd, ['migrate']);
   assert.equal(out.status, 0);
-  assert.match(out.stdout, /No legacy \.0xclaw directory found/i);
+  assert.match(out.stdout, /No legacy \.wrenos directory found/i);
 
   rmSync(cwd, { recursive: true, force: true });
 });

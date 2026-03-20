@@ -7,13 +7,13 @@ import { spawnSync } from 'node:child_process';
 
 const invokedAs = path.basename(process.argv[1] || '');
 const DEPRECATION_REMOVAL_TARGET = 'v0.3.0';
-if (invokedAs === '0xclaw') {
-  console.error("[deprecation] The `0xclaw` command has been renamed to `wrenos`. This alias will be removed in "+DEPRECATION_REMOVAL_TARGET+". Please update your scripts and workflows. Run `wrenos migrate` and see docs/migrating-from-0xclaw-to-wrenos.md for details.");
+if (invokedAs === 'wrenos') {
+  console.error("[deprecation] The `wrenos` command has been renamed to `wrenos`. This alias will be removed in "+DEPRECATION_REMOVAL_TARGET+". Please update your scripts and workflows. Run `wrenos migrate` and see docs/migrating-from-wrenos-to-wrenos.md for details.");
 }
 
 const cwd = process.cwd();
 const configDir = path.join(cwd, '.wrenos');
-const legacyConfigDir = path.join(cwd, '.0xclaw');
+const legacyConfigDir = path.join(cwd, '.wrenos');
 const configPath = path.join(configDir, 'config.json');
 const legacyConfigPath = path.join(legacyConfigDir, 'config.json');
 
@@ -123,7 +123,7 @@ async function loadConfigOrFail() {
     process.exit(1);
   }
   if (active === legacyConfigPath) {
-    console.error('Using legacy config path (.0xclaw/config.json). Use `.wrenos/` going forward. Run `wrenos migrate` (or `wrenos migrate --force`) to migrate now. Planned removal: '+DEPRECATION_REMOVAL_TARGET+'.');
+    console.error('Using legacy config path (.wrenos/config.json). Use `.wrenos/` going forward. Run `wrenos migrate` (or `wrenos migrate --force`) to migrate now. Planned removal: '+DEPRECATION_REMOVAL_TARGET+'.');
   }
   return JSON.parse(await readFile(active, 'utf8'));
 }
@@ -379,7 +379,7 @@ async function cmdDoctor() {
   const warnings = [];
 
   if (activeConfigPath === legacyConfigPath && hasConfig) {
-    warnings.push(`Legacy config path in use (.0xclaw). Run wrenos migrate before ${DEPRECATION_REMOVAL_TARGET}.`);
+    warnings.push(`Legacy config path in use (.wrenos). Run wrenos migrate before ${DEPRECATION_REMOVAL_TARGET}.`);
   }
   if (cfg?.liveExecution === true) {
     warnings.push('liveExecution=true: verify approvals, signer policy, and risk limits before trading.');
@@ -661,7 +661,7 @@ async function cmdTestExecution() {
 
 async function cmdMigrate() {
   if (!existsSync(legacyConfigDir)) {
-    console.log('No legacy .0xclaw directory found. Nothing to migrate.');
+    console.log('No legacy .wrenos directory found. Nothing to migrate.');
     return;
   }
 
@@ -727,6 +727,35 @@ async function cmdMigrate() {
   }, null, 2));
 
   if (!ok) process.exit(1);
+}
+
+async function cmdDemo() {
+  await mkdir(configDir, { recursive: true });
+  const demoPath = path.join(configDir, 'demo-last-run.json');
+
+  const now = new Date();
+  const signalScore = 0.42;
+  const threshold = 0.6;
+  const decision = signalScore >= threshold ? 'paper_proposal' : 'hold';
+
+  const payload = {
+    ok: true,
+    mode: 'demo',
+    profile: 'demo-zero-config',
+    paperDefault: true,
+    liveExecution: false,
+    requireExplicitApproval: true,
+    flow: [
+      { step: 'collect_signal', score: signalScore },
+      { step: 'evaluate_threshold', threshold },
+      { step: 'decision', decision }
+    ],
+    note: 'Zero-config demo mode. Safe defaults are enforced; no live execution side effects.',
+    generatedAt: now.toISOString()
+  };
+
+  await writeFile(demoPath, JSON.stringify(payload, null, 2));
+  console.log(JSON.stringify(payload, null, 2));
 }
 
 async function cmdStart() {
@@ -993,6 +1022,8 @@ async function main() {
       console.log('Usage: wrenos test <inference|execution>');
       process.exit(1);
     }
+    case 'demo':
+      return cmdDemo();
     case 'start':
       return cmdStart();
     case 'migrate':
@@ -1006,7 +1037,7 @@ async function main() {
       console.error('[deprecation] `wrenos bootstrap-openclaw` is deprecated; use `wrenos bootstrap-wrenos` instead. Planned removal: '+DEPRECATION_REMOVAL_TARGET+'.');
       return cmdBootstrapWrenos();
     default:
-      console.log('Usage: wrenos <init|init-pack|doctor|status|config|wallet|test|start|migrate|bootstrap-wrenos> ...');
+      console.log('Usage: wrenos <init|init-pack|doctor|status|config|wallet|test|demo|start|migrate|bootstrap-wrenos> ...');
       process.exit(1);
   }
 }
