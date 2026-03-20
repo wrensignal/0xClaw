@@ -335,3 +335,7 @@ _This file lives in the WrenOS repo root (gitignored via OpenClaw workspace file
 
 ## Launch gate reference
 - v1 go/no-go checklist: `docs/release-readiness/v1-checklist.md`
+
+
+## Benchmark parity artifact
+- Senpi delta report: `docs/release-readiness/senpi-benchmark-delta-report.md`
