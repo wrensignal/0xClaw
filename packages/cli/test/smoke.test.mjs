@@ -35,6 +35,20 @@ const PROFILE_TEMPLATES = [
   'meme-discovery-trading-paper'
 ];
 
+test('demo runs zero-config signal->decision flow with safe defaults', () => {
+  const cwd = setupWorkspace();
+  const out = run(cwd, ['demo']);
+  assert.equal(out.status, 0, out.stderr || out.stdout);
+  const payload = JSON.parse(out.stdout);
+  assert.equal(payload.mode, 'demo');
+  assert.equal(payload.liveExecution, false);
+  assert.equal(payload.requireExplicitApproval, true);
+  assert.equal(Array.isArray(payload.flow), true);
+  assert.equal(existsSync(path.join(cwd, '.wrenos/demo-last-run.json')), true);
+
+  rmSync(cwd, { recursive: true, force: true });
+});
+
 test('init creates config and mcp template', () => {
   const cwd = setupWorkspace();
   const out = run(cwd, ['init', '--profile', 'research-agent']);

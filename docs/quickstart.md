@@ -47,6 +47,11 @@ wrenos doctor
 wrenos status
 ```
 
+### 4.5) Zero-config demo (safe signal -> decision walkthrough)
+```bash
+wrenos demo
+```
+
 ### 5) Templates
 ```bash
 wrenos bootstrap-wrenos

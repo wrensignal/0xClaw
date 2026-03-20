@@ -729,6 +729,35 @@ async function cmdMigrate() {
   if (!ok) process.exit(1);
 }
 
+async function cmdDemo() {
+  await mkdir(configDir, { recursive: true });
+  const demoPath = path.join(configDir, 'demo-last-run.json');
+
+  const now = new Date();
+  const signalScore = 0.42;
+  const threshold = 0.6;
+  const decision = signalScore >= threshold ? 'paper_proposal' : 'hold';
+
+  const payload = {
+    ok: true,
+    mode: 'demo',
+    profile: 'demo-zero-config',
+    paperDefault: true,
+    liveExecution: false,
+    requireExplicitApproval: true,
+    flow: [
+      { step: 'collect_signal', score: signalScore },
+      { step: 'evaluate_threshold', threshold },
+      { step: 'decision', decision }
+    ],
+    note: 'Zero-config demo mode. Safe defaults are enforced; no live execution side effects.',
+    generatedAt: now.toISOString()
+  };
+
+  await writeFile(demoPath, JSON.stringify(payload, null, 2));
+  console.log(JSON.stringify(payload, null, 2));
+}
+
 async function cmdStart() {
   const cfg = await loadConfigOrFail();
   const once = process.argv.includes('--once');
@@ -993,6 +1022,8 @@ async function main() {
       console.log('Usage: wrenos test <inference|execution>');
       process.exit(1);
     }
+    case 'demo':
+      return cmdDemo();
     case 'start':
       return cmdStart();
     case 'migrate':
@@ -1006,7 +1037,7 @@ async function main() {
       console.error('[deprecation] `wrenos bootstrap-openclaw` is deprecated; use `wrenos bootstrap-wrenos` instead. Planned removal: '+DEPRECATION_REMOVAL_TARGET+'.');
       return cmdBootstrapWrenos();
     default:
-      console.log('Usage: wrenos <init|init-pack|doctor|status|config|wallet|test|start|migrate|bootstrap-wrenos> ...');
+      console.log('Usage: wrenos <init|init-pack|doctor|status|config|wallet|test|demo|start|migrate|bootstrap-wrenos> ...');
       process.exit(1);
   }
 }
