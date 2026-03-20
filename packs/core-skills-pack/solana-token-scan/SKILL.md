@@ -146,3 +146,21 @@ Likely MCP/data dependencies (inherited via sub-skills):
 ## Operator Notes
 
 Use this skill as the first pass for a known token. If posture is `paper_candidate`, follow with deeper strategy-specific validation before any execution workflow.
+
+## How It Works
+
+This skill is invoked by natural-language intent matching. It gathers required inputs, runs its internal analysis pipeline, and returns a structured output payload suitable for downstream WrenOS skills and operator review.
+
+## Output Contract
+
+This skill should return a JSON-compatible payload containing:
+
+- `summary`: short operator-facing summary
+- `signals`: array of key bullish/bearish/neutral observations
+- `risks`: array of explicit risks/constraints
+- `feed_health`: per-source status (`ok|degraded|down`)
+- `confidence`: `high|medium|low`
+- `generated_at`: ISO 8601 timestamp
+
+If the skill already defines a stricter schema above, that schema is authoritative.
+

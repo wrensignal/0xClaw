@@ -25,6 +25,16 @@ function run(cwd, args, env = {}) {
   });
 }
 
+const PROFILE_TEMPLATES = [
+  'research-agent',
+  'research-only',
+  'solo-trader-paper',
+  'trading-agent-paper',
+  'trading-agent-live-disabled',
+  'meme-discovery-research',
+  'meme-discovery-trading-paper'
+];
+
 test('init creates config and mcp template', () => {
   const cwd = setupWorkspace();
   const out = run(cwd, ['init', '--profile', 'research-agent']);
@@ -49,6 +59,37 @@ test('doctor passes after init', () => {
   assert.equal(payload.ok, true);
 
   rmSync(cwd, { recursive: true, force: true });
+});
+
+test('all 7 profile templates pass init + doctor runtime validation', () => {
+  const failures = [];
+
+  for (const profile of PROFILE_TEMPLATES) {
+    const cwd = setupWorkspace();
+
+    const initOut = run(cwd, ['init', '--profile', profile]);
+    if (initOut.status !== 0) {
+      failures.push({ profile, step: 'init', stderr: initOut.stderr, stdout: initOut.stdout });
+      rmSync(cwd, { recursive: true, force: true });
+      continue;
+    }
+
+    const doctorOut = run(cwd, ['doctor'], { HELIUS_API_KEY: 'test-helius-key' });
+    if (doctorOut.status !== 0) {
+      failures.push({ profile, step: 'doctor', stderr: doctorOut.stderr, stdout: doctorOut.stdout });
+      rmSync(cwd, { recursive: true, force: true });
+      continue;
+    }
+
+    const payload = JSON.parse(doctorOut.stdout);
+    if (payload.ok !== true) {
+      failures.push({ profile, step: 'doctor-payload', payload });
+    }
+
+    rmSync(cwd, { recursive: true, force: true });
+  }
+
+  assert.equal(failures.length, 0, JSON.stringify(failures, null, 2));
 });
 
 test('doctor reports MCP env/startup diagnostics when required env missing', () => {

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wrenos.dev/schemas/strategy-builder/zoo-governance-contract.schema.json",
+  "title": "Strategy Builder Zoo Governance Contract",
+  "type": "object",
+  "required": ["champion", "challengers", "promotion_decision", "generated_at"],
+  "properties": {
+    "champion": {
+      "type": "object",
+      "required": ["name", "rank", "status"],
+      "properties": {
+        "name": {"type": "string"},
+        "rank": {"type": "integer", "minimum": 1},
+        "status": {"type": "string", "enum": ["active", "paused", "retired"]}
+      },
+      "additionalProperties": true
+    },
+    "challengers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "rank", "status"],
+        "properties": {
+          "name": {"type": "string"},
+          "rank": {"type": "integer", "minimum": 1},
+          "status": {"type": "string", "enum": ["active", "paused", "retired"]}
+        },
+        "additionalProperties": true
+      }
+    },
+    "promotion_decision": {
+      "type": "object",
+      "required": ["action", "reason"],
+      "properties": {
+        "action": {"type": "string", "enum": ["promote_challenger", "retain_champion", "pause_all"]},
+        "reason": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "failure_semantics": {
+      "type": "object",
+      "properties": {
+        "mode": {"type": "string", "enum": ["fail_closed", "defer_decision"]},
+        "reason": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "generated_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": true
+}

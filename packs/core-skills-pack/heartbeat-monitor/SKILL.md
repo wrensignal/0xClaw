@@ -334,3 +334,30 @@ clawhub install heartbeat-monitor
 1. Copy this SKILL.md to your agent's skills directory
 2. Set up cron: `*/30 * * * *`
 3. Heartbeat will auto-discover other skill outputs in the workspace
+
+## Dependencies
+
+- WrenOS runtime (`wrenos init`, `wrenos doctor`)
+- Required MCP/data sources listed in this skill's data-source sections
+- Optional API keys where explicitly called out
+
+## Output Contract
+
+This skill should return a JSON-compatible payload containing:
+
+- `summary`: short operator-facing summary
+- `signals`: array of key bullish/bearish/neutral observations
+- `risks`: array of explicit risks/constraints
+- `feed_health`: per-source status (`ok|degraded|down`)
+- `confidence`: `high|medium|low`
+- `generated_at`: ISO 8601 timestamp
+
+If the skill already defines a stricter schema above, that schema is authoritative.
+
+## Failure Handling
+
+- If one data source fails, continue with remaining sources and downgrade confidence.
+- If critical sources are unavailable, return partial output with clear `feed_health` degradation details.
+- Never fabricate missing data; mark unavailable fields explicitly.
+- If all core sources fail, return a hard failure response with actionable remediation steps.
+

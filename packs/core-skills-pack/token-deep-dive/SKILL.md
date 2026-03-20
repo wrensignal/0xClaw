@@ -543,3 +543,30 @@ clawhub install token-deep-dive
 3. Configure `.mcp.json` with MCP servers
 4. Set API keys in environment
 5. Tell your agent: "Analyze WOJAK for me"
+
+## Dependencies
+
+- WrenOS runtime (`wrenos init`, `wrenos doctor`)
+- Required MCP/data sources listed in this skill's data-source sections
+- Optional API keys where explicitly called out
+
+## Output Contract
+
+This skill should return a JSON-compatible payload containing:
+
+- `summary`: short operator-facing summary
+- `signals`: array of key bullish/bearish/neutral observations
+- `risks`: array of explicit risks/constraints
+- `feed_health`: per-source status (`ok|degraded|down`)
+- `confidence`: `high|medium|low`
+- `generated_at`: ISO 8601 timestamp
+
+If the skill already defines a stricter schema above, that schema is authoritative.
+
+## Failure Handling
+
+- If one data source fails, continue with remaining sources and downgrade confidence.
+- If critical sources are unavailable, return partial output with clear `feed_health` degradation details.
+- Never fabricate missing data; mark unavailable fields explicitly.
+- If all core sources fail, return a hard failure response with actionable remediation steps.
+
