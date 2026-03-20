@@ -1,0 +1,27 @@
+{
+  "run_id": "sample-2026-03-20T01-25-35-110Z",
+  "started_at": "2026-03-20T01:25:33.910Z",
+  "ended_at": "2026-03-20T01:25:35.110Z",
+  "steps": [
+    {
+      "name": "init-context",
+      "status": "ok",
+      "duration_ms": 120
+    },
+    {
+      "name": "collect-signals",
+      "status": "ok",
+      "duration_ms": 640
+    },
+    {
+      "name": "policy-evaluation",
+      "status": "ok",
+      "duration_ms": 310
+    },
+    {
+      "name": "emit-artifacts",
+      "status": "ok",
+      "duration_ms": 80
+    }
+  ]
+}

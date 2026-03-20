@@ -1,0 +1,13 @@
+{
+  "run_id": "sample-2026-03-20T01-25-35-110Z",
+  "timestamp": "2026-03-20T01:25:35.110Z",
+  "profile": "research-agent",
+  "decision": "hold",
+  "confidence": "medium",
+  "inputs": [
+    "token-scan",
+    "whale-tracker",
+    "news-scanner"
+  ],
+  "rationale": "Signal confidence below execution threshold; preserving paper-first posture."
+}

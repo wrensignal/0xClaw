@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wrenos.dev/schemas/observability/decision-log.schema.json",
+  "type": "object",
+  "required": ["run_id", "timestamp", "profile", "decision", "confidence", "inputs", "rationale"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "profile": {"type": "string"},
+    "decision": {"type": "string", "enum": ["buy", "sell", "hold", "no_op"]},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "inputs": {"type": "array", "items": {"type": "string"}},
+    "rationale": {"type": "string"}
+  },
+  "additionalProperties": true
+}

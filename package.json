@@ -30,7 +30,9 @@
     "railway:health": "node scripts/railway-postdeploy-health.mjs",
     "railway:first-run": "node scripts/railway-first-run.mjs",
     "smoke:bootstrap": "node scripts/bootstrap-smoke.mjs",
-    "acceptance:cli": "node scripts/cli-acceptance.mjs"
+    "acceptance:cli": "node scripts/cli-acceptance.mjs",
+    "artifacts:generate": "node scripts/generate-observability-samples.mjs",
+    "artifacts:validate": "node scripts/validate-observability-artifacts.mjs"
   },
   "engines": {
     "node": ">=20"
