@@ -30,7 +30,8 @@
     "railway:health": "node scripts/railway-postdeploy-health.mjs",
     "railway:first-run": "node scripts/railway-first-run.mjs",
     "smoke:bootstrap": "node scripts/bootstrap-smoke.mjs",
-    "acceptance:cli": "node scripts/cli-acceptance.mjs"
+    "acceptance:cli": "node scripts/cli-acceptance.mjs",
+    "contract:managed": "node scripts/validate-managed-referral-contract.mjs"
   },
   "engines": {
     "node": ">=20"

@@ -1,0 +1,18 @@
+{
+  "run_id": "managed-sample-001",
+  "lane": "managed",
+  "decision_stage": { "status": "ok" },
+  "explainability_stage": { "status": "ok" },
+  "routing_verification": {
+    "status": "fail",
+    "timeout_ms": 5000,
+    "failure_code": "FAILED_ROUTING",
+    "detail": "Managed endpoint handshake did not verify expected route."
+  },
+  "finalization": {
+    "status": "failed",
+    "terminal": true,
+    "reason": "Managed lane cannot finalize success without verified routing."
+  },
+  "generated_at": "2026-03-19T19:59:00.000Z"
+}
