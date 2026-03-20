@@ -1,0 +1,37 @@
+{
+  "version": "1.0.0",
+  "name": "portfolio-optimizer-fallback-policy",
+  "deterministic_order": [
+    "validate_input_bounds",
+    "normalize_weights",
+    "solve_primary_objective",
+    "apply_conflict_resolution",
+    "fallback_to_conservative_weights_if_unsolved"
+  ],
+  "fallback_modes": {
+    "underconstrained": {
+      "trigger": "insufficient constraints to produce unique allocation",
+      "action": "equal_weight_with_risk_caps",
+      "notes": "Apply max/min bounds and drop strategies that fail minimum data quality."
+    },
+    "contradictory": {
+      "trigger": "constraints conflict (e.g., min weight sum > 1, turnover + exposure impossible)",
+      "action": "fail_closed_with_conflict_report",
+      "notes": "Return explicit conflict fields and require operator adjustment."
+    },
+    "objective_unsolved": {
+      "trigger": "optimizer does not converge within deterministic iteration budget",
+      "action": "risk_budget_baseline_allocation",
+      "notes": "Use sorted Sharpe/risk heuristic capped by max weight and turnover limit."
+    }
+  },
+  "conflict_resolution": {
+    "default_policy": "safety_first",
+    "priority_order": [
+      "risk_limits",
+      "exposure_limits",
+      "turnover_limits",
+      "return_objective"
+    ]
+  }
+}

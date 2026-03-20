@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wrenos.dev/schemas/observability/health-summary.schema.json",
+  "type": "object",
+  "required": ["run_id", "timestamp", "overall", "checks"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "overall": {"type": "string", "enum": ["ok", "degraded", "fail"]},
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "ok", "detail"],
+        "properties": {
+          "name": {"type": "string"},
+          "ok": {"type": "boolean"},
+          "detail": {"type": "string"}
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

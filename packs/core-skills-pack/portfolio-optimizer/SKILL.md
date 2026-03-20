@@ -131,3 +131,17 @@ If the skill already defines a stricter schema above, that schema is authoritati
 - Never fabricate missing data; mark unavailable fields explicitly.
 - If all core sources fail, return a hard failure response with actionable remediation steps.
 
+## Deterministic Bounds & Fallback Policy
+
+This skill now uses explicit contract artifacts:
+
+- `packs/core-skills-pack/portfolio-optimizer/contracts/parameter-bounds.schema.json`
+- `packs/core-skills-pack/portfolio-optimizer/contracts/fallback-policy.json`
+
+Conflict resolution priority is deterministic and safety-first by default:
+1. risk limits
+2. exposure limits
+3. turnover limits
+4. return objective
+
+If constraints are contradictory, the optimizer should fail-closed with an explicit conflict report rather than emit unsafe allocations.

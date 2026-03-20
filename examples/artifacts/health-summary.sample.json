@@ -1,0 +1,22 @@
+{
+  "run_id": "sample-2026-03-20T01-25-35-110Z",
+  "timestamp": "2026-03-20T01:25:35.110Z",
+  "overall": "ok",
+  "checks": [
+    {
+      "name": "config.present",
+      "ok": true,
+      "detail": "config loaded"
+    },
+    {
+      "name": "mcp.wiring",
+      "ok": true,
+      "detail": "default servers wired"
+    },
+    {
+      "name": "inference.route",
+      "ok": true,
+      "detail": "primary route healthy"
+    }
+  ]
+}
