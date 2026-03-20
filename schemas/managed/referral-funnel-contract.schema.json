@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wrenos.dev/schemas/managed/referral-funnel-contract.schema.json",
+  "title": "Managed Referral Funnel Contract",
+  "type": "object",
+  "required": [
+    "run_id",
+    "lane",
+    "decision_stage",
+    "explainability_stage",
+    "routing_verification",
+    "finalization",
+    "generated_at"
+  ],
+  "properties": {
+    "run_id": {"type": "string", "minLength": 1},
+    "lane": {"type": "string", "enum": ["managed", "oss"]},
+    "decision_stage": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"type": "string", "enum": ["ok", "fail"]}
+      },
+      "additionalProperties": true
+    },
+    "explainability_stage": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"type": "string", "enum": ["ok", "fail"]}
+      },
+      "additionalProperties": true
+    },
+    "routing_verification": {
+      "type": "object",
+      "required": ["status", "timeout_ms", "failure_code"],
+      "properties": {
+        "status": {"type": "string", "enum": ["ok", "fail", "timeout"]},
+        "timeout_ms": {"type": "integer", "minimum": 1, "maximum": 60000},
+        "failure_code": {"type": ["string", "null"], "enum": ["FAILED_ROUTING", null]}
+      },
+      "additionalProperties": true
+    },
+    "finalization": {
+      "type": "object",
+      "required": ["status", "terminal"],
+      "properties": {
+        "status": {"type": "string", "enum": ["success", "failed", "aborted"]},
+        "terminal": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    },
+    "generated_at": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"lane": {"const": "managed"}}},
+      "then": {
+        "properties": {
+          "routing_verification": {
+            "properties": {
+              "status": {"not": {"const": "ok"}}
+            }
+          },
+          "finalization": {
+            "properties": {
+              "status": {"not": {"const": "success"}}
+            }
+          }
+        }
+      }
+    }
+  ]
+}

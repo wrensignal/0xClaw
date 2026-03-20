@@ -31,6 +31,7 @@
     "railway:first-run": "node scripts/railway-first-run.mjs",
     "smoke:bootstrap": "node scripts/bootstrap-smoke.mjs",
     "acceptance:cli": "node scripts/cli-acceptance.mjs",
+    "contract:managed": "node scripts/validate-managed-referral-contract.mjs",
     "artifacts:generate": "node scripts/generate-observability-samples.mjs",
     "artifacts:validate": "node scripts/validate-observability-artifacts.mjs"
   },
