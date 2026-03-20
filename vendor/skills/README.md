@@ -1,4 +1,4 @@
-# Vendor Skills Bundle (Scout + Rook)
+# Vendor Skills Bundle (Scout + Rook) — Deferred for v1 Runtime
 
 This directory snapshots the skills currently used by Scout and Rook workspaces.
 

@@ -1,39 +1,52 @@
-# Vendor Trim Manifest (runtime-safe)
+# Vendor Trim Manifest (v1 footprint)
 
-Date: 2026-03-03
+Date: 2026-03-19
 
 ## Objective
-Trim non-runtime vendor fat while preserving tool/runtime paths used by WrenOS and OpenClaw agent workflows.
+Keep only high-value, supported vendor surface for v1 launch while clearly labeling non-v1/deferred items.
 
-## Scope
-- `vendor/pump-fun-sdk-lite`
+## Inventory + classification
+
+| Vendor surface | Class | v1 decision | Reason |
+|---|---|---|---|
+| `vendor/agenti-lite` | MCP/data provider | **keep** | Active dependency for discovery/analysis tool paths |
+| `vendor/pump-fun-sdk-lite` | MCP/data provider | **keep** | Active dependency for pump.fun monitoring/trading context |
+| `vendor/crypto-news-lite` | MCP/data provider | **keep** | Active dependency for narrative/sentiment/news scans |
+| `vendor/skills` | Workspace snapshot bundle | **defer** | Not required for core v1 runtime path; retained for optional portability only |
+
+## Keep set (v1 runtime)
+
 - `vendor/agenti-lite`
+- `vendor/pump-fun-sdk-lite`
+- `vendor/crypto-news-lite`
 
-## Kept (runtime/tooling)
-- Core source/runtime code (`src/**`)
-- MCP server implementation paths (`mcp-server/src/**`, `mcp-server/api/**`)
-- Package metadata required for use (`package.json`, lockfiles, license/notice, server manifests)
-- Rook-specific helper scripts removed from vendor bundle for generic distribution.
+These are considered supported vendor dependencies for v1 docs and operational guidance.
 
-## Removed (non-runtime)
-### pump-fun-sdk-lite
-- Community and repo management files (`.github/**`, `.vscode/**`, `.well-known/**`)
-- Upstream docs/tutorials/prompts (`docs/**`, `tutorials/**`, `prompts/**`)
-- Test and security audit trees (`tests/**`, `security/**`, `tools/**`, `typescript/**`)
-- Misc non-runtime files (`offline.html`, `llms*.txt`, contributor/governance/changelog/roadmap style docs)
+## Defer/quarantine set
 
-### agenti-lite
-- Test files (`**/*.test.ts`, `src/x402/__tests__/**`)
-- Non-runtime helper scripts (`scripts/**`, including prior rook-specific helpers)
-- Formatting/meta docs (`README.md`, `VENDOR_NOTES.md`, prettier/editor metadata)
+- `vendor/skills`
 
-## Result
-- Removed tracked files: **235**
-- Approx tracked payload reduced: **~3.28 MB**
+Quarantine policy:
+- Keep directory for optional portability/history.
+- Explicitly mark as **deferred / non-v1-critical**.
+- Do not treat as required in bootstrap/deploy docs.
+
+## Removed from required-surface claims
+
+Any claim that implied all vendor directories are runtime-critical is now invalid.
+Only the keep set above is part of required v1 vendor footprint.
 
 ## Verification
-- Adapters import smoke: inference/execution/telegram exports still load.
-- Clean install smoke: `bash scripts/install.sh` still succeeds in a fresh temp copy.
+
+- Directory existence check:
+  - `vendor/agenti-lite` ✅
+  - `vendor/pump-fun-sdk-lite` ✅
+  - `vendor/crypto-news-lite` ✅
+  - `vendor/skills` ✅ (labeled deferred)
+- Reference hygiene:
+  - docs updated to point to this keep/defer classification
+  - no required-runtime docs depend on `vendor/skills`
 
 ## Notes
-This trim was intentionally conservative on runtime code. If desired, a second pass can further reduce footprint by pruning unused runtime modules after explicit tool-level call tracing.
+
+This manifest supersedes older trim notes that did not classify `crypto-news-lite` and `vendor/skills` explicitly for v1 decisioning.

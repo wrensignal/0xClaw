@@ -1,27 +1,36 @@
-# WrenOS MCP Surface (Native Capabilities)
+# WrenOS MCP Surface (v1)
 
-WrenOS now exposes a native MCP server scaffold for external agents:
+## Native MCP surface
+
+WrenOS exposes a native MCP server scaffold for external agents:
 
 - Package: `packages/mcp`
 - Binary: `wrenos-mcp`
 - Transport: stdio (JSON-RPC)
 
-## Tool Surface
+### Tool surface
 
 1. `wrenos.discovery.scan_token_universe`
-   - Discovery envelope for ranked candidate scans
 2. `wrenos.scoring.score_token`
-   - Composite lane scoring envelope for a single token
 3. `wrenos.risk.assess_portfolio`
-   - Portfolio risk posture and constraints guidance
 4. `wrenos.backtesting.run_strategy_backtest`
-   - Backtest request/summary envelope
 
-## Status
+Status: scaffold contract is implemented (stable tool names + deterministic envelopes), with deeper runtime wiring tracked separately.
 
-This is an MCP **surface scaffold**: schema + protocol + stable tool names are implemented now, with deterministic envelopes.
+## Vendor MCP dependency surface (v1)
 
-Next wiring step (follow-up): connect tool handlers to live WrenOS pipelines/artifacts (discovery feeds, scorer outputs, risk state, backtest engine state).
+For v1, the supported vendor MCP/data providers are:
+
+- `vendor/agenti-lite` (**keep**)
+- `vendor/pump-fun-sdk-lite` (**keep**)
+- `vendor/crypto-news-lite` (**keep**)
+
+Deferred/non-critical for v1 runtime:
+
+- `vendor/skills` (**defer**) — retained as optional portability snapshot, not required for core runtime/deploy path.
+
+See authoritative classification:
+- `docs/vendor-trim-manifest.md`
 
 ## Minimal local run
 
@@ -33,4 +42,4 @@ Then speak MCP JSON-RPC over stdin/stdout (`initialize`, `tools/list`, `tools/ca
 
 ## Why this matters
 
-Spec M requires WrenOS-native capabilities to be consumable by external agents. This package establishes the native MCP contract with explicit tool naming and argument schemas so integration can begin immediately and evolve safely.
+Spec M requires WrenOS-native capabilities to be consumable by external agents. This surface defines stable native tool contracts while clearly separating required v1 vendor dependencies from deferred bundles.
