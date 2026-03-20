@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wrenos.dev/schemas/managed/embedded-pilot-metrics.schema.json",
+  "title": "Managed Funnel Embedded Pilot Metrics",
+  "type": "object",
+  "required": ["sessionId", "timeToDecisionMs", "dropOffStep", "terminalOutcome", "topNoTradeReasons", "computedAt"],
+  "properties": {
+    "sessionId": { "type": "string" },
+    "timeToDecisionMs": { "type": ["number", "null"], "minimum": 0 },
+    "dropOffStep": { "type": ["string", "null"] },
+    "terminalOutcome": { "type": "string", "enum": ["success", "failed", "aborted", "no_trade", "unknown"] },
+    "topNoTradeReasons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["reason", "count"],
+        "properties": {
+          "reason": { "type": "string" },
+          "count": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "computedAt": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": true
+}
