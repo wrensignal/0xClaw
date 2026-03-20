@@ -61,3 +61,12 @@ Rollback procedure:
 - Site regression evidence:
 - Rollback dry-run evidence:
 - Final go/no-go decision timestamp:
+
+
+## Machine-checkable evidence tracker
+- Sample tracker: `examples/release-readiness/v1-evidence-tracker.sample.json`
+- Validate checklist + evidence schema:
+
+```bash
+npm run validate:v1-checklist
+```
