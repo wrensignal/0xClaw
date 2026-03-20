@@ -1,0 +1,12 @@
+{
+  "repo": "wrensignal/wrenOS",
+  "ref": "main",
+  "syncedCommit": "7cdac89c484ca52e971d0f47eda2351fe05f6969",
+  "syncedAt": "2026-03-20T21:40:39Z",
+  "trackedDocs": [
+    "docs/quickstart.md",
+    "docs/architecture.md",
+    "docs/runtime-status.md",
+    "docs/release-readiness/v1-checklist.md"
+  ]
+}
