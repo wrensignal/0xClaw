@@ -20,6 +20,49 @@ export const defaultPolicy = {
   targetBasketSize: 8
 };
 
+export const TerminalOutcomes = Object.freeze({
+  SUCCESS: 'SUCCESS',
+  NO_TRADE: 'NO_TRADE',
+  FAILED_SETUP: 'FAILED_SETUP',
+  FAILED_CONTRACT: 'FAILED_CONTRACT',
+  FAILED_ROUTING: 'FAILED_ROUTING'
+});
+
+export const ReasonCodes = Object.freeze({
+  INVALID_INPUT: 'INVALID_INPUT',
+  INVALID_DECISION: 'INVALID_DECISION',
+  INVALID_CONFIDENCE: 'INVALID_CONFIDENCE',
+  EMPTY_REASONS: 'EMPTY_REASONS',
+  INVALID_REASON_ITEM: 'INVALID_REASON_ITEM',
+  MANAGED_FAIL_CLOSED: 'MANAGED_FAIL_CLOSED'
+});
+
+export function validateExplainabilityContract(payload) {
+  if (!payload || typeof payload !== 'object') return { valid: false, reason_code: ReasonCodes.INVALID_INPUT };
+  if (!payload.decision || typeof payload.decision !== 'string') return { valid: false, reason_code: ReasonCodes.INVALID_DECISION };
+  if (!payload.confidence || typeof payload.confidence !== 'string') return { valid: false, reason_code: ReasonCodes.INVALID_CONFIDENCE };
+  if (!Array.isArray(payload.reasons) || payload.reasons.length === 0) return { valid: false, reason_code: ReasonCodes.EMPTY_REASONS };
+  if (payload.reasons.some((r) => typeof r !== 'string' || !r.trim())) return { valid: false, reason_code: ReasonCodes.INVALID_REASON_ITEM };
+  return { valid: true, value: payload };
+}
+
+export function deriveOutcome({ managed = false, setupOk = true, contractOk = true, routingOk = true, executed = false, noTrade = false } = {}) {
+  if (!setupOk) return { outcome: TerminalOutcomes.FAILED_SETUP };
+  if (!contractOk) return { outcome: TerminalOutcomes.FAILED_CONTRACT };
+  if (!routingOk) return { outcome: TerminalOutcomes.FAILED_ROUTING };
+  if (noTrade) return { outcome: TerminalOutcomes.NO_TRADE };
+  if (executed) return { outcome: TerminalOutcomes.SUCCESS };
+
+  if (managed) {
+    return {
+      outcome: TerminalOutcomes.FAILED_CONTRACT,
+      reason_code: ReasonCodes.MANAGED_FAIL_CLOSED
+    };
+  }
+
+  return { outcome: TerminalOutcomes.NO_TRADE };
+}
+
 /**
  * Derive embedded pilot metrics for a managed funnel session.
  * events: [{ step, at, status, terminalOutcome?, noTradeReason? }]
