@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wrenos.dev/schemas/contracts/v2/strategy-check.schema.json",
+  "title": "Strategy Check Contract v2",
+  "type": "object",
+  "required": ["version", "strategy", "status", "checks", "generated_at", "compat"],
+  "properties": {
+    "version": {"const": "2.0.0"},
+    "strategy": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {"id": {"type": "string"}},
+      "additionalProperties": true
+    },
+    "status": {"type": "string", "enum": ["pass", "fail", "warn"]},
+    "checks": {"type": "array", "items": {"type": "object"}},
+    "compat": {
+      "type": "object",
+      "required": ["migrated_from", "migration_rule"],
+      "properties": {
+        "migrated_from": {"type": ["string", "null"]},
+        "migration_rule": {"type": "string"}
+      }
+    },
+    "generated_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": true
+}

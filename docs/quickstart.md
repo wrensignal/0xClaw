@@ -113,15 +113,15 @@ Current expectation:
 
 ## Migration note
 
-If you're coming from `0xClaw`:
+If you're coming from `legacy`:
 - use `wrenos` as the primary CLI name
-- `0xclaw` remains as temporary compatibility alias
-- `.wrenos/` is the primary config directory (`.0xclaw/` fallback supported during migration)
+- `legacy` remains as temporary compatibility alias
+- `.wrenos/` is the primary config directory (`.legacy/` fallback supported during migration)
 - run `wrenos migrate` (or `wrenos migrate --force`) to move legacy config
 
 See:
-- `docs/migrating-from-0xclaw-to-wrenos.md` (canonical)
-- `docs/migration-0xclaw-to-wrenos.md` (legacy pointer)
+- `docs/migrating-from-legacy-to-wrenos.md` (canonical)
+- `docs/migration-legacy-to-wrenos.md` (legacy pointer)
 - `docs/release-readiness/migration-guardrails-checklist.md` (compatibility checks + expected outputs)
 
 For hosted/private inference routing details, see `docs/speakeasy-integration.md`.

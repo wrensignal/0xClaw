@@ -14,8 +14,7 @@
     "url": "https://github.com/wrensignal/wrenOS/issues"
   },
   "bin": {
-    "wrenos": "src/index.mjs",
-    "0xclaw": "src/index.mjs"
+    "wrenos": "src/index.mjs"
   },
   "scripts": {
     "test": "node --test test/*.test.mjs"

@@ -1,4 +1,4 @@
-# Rebrand execution plan: 0xClaw → WrenOS
+# Rebrand execution plan: legacy → WrenOS
 
 ## Objective
 
@@ -17,9 +17,9 @@ Make WrenOS the dominant and consistent product identity across repo, CLI, docs,
 - **Product name:** `WrenOS`
 - **Repository name:** `WrenOS`
 - **CLI command (primary):** `wrenos`
-- **CLI command (compatibility alias):** `0xclaw` (temporary)
+- **CLI command (compatibility alias):** `legacy` (temporary)
 - **Hidden config directory (primary):** `.wrenos/`
-- **Hidden config directory (legacy fallback):** `.0xclaw/` (read-only compatibility window)
+- **Hidden config directory (legacy fallback):** `.legacy/` (read-only compatibility window)
 - **Generated config files (primary):**
   - `.wrenos/config.json`
   - `.wrenos/pack-*.json`
@@ -37,19 +37,19 @@ Use these terms consistently in user-facing docs:
 - **WrenOS packs**
 - **WrenOS control plane**
 
-Do not present `0xClaw` as the primary product identity after this phase.
-Use `0xClaw` only in explicit migration/compatibility context.
+Do not present `legacy` as the primary product identity after this phase.
+Use `legacy` only in explicit migration/compatibility context.
 
 ## Workstreams
 
 ### 1) Naming surface
 - root package renamed to `wrenos`
-- CLI bin exposes `wrenos` primary + `0xclaw` alias
-- internal package scope shifted from `@0xclaw/*` to `@wrenos/*`
+- CLI bin exposes `wrenos` primary + `legacy` alias
+- internal package scope shifted from `@legacy/*` to `@wrenos/*`
 
 ### 2) Config + command migration
 - primary config path switched to `.wrenos/`
-- legacy fallback support for `.0xclaw/config.json`
+- legacy fallback support for `.legacy/config.json`
 - `bootstrap-wrenos` primary command + legacy alias support
 
 ### 3) Trust + maturity uplift
@@ -59,7 +59,7 @@ Use `0xClaw` only in explicit migration/compatibility context.
 
 ### 4) Documentation
 - README rewritten around WrenOS positioning
-- migration guide added (`docs/migration-0xclaw-to-wrenos.md`)
+- migration guide added (`docs/migration-legacy-to-wrenos.md`)
 - quickstart and safety docs aligned with new naming
 
 ## Validation checklist
@@ -69,4 +69,4 @@ Use `0xClaw` only in explicit migration/compatibility context.
 - [ ] `npm run lint`
 - [ ] `npm run typecheck`
 - [ ] `wrenos init && wrenos status`
-- [ ] legacy path fallback test (`.0xclaw/config.json`)
+- [ ] legacy path fallback test (`.legacy/config.json`)

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wrenos.dev/schemas/contracts/v1/explainability.schema.json",
+  "title": "Explainability Contract v1",
+  "type": "object",
+  "required": ["version", "decision", "confidence", "reasons", "generated_at"],
+  "properties": {
+    "version": {"const": "1.0.0"},
+    "decision": {"type": "string"},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "reasons": {"type": "array", "items": {"type": "string"}},
+    "generated_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": true
+}

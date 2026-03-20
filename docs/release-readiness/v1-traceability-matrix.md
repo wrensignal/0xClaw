@@ -20,7 +20,7 @@ Status legend:
 | D | Write `solana-token-scan` skill (single-entry token intelligence) | `packs/core-skills-pack/solana-token-scan/` (expected) | Skill execution sample + output contract check | Quill | missing |
 | E | Remove Speakeasy from site messaging (defer for v1) | `site/` content + related docs references | Content diff review + site smoke checks | Quill | partial |
 | F | Keep docs site in sync with codebase changes | `docs/` + docs publishing surfaces | Section-by-section parity checks | Quill | partial |
-| G | Naming cleanup (0xClaw → WrenOS) across public surfaces | `site/`, `docs/`, links/meta | Link sweep + broken-link checks | Quill | partial |
+| G | Naming cleanup (legacy → WrenOS) across public surfaces | `site/`, `docs/`, links/meta | Link sweep + broken-link checks | Quill | partial |
 | H | Align vendored components with bootstrap wiring (`.mcp.json`) | `.mcp.json`, `vendor/`, docs | `doctor` diagnostics + startup probes | Quill | partial |
 
 ## Should-Have Requirements
@@ -48,7 +48,7 @@ Status legend:
 | X1 | Agent identity/API key drift across wake runs can result in wrong-agent behavior | High — can cause incorrect issue mutation or auth failures | Add identity preflight guard in wake workflow (hard fail if `agents/me.id` != expected) |
 | X2 | Completion evidence quality was inconsistent across prior issue closures | High — false `done` status risk | Enforce mandatory completion templates + evidence validator before `done` patch |
 | X3 | Site/docs drift appears repeatedly due to parallel edits without reproducible baseline discipline | Medium/High — regressions and review churn | Keep baseline freeze + cleanup gate as prerequisite for content tasks |
-| X4 | Legacy naming remnants (`0xClaw`) persist in public-facing paths and metadata | Medium — trust/consistency risk | Run dedicated naming/link hygiene sweep with automated checks |
+| X4 | Legacy naming remnants (`legacy`) persist in public-facing paths and metadata | Medium — trust/consistency risk | Run dedicated naming/link hygiene sweep with automated checks |
 
 ## Notes
 
