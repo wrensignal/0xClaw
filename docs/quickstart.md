@@ -122,6 +122,7 @@ If you're coming from `0xClaw`:
 See:
 - `docs/migrating-from-0xclaw-to-wrenos.md` (canonical)
 - `docs/migration-0xclaw-to-wrenos.md` (legacy pointer)
+- `docs/release-readiness/migration-guardrails-checklist.md` (compatibility checks + expected outputs)
 
 For hosted/private inference routing details, see `docs/speakeasy-integration.md`.
 For Privy onboarding and wallet auth-state flows, see `docs/privy-wallet-provisioning.md`.
