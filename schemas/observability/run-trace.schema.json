@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wrenos.dev/schemas/observability/run-trace.schema.json",
+  "type": "object",
+  "required": ["run_id", "started_at", "ended_at", "steps"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "started_at": {"type": "string", "format": "date-time"},
+    "ended_at": {"type": "string", "format": "date-time"},
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "status", "duration_ms"],
+        "properties": {
+          "name": {"type": "string"},
+          "status": {"type": "string", "enum": ["ok", "fail", "skip"]},
+          "duration_ms": {"type": "number", "minimum": 0}
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}
