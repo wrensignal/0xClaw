@@ -1,6 +1,6 @@
 # RC Testing 05 — Telegram integration E2E validation
 
-Timestamp UTC: 2026-03-21T22:44:31Z
+Timestamp UTC: 2026-03-21T22:44:48Z
 
 Acceptance checks:
 - discovery/trade/heartbeat/performance alerts delivered ✅
@@ -12,5 +12,5 @@ Evidence files:
 - 2026-03-21-rc05-telegram-e2e.log
 
 Notes:
-- Invalid command  returns help-style fallback response.
+- Invalid command `/wat` returns help-style fallback response.
 - Alert pipeline emitted 4 formatted messages across required event types.
