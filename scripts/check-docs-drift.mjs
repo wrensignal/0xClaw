@@ -15,13 +15,28 @@ const quickstart = existsSync('docs/quickstart.md') ? readFileSync('docs/quickst
 const cliCommands = ['wrenos init', 'wrenos doctor', 'wrenos status', 'wrenos config', 'wrenos start'];
 const missingInDocs = cliCommands.filter((cmd) => !quickstart.includes(cmd));
 
-const drift = head !== prov.syncedCommit || missingDocs.length > 0 || missingInDocs.length > 0;
+const trackedDocSet = new Set(requiredDocs);
+let changedSinceSynced = [];
+try {
+  const changed = execSync(`git diff --name-only ${prov.syncedCommit}..${head}`, { encoding: 'utf8' })
+    .split('\n')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  changedSinceSynced = changed.filter((p) => trackedDocSet.has(p));
+} catch {
+  // If synced commit is unavailable (e.g. shallow clone), keep behavior conservative.
+  changedSinceSynced = requiredDocs.slice();
+}
+
+const commitDrift = changedSinceSynced.length > 0;
+const drift = missingDocs.length > 0 || missingInDocs.length > 0;
 const report = {
   generatedAt: new Date().toISOString(),
   mode: strict ? 'strict' : 'warn',
   syncedCommit: prov.syncedCommit,
   currentCommit: head,
-  commitDrift: head !== prov.syncedCommit,
+  commitDrift,
+  changedTrackedDocsSinceSynced: changedSinceSynced,
   missingTrackedDocs: missingDocs,
   quickstartMissingCommands: missingInDocs,
   drift
