@@ -7,9 +7,26 @@ function toBool(v, fallback = false) {
   return fallback;
 }
 
+function formatAlert(event = {}) {
+  const type = event.type || 'event';
+  switch (type) {
+    case 'discovery_hit':
+      return `🔎 Discovery hit: ${event.symbol || 'unknown'} score=${event.score ?? 'n/a'} source=${event.source || 'n/a'}`;
+    case 'trade_signal':
+      return `📣 Trade signal: ${event.side || 'N/A'} ${event.symbol || 'unknown'} confidence=${event.confidence ?? 'n/a'} mode=${event.paperMode ? 'paper' : 'live'}`;
+    case 'heartbeat_alert':
+      return `💓 Heartbeat alert [${event.severity || 'info'}]: ${event.message || 'no message'}`;
+    case 'performance_report':
+      return `📈 Performance ${event.period || 'summary'}: pnlUsd=${event.pnlUsd ?? 'n/a'} winRate=${event.winRate ?? 'n/a'}`;
+    default:
+      return `ℹ️ ${type}: ${event.message || JSON.stringify(event)}`;
+  }
+}
+
 export function createTelegramAdapter(config = {}, hooks = {}) {
   const state = {
-    paperMode: toBool(config.paperMode ?? true, true)
+    paperMode: toBool(config.paperMode ?? true, true),
+    alertsEnabled: toBool(config.alertsEnabled ?? true, true)
   };
 
   const help = [
@@ -20,7 +37,8 @@ export function createTelegramAdapter(config = {}, hooks = {}) {
     '/heartbeat',
     '/performance',
     '/trade <symbol>',
-    '/paper on|off'
+    '/paper on|off',
+    '/alerts on|off'
   ].join('\n');
 
   async function cmdStatus() {
@@ -29,6 +47,7 @@ export function createTelegramAdapter(config = {}, hooks = {}) {
       ok: true,
       profile: config.profile || 'unknown',
       paperMode: state.paperMode,
+      alertsEnabled: state.alertsEnabled,
       message: 'Agent is online.'
     };
   }
@@ -93,6 +112,19 @@ export function createTelegramAdapter(config = {}, hooks = {}) {
     };
   }
 
+  async function cmdAlerts(mode) {
+    if (!mode || !['on', 'off'].includes(String(mode).toLowerCase())) {
+      return { ok: false, error: 'usage: /alerts on|off' };
+    }
+    state.alertsEnabled = String(mode).toLowerCase() === 'on';
+    if (hooks.onAlertsModeChange) await hooks.onAlertsModeChange(state.alertsEnabled);
+    return {
+      ok: true,
+      alertsEnabled: state.alertsEnabled,
+      message: `Alerts ${state.alertsEnabled ? 'enabled' : 'disabled'}.`
+    };
+  }
+
   async function handleText(text = '') {
     const [cmd, ...rest] = String(text).trim().split(/\s+/);
     const arg = rest.join(' ').trim();
@@ -113,6 +145,8 @@ export function createTelegramAdapter(config = {}, hooks = {}) {
         return cmdTrade(arg);
       case '/paper':
         return cmdPaper(rest[0]);
+      case '/alerts':
+        return cmdAlerts(rest[0]);
       case '/help':
       case 'help':
         return { ok: true, message: help };
@@ -128,10 +162,18 @@ export function createTelegramAdapter(config = {}, hooks = {}) {
     }
   }
 
+  async function notify(event = {}) {
+    if (!state.alertsEnabled) return { ok: true, skipped: true, reason: 'alerts_disabled' };
+    const message = formatAlert(event);
+    if (hooks.sendAlert) await hooks.sendAlert({ message, event, state });
+    return { ok: true, type: event.type || 'event', message };
+  }
+
   return {
     platform: 'telegram',
-    commands: ['/status', '/watchlist', '/health', '/heartbeat', '/performance', '/trade <symbol>', '/paper on|off'],
+    commands: ['/status', '/watchlist', '/health', '/heartbeat', '/performance', '/trade <symbol>', '/paper on|off', '/alerts on|off'],
     state,
-    handleText
+    handleText,
+    notify
   };
 }
