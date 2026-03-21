@@ -45,3 +45,7 @@ Scope: Convert benchmark deltas into implementable WrenOS parity work with impac
 - Impact/effort scoring present ✅
 - Backlog links included ✅
 - v1 parity dashboard produced ✅
+
+
+## Operator-facing close-plan
+- See `docs/release-readiness/senpi-operator-close-plan.md` for ship-now vs defer decisions and issue-linked actions.
