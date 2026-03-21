@@ -1,0 +1,47 @@
+{
+  "commands": [
+    {
+      "ok": true,
+      "profile": "trading-agent-paper",
+      "paperMode": true,
+      "alertsEnabled": true,
+      "message": "Agent is online."
+    },
+    {
+      "ok": true,
+      "paperMode": false,
+      "message": "Paper mode disabled."
+    },
+    {
+      "ok": true,
+      "alertsEnabled": true,
+      "message": "Alerts enabled."
+    },
+    {
+      "ok": true,
+      "summary": "healthy"
+    },
+    {
+      "ok": true,
+      "period": "24h",
+      "pnlUsd": 88
+    },
+    {
+      "ok": true,
+      "type": "proposal",
+      "symbol": "SOL",
+      "paperMode": false,
+      "message": "Trade proposal generated for SOL."
+    },
+    {
+      "ok": true,
+      "message": "Available commands:\n/status\n/watchlist\n/health\n/heartbeat\n/performance\n/trade <symbol>\n/paper on|off\n/alerts on|off"
+    }
+  ],
+  "alerts": [
+    "🔎 Discovery hit: BONK score=0.8 source=scan",
+    "📣 Trade signal: BUY SOL confidence=0.7 mode=paper",
+    "💓 Heartbeat alert [warning]: feed delayed",
+    "📈 Performance 24h: pnlUsd=88 winRate=0.61"
+  ]
+}
