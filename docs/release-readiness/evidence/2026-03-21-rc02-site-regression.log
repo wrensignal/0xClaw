@@ -1,0 +1,75 @@
+{
+  "generatedAt": "2026-03-21T19:38:52.923Z",
+  "summary": {
+    "total": 13,
+    "passed": 13,
+    "failed": 0
+  },
+  "checks": [
+    {
+      "name": "homepage canonical tag present",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "docs canonical tag present",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "homepage meta description present",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "docs meta description present",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "homepage link exists: /docs/",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "homepage link exists: https://github.com/wrensignal/wrenOS",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "docs nav anchor exists: #quick-start",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "docs nav anchor exists: #configuration",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "docs nav anchor exists: #architecture",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "route status < 400: https://www.wrenos.ai/",
+      "pass": true,
+      "details": "status=200 redirects=1"
+    },
+    {
+      "name": "route status < 400: https://www.wrenos.ai/docs",
+      "pass": true,
+      "details": "status=200 redirects=1"
+    },
+    {
+      "name": "route status < 400: https://www.wrenos.ai/",
+      "pass": true,
+      "details": "status=200 redirects=0"
+    },
+    {
+      "name": "route status < 400: https://www.wrenos.ai/docs",
+      "pass": true,
+      "details": "status=200 redirects=0"
+    }
+  ]
+}

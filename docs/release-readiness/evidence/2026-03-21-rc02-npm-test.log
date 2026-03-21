@@ -1,0 +1,266 @@
+
+> wrenos@0.1.0 test
+> npm run test --workspaces --if-present
+
+
+> @wrenos/adapters@0.1.0 test
+> node --test test/*.test.mjs
+
+TAP version 13
+# Subtest: telegram adapter handles operator commands and state toggles
+ok 1 - telegram adapter handles operator commands and state toggles
+  ---
+  duration_ms: 0.674417
+  type: 'test'
+  ...
+# Subtest: telegram adapter notify formats discovery/trade/heartbeat/performance alerts
+ok 2 - telegram adapter notify formats discovery/trade/heartbeat/performance alerts
+  ---
+  duration_ms: 0.187792
+  type: 'test'
+  ...
+# Subtest: telegram adapter wires heartbeat/performance command hooks
+ok 3 - telegram adapter wires heartbeat/performance command hooks
+  ---
+  duration_ms: 0.089084
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 58.945292
+
+> @wrenos/cli@0.1.0 test
+> node --test test/*.test.mjs
+
+TAP version 13
+# Subtest: init-pack creates pack config and .mcp.json
+ok 1 - init-pack creates pack config and .mcp.json
+  ---
+  duration_ms: 55.641625
+  type: 'test'
+  ...
+# Subtest: bootstrap-wrenos creates template set
+ok 2 - bootstrap-wrenos creates template set
+  ---
+  duration_ms: 50.324125
+  type: 'test'
+  ...
+# Subtest: test inference command returns structured diagnostics (failure path)
+ok 3 - test inference command returns structured diagnostics (failure path)
+  ---
+  duration_ms: 127.926083
+  type: 'test'
+  ...
+# Subtest: test execution command returns structured diagnostics envelope
+ok 4 - test execution command returns structured diagnostics envelope
+  ---
+  duration_ms: 317.185292
+  type: 'test'
+  ...
+# Subtest: railway deploy assumptions file remains present and parseable
+ok 5 - railway deploy assumptions file remains present and parseable
+  ---
+  duration_ms: 0.701208
+  type: 'test'
+  ...
+# Subtest: demo runs zero-config signal->decision flow with safe defaults
+ok 6 - demo runs zero-config signal->decision flow with safe defaults
+  ---
+  duration_ms: 55.038542
+  type: 'test'
+  ...
+# Subtest: init creates config and mcp template
+ok 7 - init creates config and mcp template
+  ---
+  duration_ms: 50.741583
+  type: 'test'
+  ...
+# Subtest: doctor passes after init
+ok 8 - doctor passes after init
+  ---
+  duration_ms: 106.817666
+  type: 'test'
+  ...
+# Subtest: all 7 profile templates pass init + doctor runtime validation
+ok 9 - all 7 profile templates pass init + doctor runtime validation
+  ---
+  duration_ms: 711.77125
+  type: 'test'
+  ...
+# Subtest: doctor reports MCP env/startup diagnostics when required env missing
+ok 10 - doctor reports MCP env/startup diagnostics when required env missing
+  ---
+  duration_ms: 101.26025
+  type: 'test'
+  ...
+# Subtest: config set writes nested values
+ok 11 - config set writes nested values
+  ---
+  duration_ms: 94.533584
+  type: 'test'
+  ...
+# Subtest: wallet setup supports privy provider metadata
+ok 12 - wallet setup supports privy provider metadata
+  ---
+  duration_ms: 49.224458
+  type: 'test'
+  ...
+# Subtest: wallet setup supports privy signed_out metadata state
+ok 13 - wallet setup supports privy signed_out metadata state
+  ---
+  duration_ms: 48.3705
+  type: 'test'
+  ...
+# Subtest: wallet setup supports privy expired state with refresh token
+ok 14 - wallet setup supports privy expired state with refresh token
+  ---
+  duration_ms: 49.776625
+  type: 'test'
+  ...
+# Subtest: wallet setup rejects malformed privy auth state
+ok 15 - wallet setup rejects malformed privy auth state
+  ---
+  duration_ms: 48.132709
+  type: 'test'
+  ...
+# Subtest: legacy config fallback emits migration warning in status
+ok 16 - legacy config fallback emits migration warning in status
+  ---
+  duration_ms: 48.827584
+  type: 'test'
+  ...
+# Subtest: legacy compatibility alias emits deprecation warning
+ok 17 - legacy compatibility alias emits deprecation warning
+  ---
+  duration_ms: 49.864958
+  type: 'test'
+  ...
+# Subtest: migrate no-ops safely when no legacy directory exists
+ok 18 - migrate no-ops safely when no legacy directory exists
+  ---
+  duration_ms: 48.227125
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1523.007417
+
+> @wrenos/core@0.1.0 test
+> node --test test/*.test.mjs
+
+TAP version 13
+# Subtest: deriveManagedFunnelMetrics computes decision time, drop-off, and no-trade reasons
+ok 1 - deriveManagedFunnelMetrics computes decision time, drop-off, and no-trade reasons
+  ---
+  duration_ms: 1.673667
+  type: 'test'
+  ...
+# Subtest: terminal outcomes are constrained to canonical set
+ok 2 - terminal outcomes are constrained to canonical set
+  ---
+  duration_ms: 1.042709
+  type: 'test'
+  ...
+# Subtest: deriveOutcome maps deterministic failure precedence
+ok 3 - deriveOutcome maps deterministic failure precedence
+  ---
+  duration_ms: 0.078333
+  type: 'test'
+  ...
+# Subtest: managed lane is fail-closed when no terminal branch selected
+ok 4 - managed lane is fail-closed when no terminal branch selected
+  ---
+  duration_ms: 0.038959
+  type: 'test'
+  ...
+# Subtest: explainability validator returns valid OR invalid+reason_code contract
+ok 5 - explainability validator returns valid OR invalid+reason_code contract
+  ---
+  duration_ms: 0.087125
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 60.895667
+
+> @wrenos/mcp@0.1.0 test
+> node --test test/*.test.mjs
+
+TAP version 13
+# Subtest: mcp tools/list returns core WrenOS capability surface
+ok 1 - mcp tools/list returns core WrenOS capability surface
+  ---
+  duration_ms: 42.710667
+  type: 'test'
+  ...
+# Subtest: mcp tools/call returns structured envelope payload
+ok 2 - mcp tools/call returns structured envelope payload
+  ---
+  duration_ms: 42.174666
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4146.530542
+
+> speakeasy-ai@0.1.0 test
+> node --test test/*.test.mjs
+
+TAP version 13
+# Subtest: non-streaming completion success
+ok 1 - non-streaming completion success
+  ---
+  duration_ms: 31.0665
+  type: 'test'
+  ...
+# Subtest: 402 flow retries with payment headers
+ok 2 - 402 flow retries with payment headers
+  ---
+  duration_ms: 5.800375
+  type: 'test'
+  ...
+# Subtest: supports challenge from x402-payment-requirement header
+ok 3 - supports challenge from x402-payment-requirement header
+  ---
+  duration_ms: 1.699292
+  type: 'test'
+  ...
+# Subtest: streaming returns async iterator chunks
+ok 4 - streaming returns async iterator chunks
+  ---
+  duration_ms: 1.162833
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 158.3315
