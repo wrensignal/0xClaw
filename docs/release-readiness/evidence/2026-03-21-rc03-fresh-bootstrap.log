@@ -1,0 +1,248 @@
+timestamp_utc=2026-03-21T21:42:13Z
+tmp_dir=/tmp/wre140-bootstrap-Ug26rx
+step=bootstrap_init
+Created .mcp.json with starter servers: agenti-lite, pump-fun-sdk-lite, helius (additional vendored MCPs require manual wiring)
+{
+  "ok": true,
+  "action": "init",
+  "profile": "research-agent",
+  "configPath": "/private/tmp/wre140-bootstrap-Ug26rx/.wrenos/config.json",
+  "liveExecutionDefault": false,
+  "approvalPosture": "External side effects require approvals. Live execution requires explicit enablement.",
+  "note": "Profile template applied."
+}
+step=doctor
+{
+  "ok": true,
+  "readyState": "ready",
+  "profile": "research-agent",
+  "configPath": "/private/tmp/wre140-bootstrap-Ug26rx/.wrenos/config.json",
+  "checks": [
+    {
+      "name": "runtime.node",
+      "ok": true,
+      "detail": "node=22.22.0 (required >=20)"
+    },
+    {
+      "name": "runtime.workspace-deps",
+      "ok": true,
+      "detail": "node_modules not found in current cwd (acceptable for isolated smoke workspaces)"
+    },
+    {
+      "name": "config.present",
+      "ok": true,
+      "detail": "config found at /private/tmp/wre140-bootstrap-Ug26rx/.wrenos/config.json"
+    },
+    {
+      "name": "config.profile-known",
+      "ok": true,
+      "detail": "profile=research-agent"
+    },
+    {
+      "name": "operator.mcp-config",
+      "ok": true,
+      "detail": ".mcp.json present"
+    },
+    {
+      "name": "inference.route-config",
+      "ok": true,
+      "detail": "baseUrl=https://api.speakeasyrelay.com"
+    },
+    {
+      "name": "execution.mode-defined",
+      "ok": true,
+      "detail": "liveExecution=false"
+    },
+    {
+      "name": "execution.safety-default",
+      "ok": true,
+      "detail": "paper-safe default active"
+    },
+    {
+      "name": "secrets.wallet",
+      "ok": true,
+      "detail": "wallet optional in paper mode"
+    },
+    {
+      "name": "operator.privy-metadata",
+      "ok": true,
+      "detail": "wallet not present"
+    },
+    {
+      "name": "mcp.server.agenti-lite.command",
+      "ok": true,
+      "detail": "command found: npx | remediation: Install/ensure `npx` is available in PATH."
+    },
+    {
+      "name": "mcp.server.agenti-lite.env",
+      "ok": true,
+      "detail": "required env resolved or not required | remediation: none"
+    },
+    {
+      "name": "mcp.server.agenti-lite.startup",
+      "ok": true,
+      "detail": "vendor tree not present in current workspace; startup probe skipped | remediation: none"
+    },
+    {
+      "name": "mcp.server.pump-fun-sdk-lite.command",
+      "ok": true,
+      "detail": "command found: npx | remediation: Install/ensure `npx` is available in PATH."
+    },
+    {
+      "name": "mcp.server.pump-fun-sdk-lite.env",
+      "ok": true,
+      "detail": "required env resolved or not required | remediation: none"
+    },
+    {
+      "name": "mcp.server.pump-fun-sdk-lite.startup",
+      "ok": true,
+      "detail": "vendor tree not present in current workspace; startup probe skipped | remediation: none"
+    },
+    {
+      "name": "mcp.server.helius.command",
+      "ok": true,
+      "detail": "command found: npx | remediation: Install/ensure `npx` is available in PATH."
+    },
+    {
+      "name": "mcp.server.helius.env",
+      "ok": true,
+      "detail": "required env resolved or not required | remediation: none"
+    },
+    {
+      "name": "mcp.server.helius.startup",
+      "ok": true,
+      "detail": "startup probe passed | remediation: none"
+    }
+  ],
+  "mcpDiagnostics": [
+    {
+      "server": "agenti-lite",
+      "checks": {
+        "command": {
+          "ok": true,
+          "detail": "command found: npx",
+          "remediation": "Install/ensure `npx` is available in PATH."
+        },
+        "env": {
+          "ok": true,
+          "detail": "required env resolved or not required",
+          "remediation": "none"
+        },
+        "startupProbe": {
+          "ok": true,
+          "detail": "vendor tree not present in current workspace; startup probe skipped",
+          "remediation": "none"
+        }
+      }
+    },
+    {
+      "server": "pump-fun-sdk-lite",
+      "checks": {
+        "command": {
+          "ok": true,
+          "detail": "command found: npx",
+          "remediation": "Install/ensure `npx` is available in PATH."
+        },
+        "env": {
+          "ok": true,
+          "detail": "required env resolved or not required",
+          "remediation": "none"
+        },
+        "startupProbe": {
+          "ok": true,
+          "detail": "vendor tree not present in current workspace; startup probe skipped",
+          "remediation": "none"
+        }
+      }
+    },
+    {
+      "server": "helius",
+      "checks": {
+        "command": {
+          "ok": true,
+          "detail": "command found: npx",
+          "remediation": "Install/ensure `npx` is available in PATH."
+        },
+        "env": {
+          "ok": true,
+          "detail": "required env resolved or not required",
+          "remediation": "none"
+        },
+        "startupProbe": {
+          "ok": true,
+          "detail": "startup probe passed",
+          "remediation": "none"
+        }
+      }
+    }
+  ],
+  "warnings": [],
+  "next": [
+    "System diagnostics passed",
+    "Optional network checks: wrenos test inference && wrenos test execution"
+  ]
+}
+step=status
+{
+  "system": {
+    "name": "WrenOS CLI",
+    "ready": true,
+    "configPath": "/private/tmp/wre140-bootstrap-Ug26rx/.wrenos/config.json",
+    "configFormat": "wrenos"
+  },
+  "profile": {
+    "active": "research-agent",
+    "heartbeatAdaptive": true,
+    "loopEnabled": true
+  },
+  "inference": {
+    "provider": "speakeasy",
+    "baseUrl": "https://api.speakeasyrelay.com",
+    "routes": {
+      "research": "deepseek-v3.2",
+      "deep_think": "qwen3-235b-a22b-thinking-2507",
+      "codegen": "qwen3-coder-480b-a35b-instruct",
+      "uncensored": "venice-uncensored"
+    }
+  },
+  "execution": {
+    "mode": "paper",
+    "liveExecution": false,
+    "approvalRequired": true,
+    "paperDefault": true
+  },
+  "safety": {
+    "confidenceTiers": [
+      "tier0",
+      "tier1",
+      "tier2",
+      "tier3 (template default)"
+    ],
+    "fallbackPolicyDefined": false,
+    "warning": null
+  },
+  "operatorInterface": {
+    "mcpConfig": true,
+    "walletConfigured": false,
+    "walletProvider": null,
+    "privyAuthState": null
+  },
+  "packs": [
+    {
+      "name": "dual-agent-pack",
+      "enabled": false,
+      "path": "/private/tmp/wre140-bootstrap-Ug26rx/.wrenos/pack-dual-agent.json"
+    },
+    {
+      "name": "meme-discovery",
+      "enabled": false,
+      "path": "/private/tmp/wre140-bootstrap-Ug26rx/.wrenos/pack-meme-discovery.json"
+    }
+  ],
+  "commands": {
+    "doctor": "wrenos doctor",
+    "testInference": "wrenos test inference",
+    "testExecution": "wrenos test execution",
+    "migrate": "wrenos migrate"
+  }
+}
