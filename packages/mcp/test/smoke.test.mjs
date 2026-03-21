@@ -2,9 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function startServer() {
-  const serverPath = path.resolve(process.cwd(), 'packages/mcp/src/index.mjs');
+  const serverPath = path.resolve(__dirname, '../src/index.mjs');
   const proc = spawn('node', [serverPath], { stdio: ['pipe', 'pipe', 'inherit'] });
   proc.stdout.setEncoding('utf8');
   return proc;
