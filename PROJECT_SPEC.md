@@ -1,6 +1,6 @@
 # PROJECT_SPEC.md — WrenOS v1 Execution Plan
 
-_Last updated: 2026-03-18_
+_Last updated: 2026-03-20_
 _Owner: Quill_
 _Source of truth for what exists, what's missing, and what ships for v1._
 
@@ -339,3 +339,7 @@ _This file lives in the WrenOS repo root (gitignored via OpenClaw workspace file
 
 ## Benchmark parity artifact
 - Senpi delta report: `docs/release-readiness/senpi-benchmark-delta-report.md`
+
+
+## A–O reconciliation artifact
+- `docs/release-readiness/v1-a-o-reconciliation.md`
