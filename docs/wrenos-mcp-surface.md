@@ -1,45 +1,30 @@
 # WrenOS MCP Surface (v1)
 
-## Native MCP surface
+## Exposed tools
+- `wrenos.discovery.scan_token_universe`
+- `wrenos.scoring.score_token`
+- `wrenos.risk.assess_portfolio`
+- `wrenos.backtesting.run_strategy_backtest`
 
-WrenOS exposes a native MCP server scaffold for external agents:
+## Auth and safety boundaries
+- MCP surface is read/analysis-oriented in v1 and returns structured envelopes.
+- No wallet signing or trade execution is exposed through this server.
+- Deploy behind operator-controlled environment and network boundary.
+- Treat tool outputs as advisory unless separately approved by operator policy.
 
-- Package: `packages/mcp`
-- Binary: `wrenos-mcp`
-- Transport: stdio (JSON-RPC)
-
-### Tool surface
-
-1. `wrenos.discovery.scan_token_universe`
-2. `wrenos.scoring.score_token`
-3. `wrenos.risk.assess_portfolio`
-4. `wrenos.backtesting.run_strategy_backtest`
-
-Status: scaffold contract is implemented (stable tool names + deterministic envelopes), with deeper runtime wiring tracked separately.
-
-## Vendor MCP dependency surface (v1)
-
-For v1, the supported vendor MCP/data providers are:
-
-- `vendor/agenti-lite` (**keep**)
-- `vendor/pump-fun-sdk-lite` (**keep**)
-- `vendor/crypto-news-lite` (**keep**)
-
-Deferred/non-critical for v1 runtime:
-
-- `vendor/skills` (**defer**) — retained as optional portability snapshot, not required for core runtime/deploy path.
-
-See authoritative classification:
-- `docs/vendor-trim-manifest.md`
-
-## Minimal local run
-
+## Local run
 ```bash
 node packages/mcp/src/index.mjs
 ```
 
-Then speak MCP JSON-RPC over stdin/stdout (`initialize`, `tools/list`, `tools/call`).
+## Example client call (JSON-RPC over stdio)
+```json
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}
+{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
+{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"wrenos.scoring.score_token","arguments":{"token":"SOL"}}}
+```
 
-## Why this matters
-
-Spec M requires WrenOS-native capabilities to be consumable by external agents. This surface defines stable native tool contracts while clearly separating required v1 vendor dependencies from deferred bundles.
+## Smoke test
+```bash
+node --test packages/mcp/test/*.test.mjs
+```
