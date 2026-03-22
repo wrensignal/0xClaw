@@ -146,3 +146,11 @@ Use `wrenos config` to set runtime values before launch:
 ```bash
 wrenos config set loop.enabled true
 ```
+
+## One-click deploy (Railway)
+
+Use the template import link:
+
+- https://railway.com/new/template?template=https://github.com/wrensignal/wrenOS
+
+After deploy, continue with `docs/railway-first-run-playbook.md` and run `wrenos doctor`.
