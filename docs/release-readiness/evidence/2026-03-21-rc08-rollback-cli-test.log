@@ -1,0 +1,118 @@
+TAP version 13
+# Subtest: init-pack creates pack config and .mcp.json
+ok 1 - init-pack creates pack config and .mcp.json
+  ---
+  duration_ms: 49.49025
+  type: 'test'
+  ...
+# Subtest: bootstrap-wrenos creates template set
+ok 2 - bootstrap-wrenos creates template set
+  ---
+  duration_ms: 45.328542
+  type: 'test'
+  ...
+# Subtest: test inference command returns structured diagnostics (failure path)
+ok 3 - test inference command returns structured diagnostics (failure path)
+  ---
+  duration_ms: 109.884875
+  type: 'test'
+  ...
+# Subtest: test execution command returns structured diagnostics envelope
+ok 4 - test execution command returns structured diagnostics envelope
+  ---
+  duration_ms: 319.288916
+  type: 'test'
+  ...
+# Subtest: railway deploy assumptions file remains present and parseable
+ok 5 - railway deploy assumptions file remains present and parseable
+  ---
+  duration_ms: 0.175667
+  type: 'test'
+  ...
+# Subtest: demo runs zero-config signal->decision flow with safe defaults
+ok 6 - demo runs zero-config signal->decision flow with safe defaults
+  ---
+  duration_ms: 49.130917
+  type: 'test'
+  ...
+# Subtest: init creates config and mcp template
+ok 7 - init creates config and mcp template
+  ---
+  duration_ms: 45.623167
+  type: 'test'
+  ...
+# Subtest: doctor passes after init
+ok 8 - doctor passes after init
+  ---
+  duration_ms: 91.232792
+  type: 'test'
+  ...
+# Subtest: all 7 profile templates pass init + doctor runtime validation
+ok 9 - all 7 profile templates pass init + doctor runtime validation
+  ---
+  duration_ms: 630.466458
+  type: 'test'
+  ...
+# Subtest: doctor reports MCP env/startup diagnostics when required env missing
+ok 10 - doctor reports MCP env/startup diagnostics when required env missing
+  ---
+  duration_ms: 89.047708
+  type: 'test'
+  ...
+# Subtest: config set writes nested values
+ok 11 - config set writes nested values
+  ---
+  duration_ms: 85.7705
+  type: 'test'
+  ...
+# Subtest: wallet setup supports privy provider metadata
+ok 12 - wallet setup supports privy provider metadata
+  ---
+  duration_ms: 43.861292
+  type: 'test'
+  ...
+# Subtest: wallet setup supports privy signed_out metadata state
+ok 13 - wallet setup supports privy signed_out metadata state
+  ---
+  duration_ms: 43.742458
+  type: 'test'
+  ...
+# Subtest: wallet setup supports privy expired state with refresh token
+ok 14 - wallet setup supports privy expired state with refresh token
+  ---
+  duration_ms: 43.40525
+  type: 'test'
+  ...
+# Subtest: wallet setup rejects malformed privy auth state
+ok 15 - wallet setup rejects malformed privy auth state
+  ---
+  duration_ms: 42.401416
+  type: 'test'
+  ...
+# Subtest: legacy config fallback emits migration warning in status
+ok 16 - legacy config fallback emits migration warning in status
+  ---
+  duration_ms: 43.662583
+  type: 'test'
+  ...
+# Subtest: legacy compatibility alias emits deprecation warning
+ok 17 - legacy compatibility alias emits deprecation warning
+  ---
+  duration_ms: 45.366708
+  type: 'test'
+  ...
+# Subtest: migrate no-ops safely when no legacy directory exists
+ok 18 - migrate no-ops safely when no legacy directory exists
+  ---
+  duration_ms: 42.708583
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1362.460042
