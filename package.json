@@ -39,7 +39,10 @@
     "contract:migrate:all": "npm run contract:migrate:strategy && npm run contract:migrate:explainability",
     "validate:v1-checklist": "node scripts/validate-v1-checklist.mjs",
     "docs:drift": "node scripts/check-docs-drift.mjs --strict",
-    "contract:env:hosted-docs": "node scripts/validate-hosted-env-docs.mjs"
+    "contract:env:hosted-docs": "node scripts/validate-hosted-env-docs.mjs",
+    "verify:lane:shared": "node scripts/verify-lane-matrix.mjs --lane=shared",
+    "verify:hosted": "node scripts/verify-lane-matrix.mjs --lane=hosted",
+    "verify:operator": "node scripts/verify-lane-matrix.mjs --lane=operator"
   },
   "engines": {
     "node": ">=20"

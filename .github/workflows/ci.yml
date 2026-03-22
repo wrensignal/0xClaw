@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  verify:
+  verify-shared:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,9 +30,6 @@ jobs:
       - name: Test
         run: npm run test
 
-      - name: Docs drift check
-        run: npm run docs:drift
-
       - name: CLI smoke
         run: npm run smoke:cli
 
@@ -42,5 +39,50 @@ jobs:
       - name: CLI acceptance suite
         run: npm run acceptance:cli
 
-      - name: Managed contract gate
-        run: npm run contract:managed
+  verify-hosted:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
+
+      - name: Lane verify (hosted)
+        run: npm run verify:hosted
+
+      - name: Upload hosted lane coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lane-coverage-hosted
+          path: docs/reports/lane-coverage-report.json
+
+  verify-operator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
+
+      - name: Lane verify (operator)
+        run: npm run verify:operator
+
+      - name: Upload operator lane coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lane-coverage-operator
+          path: docs/reports/lane-coverage-report.json
