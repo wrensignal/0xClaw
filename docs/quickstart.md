@@ -1,8 +1,13 @@
 # Quickstart
 
+This page is the hosted default entrypoint and now routes lane-specific docs.
+
+- Hosted default path: `docs/hosted-quickstart.md`
+- Operator advanced path: `docs/operator/README.md`
+
 This guide gives you a smooth setup + validation path for WrenOS, while continuous orchestration remains a beta surface.
 
-## Recommended operator path (canonical onboarding)
+## Recommended hosted path (canonical onboarding)
 
 1. Install dependencies
 2. Initialize a profile
