@@ -38,7 +38,8 @@
     "contract:migrate:explainability": "node scripts/migrate-contract-v1-to-v2.mjs explainability examples/contracts/explainability.v1.sample.json",
     "contract:migrate:all": "npm run contract:migrate:strategy && npm run contract:migrate:explainability",
     "validate:v1-checklist": "node scripts/validate-v1-checklist.mjs",
-    "docs:drift": "node scripts/check-docs-drift.mjs --strict"
+    "docs:drift": "node scripts/check-docs-drift.mjs --strict",
+    "contract:env:hosted-docs": "node scripts/validate-hosted-env-docs.mjs"
   },
   "engines": {
     "node": ">=20"
