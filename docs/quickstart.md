@@ -154,3 +154,7 @@ Use the template import link:
 - https://railway.com/new/template?template=https://github.com/wrensignal/wrenOS
 
 After deploy, continue with `docs/railway-first-run-playbook.md` and run `wrenos doctor`.
+
+Env contracts:
+- Hosted lane: `docs/env-contract-hosted.md`
+- Operator lane (advanced/custom): `docs/env-contract-operator.md`

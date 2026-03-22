@@ -43,3 +43,5 @@ Remediation: inspect `doctor` output in same run, fix listed checks, rerun `npm 
 ## Notes
 - Keep `liveExecution` off by default unless explicitly enabled and approval-gated.
 - Preflight scripts are designed to fail fast with operator-actionable output.
+- Hosted env contract source-of-truth: `docs/env-contract-hosted.md` (`schemas/contracts/env.hosted.schema.json`).
+- Operator lane env extensions are documented separately in `docs/env-contract-operator.md`.
