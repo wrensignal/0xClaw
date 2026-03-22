@@ -53,6 +53,19 @@ cd wrenOS
 npm install
 ```
 
+## One-click Railway deploy
+
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https://github.com/wrensignal/wrenOS)
+
+Use the Railway template import above to provision from this repo, then follow:
+- `docs/railway-first-run-playbook.md`
+- `docs/deployment-guide.md`
+
+Recommended first-run flow after deploy:
+1. Set required env vars
+2. Run `wrenos doctor`
+3. Run `wrenos start --once` in paper mode
+
 ## Quick start
 
 ```bash
