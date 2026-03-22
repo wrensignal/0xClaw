@@ -1,0 +1,7 @@
+timestamp_utc=2026-03-22T02:35:33Z
+rollback_sha=fe5046179af1fff08499574b58c815f8836339a9
+forward_sha=3edc4d848f416f429cbda790818ffb5fea62ca65
+rollback_npm_test=pass
+rollback_cli_test=pass
+forward_npm_test=pass
+restore_forward_path=tested
