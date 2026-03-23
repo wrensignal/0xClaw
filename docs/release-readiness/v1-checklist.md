@@ -11,14 +11,14 @@ Status key: ✅ Green · ⚠️ At Risk · ❌ Red
 
 | Gate | Severity | Owner | Evidence required | Status |
 |---|---|---|---|---|
-| Contract outcomes canonicalized (Q1/Q2/Q3) | Critical | Quill | Merged PR(s) + passing contract tests | ☐ |
-| Managed referral/routing contract validation | Critical | Quill | `node scripts/validate-managed-referral-contract.mjs` output + merged PR | ☐ |
-| Site/docs regression harness green | High | Quill | `site-regression-report.json` + screenshot artifacts + CI run | ☐ |
-| Docs parity + migration accuracy | High | Quill | docs parity matrix + migrated naming audit | ☐ |
-| CLI smoke and profile bootstrap pass | High | Quill | `npm test` + smoke output snippets | ☐ |
-| Release notes + changelog completeness | Medium | Quill | CHANGELOG entry + release summary | ☐ |
-| Rollback plan validated | Critical | Quill | rollback steps tested in dry-run with timestamped log | ☐ |
-| Deployment validation (main + docs route health) | High | Quill | HTTP status checks + post-deploy screenshots | ☐ |
+| Contract outcomes canonicalized (Q1/Q2/Q3) | Critical | Quill | Merged PR(s) + passing contract tests | ✅ WRE-121/122/123, PR #43 |
+| Managed referral/routing contract validation | Critical | Quill | `node scripts/validate-managed-referral-contract.mjs` output + merged PR | ✅ WRE-141, `npm run contract:managed` passes |
+| Site/docs regression harness green | High | Quill | `site-regression-report.json` + screenshot artifacts + CI run | ✅ WRE-143 |
+| Docs parity + migration accuracy | High | Quill | docs parity matrix + migrated naming audit | ✅ WRE-109/111 |
+| CLI smoke and profile bootstrap pass | High | Quill | `npm test` + smoke output snippets | ✅ `npm run verify` passes (2026-03-23) |
+| Release notes + changelog completeness | Medium | Quill | CHANGELOG entry + release summary | ✅ WRE-146 |
+| Rollback plan validated | Critical | Quill | rollback steps tested in dry-run with timestamped log | ✅ WRE-145 |
+| Deployment validation (main + docs route health) | High | Quill | HTTP status checks + post-deploy screenshots | ⚠️ Authenticated Railway deploy proof pending (WRE-150/158) |
 
 ## Must-pass verification commands
 
@@ -55,12 +55,12 @@ Rollback procedure:
 4. Post incident note with root cause + prevention action.
 
 ## Evidence links section (fill before launch tag)
-- WrenOS release PR:
-- wrenos-site release PR:
-- Contract validation evidence:
-- Site regression evidence:
-- Rollback dry-run evidence:
-- Final go/no-go decision timestamp:
+- WrenOS release PR: https://github.com/wrensignal/wrenOS/pull/55 (latest merged)
+- wrenos-site release PR: https://github.com/wrensignal/wrenos-site/pull/8
+- Contract validation evidence: WRE-121/122/123/141 (all done), `npm run contract:managed` passes
+- Site regression evidence: WRE-143 (done)
+- Rollback dry-run evidence: WRE-145 (done)
+- Final go/no-go decision timestamp: 2026-03-23T21:35:00Z — **CONDITIONAL GO** (all Critical/High gates green except deployment validation pending authenticated Railway proof)
 
 
 ## Machine-checkable evidence tracker
