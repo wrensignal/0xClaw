@@ -1,5 +1,58 @@
 # Changelog
 
+## 2026-03-23 — v1 Release Candidate
+
+### Summary
+
+This release candidate delivers the full v1 scope: hosted Railway deployment path, provider-agnostic inference, discovery mode contract, lane-split architecture, managed-lane outcome contracts, and comprehensive RC testing evidence.
+
+### Highlights
+
+**Hosted deployment (Railway)**
+- One-click Railway deploy via canonical slug URL (#38, #46, #47, #48, #49)
+- Provider-agnostic inference key support: accept any of OpenAI/Anthropic/Gemini (#46)
+- Canonical hosted env variable matrix with required/optional/secret/default docs (#47)
+- Discovery mode contract: explicit Basic vs Full mode reporting based on provider keys (#55)
+- Railway first-run playbook, hosted quickstart, and authenticated clickthrough runbook
+
+**Lane architecture**
+- Hosted/operator env schema partition (#40)
+- Docs IA split: hosted quickstart vs operator deep path (#41)
+- Lane-tagged CI verification matrix with hosted + operator jobs (#42)
+
+**Managed-lane contracts**
+- Outcome engine with strict explainability validator (WRE-121)
+- Managed referral funnel contract with routing verification (WRE-122)
+- Exhaustive managed-lane terminal outcome matrix with CI gate (WRE-123)
+- Managed-lane outcome matrix validation evidence (WRE-141, #43)
+
+**RC testing evidence (all passed)**
+- RC SHA freeze (WRE-138)
+- Clean-environment verification (WRE-139)
+- Fresh-machine bootstrap (WRE-140)
+- Managed-lane outcome matrix (WRE-141)
+- Telegram E2E integration (WRE-142)
+- Site/docs journey QA (WRE-143)
+- Paper-mode 24h soak (WRE-144)
+- Rollback rehearsal (WRE-145)
+
+**Infrastructure**
+- Stale lock reconciliation diagnostic for Paperclip checkout conflicts (#53)
+- Fix: `npm install` prepended to verify script for fresh-clone reliability (#54)
+- Hosted launch gate go/no-go checklist with timestamped decision (#48)
+
+### Known limitations
+- Authenticated Railway draft deploy proof pending (WRE-150/WRE-158)
+- `speakeasy-ai` package deferred from v1 (stays in repo, not promoted)
+
+### Verification
+```bash
+npm run verify   # build + lint + typecheck + test + smoke + contracts
+npm test         # all workspace tests pass (0 failures)
+```
+
+---
+
 ## 2026-03-07 — Rebrand: legacy → WrenOS
 
 ### Summary
