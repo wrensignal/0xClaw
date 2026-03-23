@@ -1,0 +1,2 @@
+MEDIA:~/.openclaw/media/browser/ef8aa49d-7b72-4117-9c0e-60dc5309605f.jpg
+tab_id=none

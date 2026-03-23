@@ -7,6 +7,7 @@ This guide defines a production-oriented Railway onboarding flow for WrenOS.
 - Template source: `railway.json`
 - Service target: single `agent` service (expand to multi-service later if needed)
 - Deploy URL (after publish): `https://railway.com/deploy/wrenos`
+- Referral URL (README canonical): `https://railway.com/deploy/wrenos?referralCode=wrenos&utm_source=github&utm_medium=readme`
 
 ## 2) First-Run Onboarding Flow
 
