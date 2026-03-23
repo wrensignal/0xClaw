@@ -26,3 +26,7 @@ Last updated: 2026-03-23
 1. Run authenticated Railway draft deploy from canonical slug URL.
 2. Capture timestamped proof artifact (screenshot + workspace/deploy state).
 3. Attach artifact to WRE-150/WRE-152 and update this checklist status row.
+
+## Auth handoff docs
+- `docs/release-readiness/railway-authenticated-clickthrough-runbook.md`
+- `docs/release-readiness/evidence/2026-03-23-wre158-auth-handoff-checklist.md`
