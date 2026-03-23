@@ -1,0 +1,359 @@
+- generic [active] [ref=e1]:
+  - button "Opt-Out Signal Honored" [ref=e2] [cursor=pointer]:
+    - img [ref=e3]
+    - generic [ref=e6]: Opt-Out Signal Honored
+  - generic [ref=e7]:
+    - generic [ref=e11]:
+      - link "Railway" [ref=e12] [cursor=pointer]:
+        - /url: /
+        - img [ref=e14]
+        - generic [ref=e34]: Railway
+      - navigation "Main" [ref=e36]:
+        - list [ref=e38]:
+          - listitem [ref=e39]:
+            - button "Product" [ref=e40] [cursor=pointer]:
+              - generic [ref=e41]: Product
+              - img [ref=e43]
+          - listitem [ref=e45]:
+            - button "Developers" [ref=e46] [cursor=pointer]:
+              - generic [ref=e47]: Developers
+              - img [ref=e49]
+          - listitem [ref=e51]:
+            - button "Enterprise" [ref=e52] [cursor=pointer]:
+              - generic [ref=e53]: Enterprise
+              - img [ref=e55]
+          - listitem [ref=e57]:
+            - button "Company" [ref=e58] [cursor=pointer]:
+              - generic [ref=e59]: Company
+              - img [ref=e61]
+          - listitem [ref=e63]:
+            - link "Pricing" [ref=e64] [cursor=pointer]:
+              - /url: /pricing
+      - img "Loading..." [ref=e66]
+    - main [ref=e69]:
+      - separator [ref=e70]
+      - navigation "Breadcrumb" [ref=e71]:
+        - list [ref=e72]:
+          - listitem [ref=e73]:
+            - link "Home" [ref=e74] [cursor=pointer]:
+              - /url: https://railway.com
+              - img [ref=e76]
+              - generic [ref=e78]: Home
+          - listitem [ref=e79]: /
+          - listitem [ref=e80]:
+            - link "Templates" [ref=e81] [cursor=pointer]:
+              - /url: /deploy
+          - listitem [ref=e82]: /
+          - listitem [ref=e83]:
+            - link "Other" [ref=e84] [cursor=pointer]:
+              - /url: /deploy?category=Other
+          - listitem [ref=e85]: /
+          - listitem [ref=e86]:
+            - generic [ref=e87]: WrenOS
+      - article [ref=e88]:
+        - generic [ref=e89]:
+          - generic [ref=e93]:
+            - heading "Deploy WrenOS" [level=1] [ref=e94]:
+              - generic [ref=e95]: Deploy
+              - text: WrenOS
+            - paragraph [ref=e96]: Deploy and Host WrenOS OpenClaw on Railway
+          - region "Template Preview" [ref=e98]:
+            - generic [ref=e101]:
+              - link [ref=e102] [cursor=pointer]:
+                - /url: ""
+              - generic [ref=e103]:
+                - link [ref=e104] [cursor=pointer]:
+                  - /url: ""
+                - generic [ref=e106]:
+                  - link "wrenOS" [ref=e107] [cursor=pointer]:
+                    - /url: ""
+                    - paragraph [ref=e108]: wrenOS
+                  - paragraph [ref=e109]:
+                    - link [ref=e110] [cursor=pointer]:
+                      - /url: ""
+                    - link "wrensignal/wrenOS" [ref=e111] [cursor=pointer]:
+                      - /url: https://github.com/wrensignal/wrenOS
+              - generic [ref=e112]:
+                - img [ref=e114]
+                - paragraph [ref=e117]: Just deployed
+          - region "Template Documentation" [ref=e118]:
+            - heading "Deploy and Host WrenOS on Railway" [level=1] [ref=e119]
+            - paragraph [ref=e120]: WrenOS is an open-source control plane for operator-managed crypto agents. It provides a paper-first workflow for discovery, scoring, validation, and execution with explicit safety gates and inspectable artifacts. This template gives you a fast hosted path to run WrenOS with your own keys, profile, and operator controls.
+            - heading "About Hosting WrenOS" [level=2] [ref=e121]
+            - paragraph [ref=e122]: Hosting WrenOS on Railway gives you a managed runtime for continuous agent operations without self-managing infrastructure. You configure environment variables, choose a profile, and run health/bootstrap checks to validate readiness. WrenOS is designed to start in paper-first mode and fail closed when required signals are missing, so operators can verify behavior before enabling execution-capable flows. This template supports Telegram-based operator UX, optional data-provider enrichment (Helius, Birdeye, LunarCrush, Jupiter), and clean post-deploy validation using built-in preflight and health scripts. The result is a reproducible hosted setup that is safer and easier to operate than ad hoc local-only workflows.
+            - heading "Common Use Cases" [level=2] [ref=e123]
+            - list [ref=e124]:
+              - listitem [ref=e125]: Run paper-first crypto research and decision workflows with operator visibility and safety defaults.
+              - listitem [ref=e126]: Host an always-on control plane for Telegram alerts, commands, and monitoring loops.
+              - listitem [ref=e127]: Stand up a reproducible environment for testing profile configurations and release-readiness checks.
+            - heading "Dependencies for WrenOS Hosting" [level=2] [ref=e128]
+            - list [ref=e129]:
+              - listitem [ref=e130]: A Railway account and a deployed template/service from this repository.
+              - listitem [ref=e131]: Required runtime credentials (profile + provider/API keys) configured as environment variables.
+            - heading "Deployment Dependencies" [level=3] [ref=e132]
+            - list [ref=e133]:
+              - listitem [ref=e134]:
+                - text: "WrenOS repository:"
+                - link "https://github.com/wrensignal/wrenOS" [ref=e135] [cursor=pointer]:
+                  - /url: https://github.com/wrensignal/wrenOS
+              - listitem [ref=e136]:
+                - text: "Quick Start docs:"
+                - link "https://github.com/wrensignal/wrenOS/blob/main/docs/quickstart.md" [ref=e137] [cursor=pointer]:
+                  - /url: https://github.com/wrensignal/wrenOS/blob/main/docs/quickstart.md
+              - listitem [ref=e138]:
+                - text: "Railway first-run playbook:"
+                - link "https://github.com/wrensignal/wrenOS/blob/main/docs/railway-first-run-playbook.md" [ref=e139] [cursor=pointer]:
+                  - /url: https://github.com/wrensignal/wrenOS/blob/main/docs/railway-first-run-playbook.md
+              - listitem [ref=e140]:
+                - text: "Release-readiness checklist:"
+                - link "https://github.com/wrensignal/wrenOS/blob/main/docs/release-readiness/v1-checklist.md" [ref=e141] [cursor=pointer]:
+                  - /url: https://github.com/wrensignal/wrenOS/blob/main/docs/release-readiness/v1-checklist.md
+            - heading "Why Deploy WrenOS on Railway?" [level=2] [ref=e142]
+            - paragraph [ref=e143]: Railway is a singular platform to deploy your infrastructure stack. Railway will host your infrastructure so you don't have to deal with configuration, while allowing you to vertically and horizontally scale it.
+            - paragraph [ref=e144]: By deploying WrenOS on Railway, you are one step closer to supporting a complete full-stack application with minimal burden. Host your servers, databases, AI agents, and more on Railway.
+            - paragraph [ref=e145]: Railway is a singular platform to deploy your infrastructure stack. Railway will host your infrastructure so you don't have to deal with configuration, while allowing you to vertically and horizontally scale it.
+            - paragraph [ref=e146]: By deploying WrenOS on Railway, you are one step closer to supporting a complete full-stack application with minimal burden. Host your servers, databases, AI agents, and more on Railway.
+          - separator [ref=e147]
+          - region "Template Services" [ref=e148]:
+            - paragraph [ref=e149]: Template Content
+            - generic [ref=e151]:
+              - generic [ref=e152]:
+                - img [ref=e155]
+                - generic [ref=e157]:
+                  - paragraph [ref=e158]: wrenOS
+                  - link "wrensignal/wrenOS" [ref=e159] [cursor=pointer]:
+                    - /url: https://github.com/wrensignal/wrenOS
+              - generic [ref=e160]:
+                - button "3 variables required" [ref=e161] [cursor=pointer]:
+                  - generic [ref=e162]:
+                    - img [ref=e164]
+                    - paragraph [ref=e166]: 3 variables required
+                - generic:
+                  - generic:
+                    - generic:
+                      - paragraph: AI_API_KEY
+                    - generic:
+                      - paragraph: Your API key from openai, anthropic, gemini.
+                  - generic:
+                    - generic:
+                      - paragraph: AI_PROVIDER
+                    - generic:
+                      - paragraph: "The name of your AI_PROVIDER: openai, anthropic, gemini (all lowercase)."
+                  - generic:
+                    - generic:
+                      - paragraph: TELEGRAM_BOT_TOKEN
+                    - generic:
+                      - paragraph: Telegram bot token used for operator alerts and command handling.
+        - complementary [ref=e167]:
+          - link "Deploy Now" [ref=e168] [cursor=pointer]:
+            - /url: /new/template/wrenos?referralCode=wrenos&utm_source=github&utm_medium=readme
+            - generic [ref=e169]: Deploy Now
+          - region "Template Details" [ref=e170]:
+            - separator [ref=e171]
+            - generic [ref=e172]:
+              - generic "wrensignal's Projects" [ref=e173]
+              - paragraph [ref=e175]: wrensignal
+            - generic [ref=e177]:
+              - generic [ref=e178]:
+                - term [ref=e179]: Creation Date
+                - definition [ref=e180]:
+                  - generic [ref=e182]:
+                    - img [ref=e184]
+                    - paragraph [ref=e187]:
+                      - text: Created on
+                      - time [ref=e188]: Mar 22, 2026
+              - generic [ref=e189]:
+                - term [ref=e190]: Total Projects
+                - definition [ref=e191]:
+                  - generic [ref=e192]:
+                    - img [ref=e194]
+                    - paragraph [ref=e196]: 0 total projects
+              - generic [ref=e197]:
+                - term [ref=e198]: Programming Languages
+                - definition [ref=e199]:
+                  - generic [ref=e200]:
+                    - img [ref=e202]
+                    - paragraph [ref=e204]: JavaScript, HTML, Shell
+              - generic [ref=e205]:
+                - term [ref=e206]: Category
+                - definition [ref=e207]:
+                  - generic [ref=e208]:
+                    - img [ref=e210]
+                    - paragraph [ref=e212]: Other
+            - separator [ref=e213]
+            - generic [ref=e214]:
+              - generic [ref=e215]:
+                - img [ref=e217]
+                - link "Get template help" [ref=e220] [cursor=pointer]:
+                  - /url: https://station.railway.com/all-templates/a794303d-902c-42cd-bfeb-9088faf850a4
+                  - paragraph [ref=e221]: Get template help
+              - generic [ref=e222]:
+                - img [ref=e224]
+                - link "Report template against ToS" [ref=e226] [cursor=pointer]:
+                  - /url: https://discord.gg/railway
+                  - paragraph [ref=e227]: Report template against ToS
+              - separator [ref=e228]
+    - region "Similar Templates" [ref=e229]:
+      - generic [ref=e230]:
+        - paragraph [ref=e231]: More templates in this category
+        - generic [ref=e232]:
+          - generic [ref=e233]:
+            - link "View Template" [ref=e234] [cursor=pointer]:
+              - /url: /deploy/X5tR6G
+              - generic [ref=e235]: View Template
+            - generic [ref=e238]:
+              - generic [ref=e240]: Foundry Virtual Tabletop
+              - generic [ref=e241]: A Self-Hosted & Modern Roleplaying Platform
+            - separator [ref=e242]
+            - generic [ref=e243]:
+              - generic [ref=e244]:
+                - generic "Lucas's Projects" [ref=e245]
+                - generic [ref=e247]: Lucas
+              - generic [ref=e248]:
+                - generic [ref=e249]:
+                  - img [ref=e251]
+                  - generic [ref=e253]: "65"
+                - link "Deploy" [ref=e254] [cursor=pointer]:
+                  - /url: /new/template/X5tR6G
+                  - generic [ref=e255]: Deploy
+          - generic [ref=e256]:
+            - link "View Template" [ref=e257] [cursor=pointer]:
+              - /url: /deploy/pwNTJ1
+              - generic [ref=e258]: View Template
+            - generic [ref=e261]:
+              - generic [ref=e263]: (v1) Simple Medusa Backend
+              - generic [ref=e264]: Deploy an ecommerce backend and admin using Medusa
+            - separator [ref=e265]
+            - generic [ref=e266]:
+              - generic [ref=e267]:
+                - generic "Shahed Nasser's Projects" [ref=e268]
+                - generic [ref=e270]: Shahed Nasser
+              - generic [ref=e271]:
+                - generic [ref=e272]:
+                  - img [ref=e274]
+                  - generic [ref=e276]: "342"
+                - link "Deploy" [ref=e277] [cursor=pointer]:
+                  - /url: /new/template/pwNTJ1
+                  - generic [ref=e278]: Deploy
+          - generic [ref=e279]:
+            - link "View Template" [ref=e280] [cursor=pointer]:
+              - /url: /deploy/ZIVdC1
+              - generic [ref=e281]: View Template
+            - generic [ref=e284]:
+              - generic [ref=e286]: peppermint
+              - generic [ref=e287]: Docker-compose port for peppermint.sh
+            - separator [ref=e288]
+            - generic [ref=e289]:
+              - generic [ref=e290]:
+                - generic "HamiltonAI" [ref=e291]:
+                  - img [ref=e292]
+                - generic [ref=e294]: HamiltonAI
+              - generic [ref=e295]:
+                - generic [ref=e296]:
+                  - img [ref=e298]
+                  - generic [ref=e300]: "50"
+                - link "Deploy" [ref=e301] [cursor=pointer]:
+                  - /url: /new/template/ZIVdC1
+                  - generic [ref=e302]: Deploy
+    - contentinfo [ref=e303]:
+      - generic [ref=e304]:
+        - generic [ref=e305]:
+          - generic [ref=e306]:
+            - generic [ref=e307]:
+              - link "Railway Logo" [ref=e308] [cursor=pointer]:
+                - /url: /
+                - img "Railway Logo" [ref=e309]
+              - link "All systems operational" [ref=e312] [cursor=pointer]:
+                - /url: https://status.railway.com
+                - generic [ref=e313]: All systems operational
+                - generic [ref=e314]: ↗
+              - separator [ref=e315]
+            - generic [ref=e316]:
+              - text: Copyright © 2026 Railway Corp.
+              - text: All rights reserved.
+          - link "Railway Compliance" [ref=e317] [cursor=pointer]:
+            - /url: https://trust.railway.com
+            - img [ref=e318]
+            - img [ref=e320]
+        - generic [ref=e332]:
+          - paragraph [ref=e333]: Product
+          - list [ref=e334]:
+            - listitem [ref=e335]:
+              - link "Features" [ref=e336] [cursor=pointer]:
+                - /url: /features
+            - listitem [ref=e337]:
+              - link "Docs" [ref=e338] [cursor=pointer]:
+                - /url: https://docs.railway.com
+            - listitem [ref=e339]:
+              - link "Changelog" [ref=e340] [cursor=pointer]:
+                - /url: /changelog
+            - listitem [ref=e341]:
+              - link "Pricing" [ref=e342] [cursor=pointer]:
+                - /url: /pricing
+            - listitem [ref=e343]:
+              - link "Templates" [ref=e344] [cursor=pointer]:
+                - /url: /deploy
+            - listitem [ref=e345]:
+              - link "OSS Kickback" [ref=e346] [cursor=pointer]:
+                - /url: /open-source-kickback
+            - listitem [ref=e347]:
+              - link "Migrate from Heroku" [ref=e348] [cursor=pointer]:
+                - /url: /heroku
+        - generic [ref=e349]:
+          - paragraph [ref=e350]: Company
+          - list [ref=e351]:
+            - listitem [ref=e352]:
+              - link "About" [ref=e353] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e354]:
+              - link "Careers" [ref=e355] [cursor=pointer]:
+                - /url: /careers
+            - listitem [ref=e356]:
+              - link "Blog" [ref=e357] [cursor=pointer]:
+                - /url: https://blog.railway.com
+            - listitem [ref=e358]:
+              - link "Shop" [ref=e359] [cursor=pointer]:
+                - /url: https://shop.railway.com
+            - listitem [ref=e360]:
+              - link "Trust" [ref=e361] [cursor=pointer]:
+                - /url: https://trust.railway.com
+        - generic [ref=e362]:
+          - paragraph [ref=e363]: Contact
+          - list [ref=e364]:
+            - listitem [ref=e365]:
+              - link "Support" [ref=e366] [cursor=pointer]:
+                - /url: https://station.railway.com
+            - listitem [ref=e367]:
+              - link "Discord" [ref=e368] [cursor=pointer]:
+                - /url: https://discord.gg/railway
+            - listitem [ref=e369]:
+              - link "Twitter" [ref=e370] [cursor=pointer]:
+                - /url: https://twitter.com/Railway
+            - listitem [ref=e371]:
+              - link "GitHub" [ref=e372] [cursor=pointer]:
+                - /url: https://github.com/railwayapp
+            - listitem [ref=e373]:
+              - link "Email" [ref=e374] [cursor=pointer]:
+                - /url: mailto:team@railway.com
+            - listitem [ref=e375]:
+              - link "Enterprise" [ref=e376] [cursor=pointer]:
+                - /url: /deploy/wrenos/#enterprise-calendar-embed
+        - generic [ref=e377]:
+          - paragraph [ref=e378]: Legal
+          - list [ref=e379]:
+            - listitem [ref=e380]:
+              - link "Fair Use" [ref=e381] [cursor=pointer]:
+                - /url: /legal/fair-use
+            - listitem [ref=e382]:
+              - link "Privacy Policy" [ref=e383] [cursor=pointer]:
+                - /url: /legal/privacy
+            - listitem [ref=e384]:
+              - link "Terms of Service" [ref=e385] [cursor=pointer]:
+                - /url: /legal/terms
+            - listitem [ref=e386]:
+              - link "Enterprise Agreement" [ref=e387] [cursor=pointer]:
+                - /url: /legal/enterprise-agreement
+            - button "Cookie Preferences" [ref=e388] [cursor=pointer]
+            - listitem [ref=e389]:
+              - link "Bug Bounty Program" [ref=e390] [cursor=pointer]:
+                - /url: /bug-bounty
