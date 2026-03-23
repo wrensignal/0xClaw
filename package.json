@@ -27,6 +27,8 @@
     "verify": "npm install && npm run build && npm run lint && npm run typecheck && npm run test && npm run smoke:cli && npm run smoke:bootstrap && npm run acceptance:cli && npm run contract:managed",
     "railway:preflight": "node scripts/railway-env-preflight.mjs",
     "test:railway:preflight": "node --test scripts/railway-env-preflight.test.mjs",
+    "test:discovery:mode": "node --test scripts/discovery-mode-check.test.mjs",
+    "discovery:mode": "node scripts/discovery-mode-check.mjs",
     "railway:health": "node scripts/railway-postdeploy-health.mjs",
     "railway:first-run": "node scripts/railway-first-run.mjs",
     "smoke:bootstrap": "node scripts/bootstrap-smoke.mjs",

@@ -18,6 +18,29 @@ This playbook defines the verified one-click deployment path and failure remedia
 
 \* At least one of `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY` (or compatible `AI_API_KEY`) must be set for hosted preflight to pass.
 
+## Discovery mode contract
+
+WrenOS has two discovery modes based on external provider key availability:
+
+| Mode | Active when | Data sources | Quality |
+|---|---|---|---|
+| **Basic** | No external provider keys set | agenti-lite, crypto-news-lite, pump-fun-sdk-lite | Bundled MCP servers only; limited enrichment |
+| **Full** | One or more provider keys set | Basic + Birdeye, Helius, LunarCrush, Jupiter | Enriched analytics, social sentiment, DEX routing |
+
+**Optional provider keys for Full mode:**
+
+| Variable | Service | Capability |
+|---|---|---|
+| `BIRDEYE_API_KEY` | Birdeye | Token analytics, price/volume data, holder distribution |
+| `HELIUS_API_KEY` | Helius | Enriched Solana RPC, transaction parsing, webhooks |
+| `LUNARCRUSH_API_KEY` | LunarCrush | Social sentiment metrics, influencer tracking |
+| `JUPITER_API_KEY` | Jupiter | DEX aggregation, swap routing, price impact estimation |
+
+Check current mode:
+```bash
+npm run discovery:mode
+```
+
 ## Verified happy path
 1. Set required env vars in Railway.
 2. Deploy service.
