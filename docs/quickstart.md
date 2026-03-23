@@ -154,9 +154,9 @@ wrenos config set loop.enabled true
 
 ## One-click deploy (Railway)
 
-Use the template import link:
+Use the hosted deploy slug link:
 
-- https://railway.com/new/template?template=https://github.com/wrensignal/wrenOS
+- https://railway.com/deploy/wrenos?referralCode=wrenos&utm_source=github&utm_medium=readme
 
 After deploy, continue with `docs/railway-first-run-playbook.md` and run `wrenos doctor`.
 

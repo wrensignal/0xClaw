@@ -2,13 +2,21 @@
 
 This playbook defines the verified one-click deployment path and failure remediations.
 
-## Minimal env contract (required)
-- `PROFILE` (recommended: `research-agent`)
-- `OPENCLAW_API_KEY`
-- `TELEGRAM_BOT_TOKEN`
+## Canonical hosted env variable matrix
 
-Conditional:
-- `AGENT_WALLET_PRIVATE_KEY` only when execution-enabled mode is explicitly enabled.
+| Variable | Required | Secret | Default / example | Description |
+|---|---:|---:|---|---|
+| `PROFILE` | Yes | No | `research-agent` | Hosted runtime profile template. |
+| `OPENCLAW_API_KEY` | Yes | Yes | _(none)_ | Gateway/API auth key for OpenClaw runtime integration. |
+| `TELEGRAM_BOT_TOKEN` | Yes | Yes | _(none)_ | Telegram operator bot token used by notification + operator flows. |
+| `OPENAI_API_KEY` | Yes* | Yes | _(none)_ | Inference provider key (OpenAI path). |
+| `ANTHROPIC_API_KEY` | Yes* | Yes | _(none)_ | Inference provider key (Anthropic path). |
+| `GEMINI_API_KEY` | Yes* | Yes | _(none)_ | Inference provider key (Gemini path). |
+| `AI_API_KEY` | Optional | Yes | _(none)_ | Backward-compatible umbrella inference key alias. |
+| `WRENOS_ENABLE_EXECUTION` | Optional | No | `false` | Enables execution-required checks when set to `true`. |
+| `AGENT_WALLET_PRIVATE_KEY` | Conditional | Yes | _(none)_ | Required only when `WRENOS_ENABLE_EXECUTION=true`. |
+
+\* At least one of `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY` (or compatible `AI_API_KEY`) must be set for hosted preflight to pass.
 
 ## Verified happy path
 1. Set required env vars in Railway.
@@ -46,3 +54,4 @@ Remediation: inspect `doctor` output in same run, fix listed checks, rerun `npm 
 - Hosted env contract source-of-truth: `docs/env-contract-hosted.md` (`schemas/contracts/env.hosted.schema.json`).
 - Operator lane env extensions are documented separately in `docs/env-contract-operator.md`.
 - Advanced operator/custom runtime docs: `docs/operator/README.md`.
+- Rendered template field mapping evidence: `docs/release-readiness/evidence/2026-03-23-wre149-railway-vars-matrix.md`.

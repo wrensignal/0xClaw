@@ -55,9 +55,9 @@ npm install
 
 ## One-click Railway deploy
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https://github.com/wrensignal/wrenOS)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/wrenos?referralCode=wrenos&utm_source=github&utm_medium=readme)
 
-Use the Railway template import above to provision from this repo, then follow:
+Use the Railway deploy slug above to provision from this repo, then follow:
 - `docs/railway-first-run-playbook.md`
 - `docs/deployment-guide.md`
 
