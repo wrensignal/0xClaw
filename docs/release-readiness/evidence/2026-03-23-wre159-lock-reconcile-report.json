@@ -1,0 +1,68 @@
+{
+  "issueId": "6d68633d-51ed-4af4-92c6-5cc7a3591912",
+  "runId": "09ab355d-d285-4e04-af75-fcbfaf70128a",
+  "before": {
+    "status": "blocked",
+    "executionRunId": "a3ec7376-7147-4f7f-98b1-e06860e26d5e",
+    "checkoutRunId": null
+  },
+  "patchAttempt": {
+    "status": 200,
+    "body": {
+      "id": "6d68633d-51ed-4af4-92c6-5cc7a3591912",
+      "companyId": "5d247da4-2a76-4593-a195-0e82ac262a03",
+      "projectId": null,
+      "projectWorkspaceId": null,
+      "goalId": null,
+      "parentId": null,
+      "title": "type:ops Railway template UX 04: publish deploy slug and validate referral URL",
+      "description": "Goal: make https://railway.com/deploy/wrenos?... consistently usable.\nDeliverables:\n- Publish/update Railway template slug metadata (icon, overview, long markdown sections)\n- Validate referral/utm URL resolves and deploy flow works end-to-end\nAcceptance:\n- URL opens deploy flow successfully\n- Required template sections present\n- Evidence: screen capture + successful draft deploy",
+      "status": "blocked",
+      "priority": "critical",
+      "assigneeAgentId": "04842321-fe8f-42c2-abee-4ebc2d0db6ee",
+      "assigneeUserId": null,
+      "checkoutRunId": null,
+      "executionRunId": "a3ec7376-7147-4f7f-98b1-e06860e26d5e",
+      "executionAgentNameKey": null,
+      "executionLockedAt": "2026-03-23T11:08:36.682Z",
+      "createdByAgentId": null,
+      "createdByUserId": "local-board",
+      "issueNumber": 150,
+      "identifier": "WRE-150",
+      "requestDepth": 0,
+      "billingCode": null,
+      "assigneeAdapterOverrides": null,
+      "executionWorkspaceId": null,
+      "executionWorkspacePreference": null,
+      "executionWorkspaceSettings": null,
+      "startedAt": "2026-03-23T10:07:51.904Z",
+      "completedAt": null,
+      "cancelledAt": null,
+      "hiddenAt": null,
+      "createdAt": "2026-03-22T04:03:04.044Z",
+      "updatedAt": "2026-03-23T18:34:15.688Z",
+      "labels": [],
+      "labelIds": [],
+      "comment": null
+    }
+  },
+  "after": {
+    "status": "blocked",
+    "executionRunId": "a3ec7376-7147-4f7f-98b1-e06860e26d5e",
+    "checkoutRunId": null
+  },
+  "checkoutAttempt": {
+    "status": 409,
+    "body": {
+      "error": "Issue checkout conflict",
+      "details": {
+        "issueId": "6d68633d-51ed-4af4-92c6-5cc7a3591912",
+        "status": "blocked",
+        "assigneeAgentId": "04842321-fe8f-42c2-abee-4ebc2d0db6ee",
+        "checkoutRunId": null,
+        "executionRunId": "a3ec7376-7147-4f7f-98b1-e06860e26d5e"
+      }
+    }
+  },
+  "reconciled": false
+}
