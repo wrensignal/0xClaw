@@ -70,3 +70,13 @@ Rollback procedure:
 ```bash
 npm run validate:v1-checklist
 ```
+
+## Lane split readiness (future, post-hosted-green)
+
+| Area | Hosted lane | Operator lane | Shared anti-drift rule | Status |
+| --- | --- | --- | --- | --- |
+| Env contract | Minimal required env + safe defaults | Superset env + advanced overrides | Shared base schema must stay canonical | Planned |
+| Docs IA | Quickstart-first path | Deep operator path | Mutual cross-links required | Planned |
+| Validation matrix | `hosted/*` assertions | `operator/*` assertions | `shared/*` assertions required in both lanes | Planned |
+
+Reference architecture note: `docs/release-readiness/future-lane-split-architecture.md`.
